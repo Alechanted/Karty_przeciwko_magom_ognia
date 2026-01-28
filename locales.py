@@ -2,11 +2,11 @@
 
 TEXTS = {
     # --- ROLE I NAZWY ---
-    "GAME_TITLE": "Karty przeciwko<br>magom wody",
+    "GAME_TITLE": "Karty przeciwko<br>magom ognia",
     "ROLE_CZAR": "Magnat",  # Np. "SĘDZIA", "IMPERATOR"
     "ROLE_PLAYER": "Kopacz",  # Np. "Gracz", "Plebs"
     "WINNER_TITLE": "ZWYCIĘZCA",
-    "POINT_NAME": "bryłka rudy",  # Np. "punkt", "ciastko"
+    "POINT_NAME": "bryłka rudy",  # Np. "punkt", "bryłka rudy"
 
     # --- BEZPIECZEŃSTWO (PANIC BUTTON) ---
     "PANIC_BTN": "PANIC",
@@ -100,4 +100,5 @@ TEXTS = {
     "MSG_GHOST": "Duch",  # Gdy gracz wyjdzie
     "MSG_EMPTY_ROOM": "Obóz '{room}' jest pusty. Usuwanie.",
     "MSG_SYSTEM": "SYSTEM"
+
 }
