@@ -57,8 +57,11 @@ Przykładowa struktura (może ewoluować):
     example.white
     example.black
 README.md
-main.py
 debug.py
+locales.py
+main.py
+models.py
+room_manager.py
 run.py
 ```
 - static/ – *interfejs użytkownika (JS/HTML/CSS)*
@@ -67,7 +70,13 @@ run.py
 
 - debug.py – *skrypt do sprawdzania poprawności decków*
 
+- locales.py - *słownik, żeby dało się to konwertować, jakbyśmy chcieli jednak zrobić karty przeciwko forknife*
+
 - main.py - *główny backend gry*
+
+- models.py - *karteluszki*
+
+- room_manager - *logika pokoi*
 
 - run.py - *uruchamiacz*
 
@@ -199,4 +208,5 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
 
