@@ -29,11 +29,11 @@ Projekt ma charakter **hobbystyczny / edukacyjny / szyderczo-złośliwy / metare
 
 1. Sklonuj repozytorium:
 ```bash
-git clone <adres_repo>
+git clone [<adres_repo>](https://github.com/Alechanted/Karty_przeciwko_magom_ognia.git)
 ```
 Wejdź do katalogu projektu:
 ```bash
-cd <nazwa_repo>
+cd Karty_przeciwko_magom_ognia
 ```
 Uruchom backend (szczegóły mogą się zmieniać wraz z rozwojem projektu):
 ```bash
@@ -41,7 +41,7 @@ python run.py
 ```
 lub:
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uvicorn main:app --reload --host 0.0.0.0 --port 2137
 ```
 ---
 
@@ -199,3 +199,4 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
