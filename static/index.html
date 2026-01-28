@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Karty Przeciwko Magom Ognia</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Tło graficzne jest w CSS body::before -->
+
+    <!-- EKRAN 1: WYBÓR NICKU -->
+    <div id="login-screen">
+        <h1 id="game-main-title" class="game-title">Karty przeciwko<br>Magom Ognia</h1>
+        <input type="text" id="nickname-input" placeholder="Podaj swój nick" maxlength="15">
+        <button id="set-nick-btn">Wejdź do Lobby</button>
+        <p id="login-error" class="error"></p>
+    </div>
+
+    <!-- EKRAN 2: LISTA POKOI -->
+    <div id="room-list-screen" class="hidden">
+        <header>
+            <span id="lobby-user-display">Gracz: ???</span>
+            <button id="create-room-btn" class="action-btn">Załóż Pokój</button>
+        </header>
+        <div class="container">
+            <h2>Dostępne Pokoje</h2>
+            <div id="rooms-container">
+                <!-- Tu wpadną kafelki pokoi -->
+                <p>Ładowanie...</p>
+            </div>
+            <button id="refresh-rooms">Odśwież</button>
+        </div>
+    </div>
+
+    <!-- MODAL: TWORZENIE POKOJU -->
+    <div id="create-room-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Załóż nowy pokój</h3>
+            <label>Nazwa pokoju: <input type="text" id="new-room-name"></label>
+            <label>Hasło (opcjonalne): <input type="text" id="new-room-pass"></label>
+
+            <div class="settings-grid">
+                <label>Max graczy: <input type="number" id="conf-max" value="8" min="3" max="20"></label>
+                <label>Karty na ręce: <input type="number" id="conf-hand" value="10" min="5" max="20"></label>
+                <label>Punkty do win: <input type="number" id="conf-win" value="5" min="3" max="20"></label>
+                <label>Timeout (s): <input type="text" id="conf-timeout" value="60" placeholder="np. 60 lub inf"></label>
+            </div>
+
+            <h4>Wybierz talie:</h4>
+            <div id="deck-list" class="deck-grid">
+                <!-- Tu wpadną checkboxy -->
+            </div>
+
+            <div class="modal-actions">
+                <button id="confirm-create-room" class="green-btn">Stwórz i graj</button>
+                <button id="cancel-create-room" class="red-btn">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: HASŁO DO POKOJU -->
+    <div id="password-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Podaj hasło</h3>
+            <input type="text" id="join-room-pass">
+            <div class="modal-actions">
+                <button id="confirm-join-pass" class="green-btn">Dołącz</button>
+                <button id="cancel-join-pass" class="red-btn">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EKRAN 3: WŁAŚCIWA GRA (Z poprzedniej wersji) -->
+    <div id="game-screen" class="hidden">
+        <header>
+            <span id="room-display">Pokój: ???</span>
+            <div class="controls">
+                <button id="panic-btn">PANIC</button>
+                <button id="leave-room-btn">Wyjdź z pokoju</button>
+            </div>
+        </header>
+
+        <main class="layout">
+            <!-- LEWA STRONA: Obszar gry / Lobby -->
+            <section id="game-area" class="panel">
+                <div id="lobby-view">
+                    <h2 id="lobby-waiting-title">Oczekiwanie na start...</h2>
+                    <p id="lobby-waiting-desc">Gdy wszyscy będą gotowi, gra się rozpocznie.</p>
+
+                    <!-- Nowy licznik graczy -->
+                    <p id="lobby-players-count" style="font-weight: bold; color: #4CAF50; margin: 10px 0;">
+                        Ładowanie statusu...
+                    </p>
+
+                    <button id="start-game-btn" class="big-green-btn">ROZPOCZNIJ GRĘ</button>
+                </div>
+
+                <div id="play-view" class="hidden">
+                    <div id="black-card-container">
+                        <div class="card black-card-render">
+                            <div class="card-content" id="black-card-text">...</div>
+                        </div>
+                    </div>
+                    <div id="status-bar"><span id="role-info">Rola: ???</span></div>
+                    <div id="hand-container"></div>
+                </div>
+
+                <div id="waiting-room-view" class="hidden">
+                    <h3>Gra w toku...</h3>
+                    <p>Dołączysz w następnej rundzie.</p>
+                </div>
+            </section>
+
+            <!-- PRAWA STRONA -->
+            <section id="sidebar" class="panel">
+                <div id="player-list-container">
+                    <h3>Gracze</h3>
+                    <ul id="player-list"></ul>
+                </div>
+                <div id="chat-container">
+                    <div id="chat-messages"></div>
+                    <div class="chat-input-row">
+                        <input type="text" id="chat-input" placeholder="...">
+                        <button id="send-chat">></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PANIC OVERLAY -->
+    <div id="panic-overlay" class="hidden">
+        <div class="fake-teams">
+            <h2>Microsoft Teams</h2>
+            <p>Spotkanie: "Status projektu Q3" - Trwa nagrywanie</p>
+            <div class="avatar-grid">
+                <div class="avatar">Szef</div> <div class="avatar">HR</div> <div class="avatar">Ty</div>
+            </div>
+        </div>
+    </div>
+    <script src="/locales.js"></script>
+    <script src="/static/game.js"></script>
+</body>
+</html>
