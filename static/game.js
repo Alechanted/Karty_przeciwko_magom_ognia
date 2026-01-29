@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Mapowanie ID elementu -> Klucz w TEXTS
         const map = {
             'game-main-title': 'GAME_TITLE',
-            'nickname-input': ['placeholder', 'LOGIN_PLACEHOLDER'], // Inputy obsługujemy inaczej
+            'nickname-input': ['placeholder', 'LOGIN_PLACEHOLDER'],
             'set-nick-btn': 'LOGIN_BTN',
             'rooms-header': 'ROOM_LIST_HEADER',
             'create-room-btn': 'CREATE_ROOM_BTN',
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             'waiting-room-title': 'WAITING_ROOM_TITLE',
             'waiting-room-desc': 'WAITING_ROOM_DESC',
             'players-header': 'SIDEBAR_PLAYERS',
-            'chat-header': 'SIDEBAR_CHAT', // Jeśli masz nagłówek chatu
+            'chat-header': 'SIDEBAR_CHAT',
             'chat-input': ['placeholder', 'CHAT_PLACEHOLDER'],
 
             // Panic Overlay
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let requiredPick = 1;
     let currentHand = [];
 
-    // Elementy (bez zmian zmiennych, używamy ich poniżej)
+    // Elementy
     const loginScreen = document.getElementById('login-screen');
     const roomListScreen = document.getElementById('room-list-screen');
     const gameScreen = document.getElementById('game-screen');
@@ -227,15 +227,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderGame(data) {
         currentHand = data.hand || [];
 
-        // --- FIX WIDOKÓW ---
-        // Sterujemy widocznością wyłącznie na podstawie FAZY GRY
         if (data.phase === 'LOBBY') {
             lobbyView.classList.remove('hidden');
             playView.classList.add('hidden');
             waitingRoomView.classList.add('hidden');
 
-            // Aktualizacja licznika graczy w Lobby (obok przycisku start)
-            // Musimy to robić tutaj, bo update przychodzi live
             const startBtnInfo = document.getElementById('lobby-players-count');
             if (startBtnInfo && data.players_list) {
                 startBtnInfo.innerText = `Graczy w pokoju: ${data.players_list.length}`;
@@ -260,7 +256,6 @@ function renderGame(data) {
                 waitingRoomView.classList.remove('hidden');
             }
         }
-        // -------------------
 
         blackCardText.innerHTML = data.black_card ? data.black_card.text : "...";
         requiredPick = data.black_card ? data.black_card.pick : 1;
@@ -427,4 +422,5 @@ function renderGame(data) {
     document.getElementById('panic-overlay').onclick = () => document.getElementById('panic-overlay').classList.add('hidden');
 
     connect();
+
 });
