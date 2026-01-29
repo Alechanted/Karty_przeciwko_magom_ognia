@@ -6,16 +6,16 @@ from fastapi import WebSocket
 
 from game_engine import GameEngine
 from enums import Phase
-from locales import TEXTS # <--- IMPORT
+from locales import TEXTS
 
 logger = logging.getLogger(__name__)
 
 
 class RoomManager:
     def __init__(self):
-        self.rooms: Dict[str, GameEngine] = {}  # room_name -> Engine
-        self.player_room_map: Dict[WebSocket, str] = {}  # ws -> room_name
-        self.active_connections: Dict[WebSocket, Optional[str]] = {}  # ws -> nick
+        self.rooms: Dict[str, GameEngine] = {}
+        self.player_room_map: Dict[WebSocket, str] = {}
+        self.active_connections: Dict[WebSocket, Optional[str]] = {}
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
@@ -136,4 +136,5 @@ class RoomManager:
                     "room_name": room_name
                 })
             except Exception:
+
                 pass
