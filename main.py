@@ -1,14 +1,13 @@
 import logging
-import json # <--- DODAJ IMPORT JSON
+import json
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, Response # <--- DODAJ RESPONSE
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from room_manager import RoomManager
 from enums import Phase
-from locales import TEXTS # <--- IMPORT TEKSTÓW
+from locales import TEXTS
 
-# --- KONFIGURACJA LOGOWANIA ---
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger("CAH_Main")
 
@@ -16,7 +15,6 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 room_manager = RoomManager()
-
 
 @app.get("/")
 async def get():
@@ -116,4 +114,5 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         nick, r_name = room_manager.disconnect(websocket)
         if r_name and r_name in room_manager.rooms:
+
             await room_manager.broadcast_room_state(r_name)
