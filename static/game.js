@@ -325,13 +325,27 @@ function renderGame(data) {
         handContainer.innerHTML = ''; renderHand(currentHand); renderConfirmButton();
     }
 
+    // FIX: Odklikiwanie
+    // szybki fix, dodałem usuwanie guzika po odkliknięciu karty
+    // https://github.com/Alechanted/Karty_przeciwko_magom_ognia/issues/3#issue-3869884755
     function renderConfirmButton() {
+        const oldBtn = document.getElementById('confirm-selection-btn');
+        if (oldBtn) oldBtn.remove();
+
         if (selectedCards.length === requiredPick) {
             const btn = document.createElement('button');
             btn.id = 'confirm-selection-btn';
             btn.className = 'big-green-btn';
             btn.innerText = TEXTS['BTN_CONFIRM_SELECTION'];
-            btn.onclick = () => { ws.send(JSON.stringify({ type: 'SUBMIT_CARDS', cards: selectedCards })); selectedCards = []; };
+
+            btn.onclick = () => {
+                ws.send(JSON.stringify({
+                    type: 'SUBMIT_CARDS',
+                    cards: selectedCards
+                }));
+                selectedCards = [];
+            };
+
             handContainer.after(btn);
         }
     }
