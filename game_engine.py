@@ -97,31 +97,21 @@ class GameEngine:
             if ws == self.czar_socket: self.czar_socket = None
             if ws in self.round_submissions: del self.round_submissions[ws]
 
+
+    # FIX: Gra duplikuje karty
+    # Gra miała nieprzemyślane zabezpieczenie przed przedwczesnym zakończeniem gry z powodu brak kart
+    # Usunąłem zabezpieczenie i dodałem kończenie rundy przy braku kart na ręce gracza
+    # https://github.com/Alechanted/Karty_przeciwko_magom_ognia/issues/1#issue-3869636354
     async def start_round(self):
         self._cancel_timeout()
 
-        # --- FIX: AUTO-RESHUFFLE ---
-        # Jeśli talia robocza jest pusta, ale Master ma karty -> przetasuj od nowa.
-        # To naprawia błąd przy starcie ORAZ pozwala na nieskończoną grę.
         if not self.black_deck:
-            if self.black_deck_master:
-                logger.info(f"Pokój '{self.room_name}': Talia czarnych pusta/niezainicjowana. Tasowanie z Mastera...")
-                self.black_deck = self.black_deck_master.copy()
-                random.shuffle(self.black_deck)
-            else:
-                # Tylko jeśli Master też pusty, kończymy grę
-                logger.error(f"Pokój '{self.room_name}': Brak czarnych kart nawet w Masterze!")
-                self.phase = Phase.GAME_OVER
-                self.winner_nick = TEXTS["MSG_DECK_EMPTY"]
-                return
+            logger.info(f"Pokój '{self.room_name}': Brak czarnych kart. Koniec gry.")
+            self.phase = Phase.GAME_OVER
+            self.winner_nick = TEXTS["MSG_DECK_EMPTY"]
+            return
 
-        if not self.white_deck:
-            if self.white_deck_master:
-                logger.info(f"Pokój '{self.room_name}': Talia białych pusta. Tasowanie z Mastera...")
-                self.white_deck = self.white_deck_master.copy()
-                random.shuffle(self.white_deck)
-        # ---------------------------
-
+        # Dobieramy czarną kartę
         self.current_black_card = self.black_deck.pop()
         self.phase = Phase.SELECTING
         self.round_submissions = {}
@@ -131,18 +121,12 @@ class GameEngine:
         hand_limit = int(self.settings.get('hand_size', 10))
 
         for ws, p_data in self.players_data.items():
-            while len(p_data['hand']) < hand_limit:
-                if not self.white_deck:
-                    # Auto-reshuffle dla białych w trakcie rozdawania
-                    if self.white_deck_master:
-                        self.white_deck = self.white_deck_master.copy()
-                        random.shuffle(self.white_deck)
-                    else:
-                        break
+            while len(p_data['hand']) < hand_limit and self.white_deck:
                 p_data['hand'].append(self.white_deck.pop())
 
         active = list(self.players_data.keys())
-        if not active: return
+        if not active:
+            return
 
         if not self.czar_socket or self.czar_socket not in active:
             self.czar_socket = random.choice(active)
@@ -155,7 +139,9 @@ class GameEngine:
 
         timeout_sec = self.settings.get('timeout')
         if timeout_sec and timeout_sec > 0:
-            self._timeout_task = asyncio.create_task(self._round_timeout_logic(timeout_sec))
+            self._timeout_task = asyncio.create_task(
+                self._round_timeout_logic(timeout_sec)
+            )
 
     async def _round_timeout_logic(self, seconds):
         try:
