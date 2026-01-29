@@ -10,7 +10,7 @@
     <!-- Tło graficzne jest w CSS body::before -->
 
     <!-- EKRAN 1: WYBÓR NICKU -->
-    <div id="login-screen">
+    <div id="login-screen" class="screen">
         <h1 id="game-main-title" class="game-title">Karty przeciwko<br>Magom Ognia</h1>
         <input type="text" id="nickname-input" placeholder="Podaj swój nick" maxlength="15">
         <button id="set-nick-btn">Wejdź do Lobby</button>
@@ -18,7 +18,7 @@
     </div>
 
     <!-- EKRAN 2: LISTA POKOI -->
-    <div id="room-list-screen" class="hidden">
+    <div id="room-list-screen" class="screen hidden">
         <header>
             <span id="lobby-user-display">Gracz: ???</span>
             <button id="create-room-btn" class="action-btn">Załóż Pokój</button>
@@ -72,7 +72,7 @@
     </div>
 
     <!-- EKRAN 3: WŁAŚCIWA GRA (Z poprzedniej wersji) -->
-    <div id="game-screen" class="hidden">
+    <div id="game-screen" class="screen hidden">
         <header>
             <span id="room-display">Pokój: ???</span>
             <div class="controls">
