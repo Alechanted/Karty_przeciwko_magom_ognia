@@ -102,3 +102,9 @@ TEXTS = {
     "MSG_SYSTEM": "SYSTEM"
 
 }
+
+BOT_NAMES = [
+    "Gomez", "Blizna", "Lee", "Cor Win", "Gorn", "Pyrokar",
+    "Xardas", "Moe", "Snaf", "Lares", "Baltram", "Thorus",
+    "Szef", "Andre", "Milten", "Lester", "Cord", "Drax"
+]
