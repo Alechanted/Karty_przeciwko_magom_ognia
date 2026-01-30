@@ -29,7 +29,7 @@ Projekt ma charakter **hobbystyczny / edukacyjny / szyderczo-złośliwy / metare
 
 1. Sklonuj repozytorium:
 ```bash
-git clone [<adres_repo>](https://github.com/Alechanted/Karty_przeciwko_magom_ognia.git)
+git clone https://github.com/Alechanted/Karty_przeciwko_magom_ognia.git
 ```
 Wejdź do katalogu projektu:
 ```bash
@@ -208,5 +208,6 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
 
 
