@@ -3,41 +3,47 @@ import websockets
 import json
 import random
 import logging
+import time
 
-# --- KONFIGURACJA ---
-SERVER_URL = "ws://83.168.90.152:2137/ws"
-BOT_NICK = "Gomez"
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [GOMEZ] %(message)s",
-    datefmt="%H:%M:%S"
-)
-logger = logging.getLogger("GomezBot")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(nick)s] %(message)s", datefmt="%H:%M:%S")
 
 
-class GomezBot:
-    def __init__(self):
+class GameBot:
+    def __init__(self, nickname, server_url):
+        self.nickname = nickname
+        self.server_url = server_url
         self.ws = None
         self.current_room = None
         self.latest_state = None
         self.room_search_task = None
         self.game_loop_task = None
         self.is_acting = False
-        self.last_debug_time = 0
+
+        self.next_search_timestamp = 0
+
+        self.logger = logging.getLogger(f"Bot_{nickname}")
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(f"%(asctime)s [{self.nickname}] %(message)s", datefmt="%H:%M:%S")
+        handler.setFormatter(formatter)
+        self.logger.handlers = []
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.INFO)
+        self.logger.propagate = False
 
     async def connect(self):
+        await asyncio.sleep(random.uniform(1.0, 5.0))
+
         while True:
             try:
-                logger.info(f"Łączenie z {SERVER_URL}...")
-                async with websockets.connect(SERVER_URL) as websocket:
+                self.logger.info(f"Łączenie z {self.server_url}...")
+                async with websockets.connect(self.server_url) as websocket:
                     self.ws = websocket
                     self.current_room = None
                     self.latest_state = None
                     self.is_acting = False
-                    logger.info("Połączono!")
+                    self.logger.info("Połączono!")
 
-                    await self.send_json({"type": "SET_NICK", "nickname": BOT_NICK})
+                    await self.send_json({"type": "SET_NICK", "nickname": self.nickname})
 
                     self.room_search_task = asyncio.create_task(self.loop_search_rooms())
                     self.game_loop_task = asyncio.create_task(self.game_logic_loop())
@@ -46,11 +52,10 @@ class GomezBot:
                         await self.handle_message(message)
 
             except (websockets.ConnectionClosed, ConnectionRefusedError):
-                logger.warning("Rozłączono! Ponawiam za 5s...")
+                self.logger.warning("Brak połączenia. Ponawiam za 5s...")
             except Exception as e:
-                logger.error(f"Krytyczny błąd: {e}")
+                self.logger.error(f"Krytyczny błąd: {e}")
 
-            # Sprzątanie
             if self.room_search_task: self.room_search_task.cancel()
             if self.game_loop_task: self.game_loop_task.cancel()
             self.current_room = None
@@ -68,47 +73,55 @@ class GomezBot:
             data = json.loads(message)
             mtype = data.get('type')
 
-            if mtype == 'NICK_OK':
-                logger.info("Nick zaakceptowany.")
-
-            elif mtype == 'ROOM_LIST':
-                if not self.current_room:
+            if mtype == 'ROOM_LIST':
+                if not self.current_room and time.time() > self.next_search_timestamp:
                     await self.try_join_room(data.get('rooms', []))
 
             elif mtype == 'JOIN_ROOM_OK':
                 self.current_room = data.get('room')
-                logger.info(f"SUKCES: Dołączono do pokoju '{self.current_room}'")
+                self.logger.info(f"Dołączono do pokoju '{self.current_room}'")
 
             elif mtype == 'GAME_UPDATE':
                 self.latest_state = data
 
+            elif mtype == 'LEFT_ROOM':
+                cooldown = 20.0 + random.uniform(0, 5.0)
+                self.next_search_timestamp = time.time() + cooldown
+
+                self.logger.info(f"Opuszczono pokój. Odpoczywam {cooldown:.1f}s zanim poszukam nowego...")
+                self.current_room = None
+                self.latest_state = None
+
             elif mtype == 'ERROR':
-                logger.error(f"SERWER: {data.get('message')}")
                 if "FULL" in str(data.get('message')) or "NO_ROOM" in str(data.get('message')):
                     self.current_room = None
 
-        except Exception as e:
-            logger.error(f"Błąd parsowania: {e}")
+        except Exception:
+            pass
 
     async def loop_search_rooms(self):
         while True:
+            now = time.time()
             if self.ws and not self.current_room:
-                await self.send_json({"type": "GET_ROOMS"})
-            await asyncio.sleep(2.0)
+                if now > self.next_search_timestamp:
+                    await self.send_json({"type": "GET_ROOMS"})
+                else:
+                    pass
+
+            await asyncio.sleep(3.0)
 
     async def try_join_room(self, rooms):
-        for room in rooms:
-            if not room['has_password'] and room['players'] < room['max']:
-                logger.info(f"Próba wejścia do: {room['name']}")
-                await self.send_json({"type": "JOIN_ROOM", "name": room['name'], "password": ""})
-                return
+        available = [r for r in rooms if not r['has_password'] and r['players'] < r['max']]
+
+        if available:
+            target = random.choice(available)
+            self.logger.info(f"Próba wejścia do: {target['name']}")
+            await self.send_json({"type": "JOIN_ROOM", "name": target['name'], "password": ""})
 
     async def game_logic_loop(self):
         while True:
-            await asyncio.sleep(1.0)  # Taktowanie bota, warznewchuj
-
-            if not self.latest_state or self.is_acting:
-                continue
+            await asyncio.sleep(1.0)
+            if not self.latest_state or self.is_acting: continue
 
             try:
                 state = self.latest_state
@@ -116,86 +129,71 @@ class GomezBot:
                 is_czar = state.get('is_czar')
                 am_i_ready = state.get('am_i_ready')
 
-                if phase == "SUMMARY" and not am_i_ready:
-                    now = asyncio.get_event_loop().time()
-                    if now - self.last_debug_time > 5:
-                        logger.info(
-                            f"DEBUG SUMMARY: Czekam na kliknięcie Ready. Ready={am_i_ready}, Acting={self.is_acting}")
-                        self.last_debug_time = now
+                if phase == "GAME_OVER":
+                    self.is_acting = True
+                    try:
+                        winner = state.get('winner', '???')
+                        delay = random.uniform(5, 12)
+                        self.logger.info(f"Koniec gry! Wygrał {winner}. Wychodzę za {delay:.1f}s")
+                        await asyncio.sleep(delay)
+                        await self.send_json({"type": "LEAVE_ROOM"})
+                    finally:
+                        self.is_acting = False
+                    continue
 
                 if phase == "SUMMARY" and not am_i_ready:
                     self.is_acting = True
                     try:
-                        delay = random.uniform(2, 5)
-                        logger.info(f"[SUMMARY] Koniec rundy. Klikam READY za {delay:.1f}s...")
-                        await asyncio.sleep(delay)
-
-                        curr_state = self.latest_state
-                        if curr_state.get('phase') == "SUMMARY" and not curr_state.get('am_i_ready'):
+                        await asyncio.sleep(random.uniform(2, 6))
+                        if self.latest_state.get('phase') == "SUMMARY":
                             await self.send_json({"type": "PLAYER_READY"})
-                            logger.info("-> Wysłano PLAYER_READY")
+                            self.logger.info("Ready!")
                     finally:
                         self.is_acting = False
                     continue
 
                 if phase == "JUDGING" and is_czar:
-                    submissions = state.get('submissions', [])
-                    # Sprawdź czy są zgłoszenia i czy nie ma jeszcze zwycięzcy
-                    if submissions and not state.get('winner'):
+                    subs = state.get('submissions', [])
+                    if subs and not state.get('winner'):
                         self.is_acting = True
                         try:
-                            delay = random.uniform(3, 8)
-                            logger.info(
-                                f"[JUDGING] Jestem Carem. Wybieram z {len(submissions)} kart za {delay:.1f}s...")
-                            await asyncio.sleep(delay)
-
-                            fresh_state = self.latest_state
-                            fresh_subs = fresh_state.get('submissions', [])
-
-                            if fresh_state.get('phase') == "JUDGING" and fresh_subs:
+                            await asyncio.sleep(random.uniform(3, 8))
+                            fresh_subs = self.latest_state.get('submissions', [])
+                            if fresh_subs:
                                 choice = random.choice(fresh_subs)
                                 await self.send_json({"type": "PICK_WINNER", "index": choice['id']})
-                                logger.info(f"-> Wybrano ID: {choice['id']}")
+                                self.logger.info(f"Wybrano ID: {choice['id']}")
                         finally:
                             self.is_acting = False
                         continue
 
                 if phase == "SELECTING" and not is_czar:
-                    has_submitted = state.get('has_submitted')
                     black_card = state.get('black_card')
-
-                    if not has_submitted and black_card:
+                    if not state.get('has_submitted') and black_card:
                         self.is_acting = True
                         try:
-                            pick_count = black_card.get('pick', 1)
+                            pick = black_card.get('pick', 1)
                             hand = state.get('hand', [])
-
-                            if len(hand) >= pick_count:
-                                delay = random.uniform(2, 8)
-                                logger.info(f"[SELECTING] Wybieram {pick_count} kart za {delay:.1f}s...")
-                                await asyncio.sleep(delay)
-
-                                fresh_state = self.latest_state
-                                if fresh_state.get('phase') == "SELECTING" and not fresh_state.get('has_submitted'):
-                                    curr_hand = fresh_state.get('hand', [])
-                                    if len(curr_hand) >= pick_count:
-                                        chosen = random.sample(curr_hand, pick_count)
-                                        ids = [c['id'] for c in chosen]
-                                        await self.send_json({"type": "SUBMIT_CARDS", "cards": ids})
-                                        logger.info(f"-> Wysłano karty")
-                            else:
-                                logger.warning("Brak kart na ręce!")
+                            if len(hand) >= pick:
+                                await asyncio.sleep(random.uniform(2, 9))
+                                fresh_hand = self.latest_state.get('hand', [])
+                                if len(fresh_hand) >= pick:
+                                    chosen = random.sample(fresh_hand, pick)
+                                    ids = [c['id'] for c in chosen]
+                                    await self.send_json({"type": "SUBMIT_CARDS", "cards": ids})
+                                    self.logger.info("Wysłano karty")
                         finally:
                             self.is_acting = False
                         continue
 
             except Exception as e:
-                logger.error(f"Błąd w logice: {e}")
+                self.logger.error(f"Logic error: {e}")
                 self.is_acting = False
 
 
-if __name__ == "__main__":
-    bot = GomezBot()
+def start_bot_process(nickname, host, port):
+    url = f"ws://{host}:{port}/ws"
+    bot = GameBot(nickname, url)
     try:
         asyncio.run(bot.connect())
     except KeyboardInterrupt:
