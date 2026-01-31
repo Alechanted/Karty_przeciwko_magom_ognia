@@ -4,6 +4,7 @@ Nieoficjalna, elektroniczna wersja gry typu *Cards Against Humanity*, napisana w
 Projekt ma charakter **hobbystyczny / edukacyjny / szyderczo-złośliwy / metareligijny**.
 
 https://tetriando.ch
+
 https://discord.gg/nE3jskQCVg
 
 ---
@@ -214,6 +215,7 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
 
 
 
