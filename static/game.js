@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 roomListScreen.classList.remove('hidden');
                 document.getElementById('lobby-user-display').innerText = `Gracz: ${myNick}`;
                 break;
-            case 'ROOM_LIST': renderRoomList(data.rooms); break;
+            case 'ROOM_LIST': renderRoomList(data.rooms); if(data.players) renderGlobalPlayers(data.players); break;
             case 'DECK_LIST': renderDeckList(data.decks); break;
             case 'JOIN_ROOM_OK':
                 currentRoom = data.room;
@@ -122,7 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderGame(data);
                 if (data.players_list) renderPlayerList(data.players_list);
                 break;
-            case 'CHAT': addChatMessage(data.author, data.message); break;
+            case 'CHAT':
+                if(data.scope === 'LOBBY') addLobbyChatMessage(data.author, data.message);
+                else addChatMessage(data.author, data.message);
+                break;
             case 'LEFT_ROOM':
                 gameScreen.classList.add('hidden');
                 roomListScreen.classList.remove('hidden');
@@ -172,6 +175,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('start-game-btn').onclick = () => ws.send(JSON.stringify({ type: 'START_GAME' }));
     document.getElementById('send-chat').onclick = sendChat;
     document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChat(); };
+
+    // Lobby chat handlers
+    const lobbyChatInput = document.getElementById('lobby-chat-input');
+    const lobbyChatMsgs = document.getElementById('lobby-chat-messages');
+    document.getElementById('send-lobby-chat').onclick = () => {
+        const msg = lobbyChatInput.value.trim();
+        if(!msg) return;
+        ws.send(JSON.stringify({ type: 'CHAT_MSG', message: msg }));
+        lobbyChatInput.value = '';
+    };
+    if(lobbyChatInput) lobbyChatInput.onkeypress = (e) => { if(e.key === 'Enter') document.getElementById('send-lobby-chat').click(); };
 
     function sendChat() {
         const msg = chatInput.value.trim();
@@ -444,6 +458,25 @@ function renderGame(data) {
         div.innerHTML = `<strong>${author}:</strong> ${msg}`;
         chatMsgs.appendChild(div);
         chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    }
+
+    function addLobbyChatMessage(author, msg) {
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${author}:</strong> ${msg}`;
+        lobbyChatMsgs.appendChild(div);
+        lobbyChatMsgs.scrollTop = lobbyChatMsgs.scrollHeight;
+    }
+
+    function renderGlobalPlayers(players) {
+        const el = document.getElementById('global-player-list');
+        if (!el) return;
+        el.innerHTML = '';
+        players.forEach(p => {
+            const li = document.createElement('li');
+            li.innerText = `${p.nick}${p.room ? ` — ${p.room}` : ' (lobby)'}`;
+            if (p.room) li.style.color = '#9a8f92';
+            el.appendChild(li);
+        });
     }
 
     // Panic
