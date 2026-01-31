@@ -56,6 +56,7 @@ Przykładowa struktura (może ewoluować):
 /decks
     example.white
     example.black
+bot.py
 README.md
 debug.py
 locales.py
@@ -67,6 +68,8 @@ run.py
 - static/ – *interfejs użytkownika (JS/HTML/CSS)*
 
 - decks/ – *pliki z kartami (bez logiki)*
+
+- bot.py - *logika botów*
 
 - debug.py – *skrypt do sprawdzania poprawności decków*
 
@@ -208,6 +211,7 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
 
 
 
