@@ -3,6 +3,9 @@
 Nieoficjalna, elektroniczna wersja gry typu *Cards Against Humanity*, napisana w **Pythonie (backend)** i **JavaScript (frontend)**, przystosowana do grania online z pięknymi mężczyznami.  
 Projekt ma charakter **hobbystyczny / edukacyjny / szyderczo-złośliwy / metareligijny**.
 
+https://tetriando.ch
+https://discord.gg/nE3jskQCVg
+
 ---
 
 ## Spis treści
@@ -211,6 +214,7 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
+
 
 
 
