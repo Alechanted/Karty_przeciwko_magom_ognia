@@ -258,6 +258,10 @@ function renderGame(data) {
         }
 
         blackCardText.innerHTML = data.black_card ? data.black_card.text : "...";
+        // Usuń ewentualny podpis autora na centralnej karcie, jeśli nie jesteśmy w SUMMARY
+        const blackCardParent = blackCardText.parentElement;
+        const existingFooter = blackCardParent ? blackCardParent.querySelector('.card-footer') : null;
+        if (existingFooter) existingFooter.remove();
         requiredPick = data.black_card ? data.black_card.pick : 1;
         handContainer.innerHTML = '';
 
@@ -270,6 +274,26 @@ function renderGame(data) {
             roleInfo.innerText = TEXTS['SUMMARY_TITLE'];
             renderSummary(data.submissions);
             renderReadyButton(data.ready_status, data.am_i_ready);
+
+            // Pokaż wygraną białą kartę na czarnej karcie centralnej
+            if (Array.isArray(data.submissions) && data.submissions.length) {
+                const winner = data.submissions.find(s => s.is_winner);
+                if (winner && winner.full_text) {
+                    blackCardText.innerHTML = winner.full_text;
+
+                    // Dodaj podpis autora pod centralną kartą, tak jak w panelu poniżej
+                    const parent = blackCardText.parentElement;
+                    if (parent) {
+                        let footer = parent.querySelector('.card-footer');
+                        if (!footer) {
+                            footer = document.createElement('div');
+                            footer.className = 'card-footer';
+                            parent.appendChild(footer);
+                        }
+                        footer.innerText = `${TEXTS['AUTHOR_LABEL']} ${winner.author || ''}`;
+                    }
+                }
+            }
 
         } else if (data.phase === 'JUDGING') {
             const czarTitle = TEXTS['ROLE_CZAR'];
