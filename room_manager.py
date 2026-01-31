@@ -83,7 +83,40 @@ class RoomManager:
                 "max": engine.settings['max_players'],
                 "has_password": bool(engine.settings.get('password'))
             })
-        await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms_list})
+
+        players_list = []
+        for ws, nick in self.active_connections.items():
+            if not nick: continue
+            players_list.append({
+                "nick": nick,
+                "room": self.player_room_map.get(ws)
+            })
+
+        await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
+
+    async def broadcast_room_list(self):
+        rooms_list = []
+        for name, engine in self.rooms.items():
+            rooms_list.append({
+                "name": name,
+                "players": len(engine.players_data),
+                "max": engine.settings['max_players'],
+                "has_password": bool(engine.settings.get('password'))
+            })
+
+        players_list = []
+        for ws, nick in self.active_connections.items():
+            if not nick: continue
+            players_list.append({
+                "nick": nick,
+                "room": self.player_room_map.get(ws)
+            })
+
+        for ws in list(self.active_connections.keys()):
+            try:
+                await ws.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
+            except Exception:
+                pass
 
     async def broadcast_room_state(self, room_name):
         room = self.rooms.get(room_name)

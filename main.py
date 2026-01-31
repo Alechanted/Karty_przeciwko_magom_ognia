@@ -40,6 +40,26 @@ async def websocket_endpoint(websocket: WebSocket):
                     room_manager.active_connections[websocket] = nick
                     await websocket.send_json({"type": "NICK_OK"})
                     await room_manager.send_room_list(websocket)
+                    await room_manager.broadcast_room_list()
+
+            if mtype == 'CHAT_MSG':
+                nick = room_manager.active_connections.get(websocket)
+                # If player is in a room -> send to that room, else broadcast to lobby clients only
+                room_name_for_msg = room_manager.player_room_map.get(websocket)
+                if room_name_for_msg:
+                    room = room_manager.rooms.get(room_name_for_msg)
+                    if room:
+                        for ws in room.players_data:
+                            await ws.send_json({"type": "CHAT", "author": nick, "message": data['message']})
+                else:
+                    # lobby chat: send only to clients not in a room
+                    for ws, _ in room_manager.active_connections.items():
+                        try:
+                            if room_manager.player_room_map.get(ws) is None:
+                                await ws.send_json({"type": "CHAT", "author": nick, "message": data['message'], "scope": "LOBBY"})
+                        except Exception:
+                            pass
+                continue
 
             elif mtype == 'GET_ROOMS':
                 await room_manager.send_room_list(websocket)
@@ -64,7 +84,6 @@ async def websocket_endpoint(websocket: WebSocket):
                     await room_manager.broadcast_room_state(data['name'])
                 else:
                     await websocket.send_json({"type": "ERROR", "message": res})
-
             else:
                 room_name = room_manager.player_room_map.get(websocket)
                 if not room_name: continue
@@ -96,6 +115,7 @@ async def websocket_endpoint(websocket: WebSocket):
                                 await ws.send_json({"type": "CHAT", "author": "SYSTEM",
                                                     "message": f"Wygrywa: {winner_nick}"})
                             await room_manager.broadcast_room_state(room_name)
+                            await room_manager.broadcast_room_list()
 
                 elif mtype == 'PLAYER_READY':
                     if room.phase == Phase.SUMMARY:
@@ -105,12 +125,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 elif mtype == 'LEAVE_ROOM':
                     room_manager.disconnect(websocket)
-                    room_manager.active_connections[websocket] = room.players_data[websocket]['nick']
                     await websocket.send_json({"type": "LEFT_ROOM"})
                     await room_manager.send_room_list(websocket)
+                    await room_manager.broadcast_room_list()
 
     except WebSocketDisconnect:
         nick, r_name = room_manager.disconnect(websocket)
         if r_name and r_name in room_manager.rooms:
-
             await room_manager.broadcast_room_state(r_name)
+        # update lobby/room lists for remaining clients
+        await room_manager.broadcast_room_list()

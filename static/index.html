@@ -24,12 +24,24 @@
             <button id="create-room-btn" class="action-btn">Załóż Pokój</button>
         </header>
         <div class="container">
-            <h2>Dostępne Obozy</h2>
-            <div id="rooms-container">
-                <!-- Tu wpadną kafelki pokoi -->
-                <p>Ładowanie...</p>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <div style="flex:2">
+                    <h2>Dostępne Obozy</h2>
+                    <div id="rooms-container">
+                        <!-- Tu wpadną kafelki pokoi -->
+                        <p>Ładowanie...</p>
+                    </div>
+                    <button id="refresh-rooms">Odśwież</button>
+                </div>
+                <aside style="flex:1; max-width:320px;">
+                    <h3>Lobby — Czat</h3>
+                    <div id="lobby-chat-messages" style="height:220px; overflow-y:auto; background:rgba(0,0,0,0.25); padding:8px; border-radius:10px; margin-bottom:8px;"></div>
+                    <div style="display:flex; gap:8px; margin-bottom:12px;"><input id="lobby-chat-input" type="text" placeholder="Napisz..." style="flex:1; padding:6px; border-radius:8px;"><button id="send-lobby-chat" class="green-btn">Wyślij</button></div>
+
+                    <h3>Wszyscy gracze</h3>
+                    <ul id="global-player-list" style="max-height:240px; overflow-y:auto; padding-left:18px;"></ul>
+                </aside>
             </div>
-            <button id="refresh-rooms">Odśwież</button>
         </div>
     </div>
 
