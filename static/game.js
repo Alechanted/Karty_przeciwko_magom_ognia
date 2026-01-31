@@ -376,8 +376,13 @@ function renderGame(data) {
             div.style.background = '#ddd'; div.style.color = '#333';
             div.innerHTML = `<div class="card-content">${sub.full_text}</div><div class="card-footer">${isCzar ? TEXTS['CARD_FOOTER_CZAR'] : ''}</div>`;
             if (isCzar) {
-                div.style.cursor = 'pointer';
-                div.onclick = () => { if(confirm(TEXTS['BTN_CONFIRM_SELECTION'] + "?")) ws.send(JSON.stringify({ type: 'PICK_WINNER', index: sub.id })); };
+                // Zamiast przestarzałego pop-upu dodajemy przycisk do wyboru zwycięzcy
+                const pickBtn = document.createElement('button');
+                pickBtn.className = 'green-btn';
+                pickBtn.style.marginTop = '8px';
+                pickBtn.innerText = TEXTS['BTN_CONFIRM_SELECTION'];
+                pickBtn.onclick = () => ws.send(JSON.stringify({ type: 'PICK_WINNER', index: sub.id }));
+                div.appendChild(pickBtn);
             }
             handContainer.appendChild(div);
         });
