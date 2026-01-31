@@ -23,7 +23,6 @@ async def get():
 
 @app.get("/locales.js")
 async def get_locales():
-    # Zamienia słownik Python na obiekt JS: const TEXTS = { ... };
     js_content = f"const TEXTS = {json.dumps(TEXTS)};"
     return Response(content=js_content, media_type="application/javascript")
 
@@ -35,7 +34,6 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_json()
             mtype = data.get('type')
 
-            # --- FAZA 1: LOGOWANIE I POKOJE ---
             if mtype == 'SET_NICK':
                 nick = data.get('nickname')
                 if nick:
@@ -67,7 +65,6 @@ async def websocket_endpoint(websocket: WebSocket):
                 else:
                     await websocket.send_json({"type": "ERROR", "message": res})
 
-            # --- FAZA 2: ROZGRYWKA (wymaga bycia w pokoju) ---
             else:
                 room_name = room_manager.player_room_map.get(websocket)
                 if not room_name: continue
@@ -93,10 +90,11 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 elif mtype == 'PICK_WINNER':
                     if room.phase == Phase.JUDGING and websocket == room.czar_socket:
-                        if room.pick_winner(data['index']):
+                        winner_nick = room.pick_winner(data['index'])
+                        if winner_nick:
                             for ws in room.players_data:
                                 await ws.send_json({"type": "CHAT", "author": "SYSTEM",
-                                                    "message": f"Wygrywa: {room.winning_submission_index}"})
+                                                    "message": f"Wygrywa: {winner_nick}"})
                             await room_manager.broadcast_room_state(room_name)
 
                 elif mtype == 'PLAYER_READY':
