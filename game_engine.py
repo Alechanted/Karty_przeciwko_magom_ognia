@@ -177,7 +177,8 @@ class GameEngine:
         player = self.players_data.get(ws)
         if not player or ws == self.czar_socket: return False
 
-        selected = [c for c in player['hand'] if c.id in card_ids]
+        id_map = {c.id: c for c in player['hand']}
+        selected = [id_map[cid] for cid in card_ids if cid in id_map]
         if len(selected) != self.current_black_card.pick_count: return False
 
         self.round_submissions[ws] = selected
