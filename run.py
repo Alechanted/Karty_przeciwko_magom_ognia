@@ -10,6 +10,8 @@ HOST = "0.0.0.0"
 PORT = 2137
 RELOAD = True
 NUM_BOTS = 3  # <-- TUTAJ USTALASZ LICZBĘ BOTÓW
+# Auto-refresh interval for lobby (seconds)
+LOBBY_REFRESH = 3
 
 
 def launch_bots():
