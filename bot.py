@@ -7,8 +7,7 @@ import traceback
 from ai import Ai
 
 # --- KONFIGURACJA ---
-SERVER_URL = "ws://localhost:2137/ws"
-#SERVER_URL = "ws://83.168.90.152:2137/ws"
+SERVER_URL = "ws://83.168.90.152:2137/ws"
 BOT_NICK = "Gomez"
 
 logging.basicConfig(
@@ -28,7 +27,8 @@ class GomezBot:
         self.game_loop_task = None
         self.is_acting = False
         self.last_debug_time = 0
-        self.ai = None #Ai()
+        self.ai = None
+        # self.ai = Ai()
 
     async def connect(self):
         while True:

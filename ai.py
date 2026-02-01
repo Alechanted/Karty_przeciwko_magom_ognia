@@ -33,7 +33,7 @@ class Ai:
     """
 
     def __init__(self):
-        self.client = AsyncClient(host = 'http://localhost:11434', )
+        self.client = AsyncClient(host = 'http://localhost:11434')
         self.is_busy = False
 
     async def send_message(self, message):
