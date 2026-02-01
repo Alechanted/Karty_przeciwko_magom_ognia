@@ -3,9 +3,12 @@ import websockets
 import json
 import random
 import logging
+import traceback
+from ai import Ai
 
 # --- KONFIGURACJA ---
-SERVER_URL = "ws://83.168.90.152:2137/ws"
+SERVER_URL = "ws://localhost:2137/ws"
+#SERVER_URL = "ws://83.168.90.152:2137/ws"
 BOT_NICK = "Gomez"
 
 logging.basicConfig(
@@ -25,6 +28,7 @@ class GomezBot:
         self.game_loop_task = None
         self.is_acting = False
         self.last_debug_time = 0
+        self.ai = None #Ai()
 
     async def connect(self):
         while True:
@@ -144,18 +148,20 @@ class GomezBot:
                     if submissions and not state.get('winner'):
                         self.is_acting = True
                         try:
-                            delay = random.uniform(3, 8)
-                            logger.info(
-                                f"[JUDGING] Jestem Carem. Wybieram z {len(submissions)} kart za {delay:.1f}s...")
-                            await asyncio.sleep(delay)
+                            if not self.ai:
+                                delay = random.uniform(3, 8)
+                                logger.info(f"[JUDGING] Jestem Carem. Wybieram z {len(submissions)} kart za {delay:.1f}s...")
+                                await asyncio.sleep(delay)
 
                             fresh_state = self.latest_state
                             fresh_subs = fresh_state.get('submissions', [])
 
                             if fresh_state.get('phase') == "JUDGING" and fresh_subs:
-                                choice = random.choice(fresh_subs)
-                                await self.send_json({"type": "PICK_WINNER", "index": choice['id']})
-                                logger.info(f"-> Wybrano ID: {choice['id']}")
+                                result = await self.ai.pick_winner(fresh_state) if self.ai else { "id": random.choice(fresh_subs)['id'], "message": None }
+                                if result['message']:
+                                    await self.send_json({ "type": "CHAT_MSG", "message": result['message'] })
+                                await self.send_json({"type": "PICK_WINNER", "index": result['id']})
+                                logger.info(f"-> Wybrano ID: {result['id']}")
                         finally:
                             self.is_acting = False
                         continue
@@ -171,17 +177,22 @@ class GomezBot:
                             hand = state.get('hand', [])
 
                             if len(hand) >= pick_count:
-                                delay = random.uniform(2, 8)
-                                logger.info(f"[SELECTING] Wybieram {pick_count} kart za {delay:.1f}s...")
-                                await asyncio.sleep(delay)
+                                if not self.ai:
+                                    delay = random.uniform(2, 8)
+                                    logger.info(f"[SELECTING] Wybieram {pick_count} kart za {delay:.1f}s...")
+                                    await asyncio.sleep(delay)
 
                                 fresh_state = self.latest_state
                                 if fresh_state.get('phase') == "SELECTING" and not fresh_state.get('has_submitted'):
                                     curr_hand = fresh_state.get('hand', [])
                                     if len(curr_hand) >= pick_count:
-                                        chosen = random.sample(curr_hand, pick_count)
-                                        ids = [c['id'] for c in chosen]
+                                        result = await self.ai.select_white_card(fresh_state) if self.ai else { "cards": random.sample(curr_hand, pick_count), "message": None }
+                                        ids = [c['id'] for c in result['cards']]
                                         await self.send_json({"type": "SUBMIT_CARDS", "cards": ids})
+
+                                        if result['message']:
+                                            await self.send_json({ "type": "CHAT_MSG", "message": result['message'] })
+                                        
                                         logger.info(f"-> Wysłano karty")
                             else:
                                 logger.warning("Brak kart na ręce!")
@@ -191,6 +202,7 @@ class GomezBot:
 
             except Exception as e:
                 logger.error(f"Błąd w logice: {e}")
+                traceback.print_exc()
                 self.is_acting = False
 
 
