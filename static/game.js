@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    document.getElementById('refresh-rooms').onclick = () => ws.send(JSON.stringify({ type: 'GET_ROOMS' }));
+    // Manual refresh removed — server broadcasts lobby updates automatically.
     document.getElementById('create-room-btn').onclick = () => { ws.send(JSON.stringify({ type: 'GET_DECKS' })); createRoomModal.classList.remove('hidden'); };
     document.getElementById('cancel-create-room').onclick = () => createRoomModal.classList.add('hidden');
     document.getElementById('confirm-create-room').onclick = () => {

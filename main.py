@@ -5,6 +5,8 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from room_manager import RoomManager
+import asyncio
+import run as run_cfg
 from enums import Phase
 from locales import TEXTS
 
@@ -15,6 +17,22 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 room_manager = RoomManager()
+
+
+async def _lobby_broadcaster_loop():
+    # Periodically broadcast room/player list to all connected clients
+    interval = getattr(run_cfg, 'LOBBY_REFRESH', 3)
+    while True:
+        try:
+            await room_manager.broadcast_room_list()
+        except Exception:
+            pass
+        await asyncio.sleep(interval)
+
+
+@app.on_event("startup")
+async def _startup_tasks():
+    asyncio.create_task(_lobby_broadcaster_loop())
 
 @app.get("/")
 async def get():
