@@ -24,6 +24,7 @@ class RoomManager:
     def disconnect(self, websocket: WebSocket):
         nick = self.active_connections.pop(websocket, None)
         room_name = self.player_room_map.pop(websocket, None)
+        room_removed = False
 
         if room_name and room_name in self.rooms:
             room = self.rooms[room_name]
@@ -31,7 +32,8 @@ class RoomManager:
             if not room.players_data:
                 logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
                 del self.rooms[room_name]
-        return nick, room_name
+                room_removed = True
+        return nick, room_name, room_removed
 
     def get_deck_list(self):
         files = glob.glob("decks/*.*")
@@ -41,6 +43,48 @@ class RoomManager:
             name = os.path.splitext(base)[0]
             decks.add(name)
         return list(decks)
+
+    async def broadcast_room_count(self, room_name: str):
+        """Send a minimal update about a single room to lobby clients only."""
+        room = self.rooms.get(room_name)
+        if not room:
+            return
+
+        payload = {
+            "type": "ROOM_UPDATE",
+            "room": {
+                "name": room_name,
+                "players": len(room.players_data),
+                "max": room.settings['max_players'],
+                "has_password": bool(room.settings.get('password'))
+            }
+        }
+
+        for ws, nick in list(self.active_connections.items()):
+            try:
+                if self.player_room_map.get(ws) is None:
+                    await ws.send_json(payload)
+            except Exception:
+                pass
+
+    async def broadcast_lobby_players(self):
+        """Send current list of connected players (with room info) to lobby clients."""
+        players_list = []
+        for ws, nick in self.active_connections.items():
+            if not nick: continue
+            players_list.append({
+                'nick': nick,
+                'room': self.player_room_map.get(ws)
+            })
+
+        payload = {"type": "LOBBY_PLAYERS", "players": players_list}
+
+        for ws, nick in list(self.active_connections.items()):
+            try:
+                if self.player_room_map.get(ws) is None:
+                    await ws.send_json(payload)
+            except Exception:
+                pass
 
     def create_room(self, name, password, settings):
         if name in self.rooms: return False
@@ -95,6 +139,7 @@ class RoomManager:
         await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
 
     async def broadcast_room_list(self):
+        # Full room list is intended only for lobby clients.
         rooms_list = []
         for name, engine in self.rooms.items():
             rooms_list.append({
@@ -112,9 +157,10 @@ class RoomManager:
                 "room": self.player_room_map.get(ws)
             })
 
-        for ws in list(self.active_connections.keys()):
+        for ws, nick in list(self.active_connections.items()):
             try:
-                await ws.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
+                if self.player_room_map.get(ws) is None:
+                    await ws.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
             except Exception:
                 pass
 

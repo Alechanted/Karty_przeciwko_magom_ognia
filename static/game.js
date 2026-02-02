@@ -104,6 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('lobby-user-display').innerText = `Gracz: ${myNick}`;
                 break;
             case 'ROOM_LIST': renderRoomList(data.rooms); if(data.players) renderGlobalPlayers(data.players); break;
+            case 'ROOM_UPDATE':
+                // Update single room's player count in lobby without re-rendering full list
+                if (data.room) updateRoomCard(data.room.name, data.room.players, data.room.max, data.room.has_password);
+                break;
+            case 'LOBBY_PLAYERS':
+                if (data.players) renderGlobalPlayers(data.players);
+                break;
             case 'DECK_LIST': renderDeckList(data.decks); break;
             case 'JOIN_ROOM_OK':
                 currentRoom = data.room;
@@ -216,6 +223,20 @@ document.addEventListener("DOMContentLoaded", () => {
             div.querySelector('.join-btn').onclick = () => tryJoinRoom(room);
             roomsContainer.appendChild(div);
         });
+    }
+
+    function updateRoomCard(name, players, max, has_password) {
+        const cards = Array.from(roomsContainer.querySelectorAll('.room-card'));
+        for (const card of cards) {
+            const h4 = card.querySelector('h4');
+            if (!h4) continue;
+            if (h4.innerText === name) {
+                const info = card.querySelector('.room-info');
+                if (!info) continue;
+                info.innerHTML = `${TEXTS['ROOM_PLAYERS']}: ${players}/${max}<br>Hasło: ${has_password ? TEXTS['ROOM_PASS_YES'] : TEXTS['ROOM_PASS_NO']}`;
+                break;
+            }
+        }
     }
 
     function tryJoinRoom(room) {
