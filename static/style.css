@@ -361,8 +361,9 @@ button {
 
 #chat-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    overflow-y: auto;
+    grid-template-rows: 1fr auto;
     gap: 5px;
 }
 
@@ -373,6 +374,18 @@ button {
     padding: 8px;
     border-radius: var(--radius);
     font-size: 0.85rem;
+}
+
+.chat-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+}
+
+.chat-input-row input {
+    border: none;
+    padding: 10px;
+    border-radius: var(--radius);
 }
 
 /* ========================================
