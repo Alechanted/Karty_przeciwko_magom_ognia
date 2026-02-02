@@ -32,7 +32,8 @@ async def _lobby_broadcaster_loop():
 
 @app.on_event("startup")
 async def _startup_tasks():
-    asyncio.create_task(_lobby_broadcaster_loop())
+    # No periodic lobby broadcaster: full ROOM_LIST is sent only on room create/remove.
+    pass
 
 @app.get("/")
 async def get():
@@ -57,8 +58,10 @@ async def websocket_endpoint(websocket: WebSocket):
                 if nick:
                     room_manager.active_connections[websocket] = nick
                     await websocket.send_json({"type": "NICK_OK"})
+                    # Send full ROOM_LIST only to this new client in lobby
                     await room_manager.send_room_list(websocket)
-                    await room_manager.broadcast_room_list()
+                    # Notify lobby clients about updated player list
+                    await room_manager.broadcast_lobby_players()
 
             if mtype == 'CHAT_MSG':
                 nick = room_manager.active_connections.get(websocket)
@@ -92,6 +95,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     res = await room_manager.join_room(websocket, data['name'], data['password'])
                     await websocket.send_json({"type": "JOIN_ROOM_OK", "room": data['name']})
                     await room_manager.broadcast_room_state(data['name'])
+                    # New room created: notify lobby clients with full list
+                    await room_manager.broadcast_room_list()
                 else:
                     await websocket.send_json({"type": "ERROR", "message": "Pokój o tej nazwie już istnieje!"})
 
@@ -100,6 +105,10 @@ async def websocket_endpoint(websocket: WebSocket):
                 if res == "OK":
                     await websocket.send_json({"type": "JOIN_ROOM_OK", "room": data['name']})
                     await room_manager.broadcast_room_state(data['name'])
+                    # Update lobby clients with changed player count for this room
+                    await room_manager.broadcast_room_count(data['name'])
+                    # Also update lobby's player list
+                    await room_manager.broadcast_lobby_players()
                 else:
                     await websocket.send_json({"type": "ERROR", "message": res})
             else:
@@ -133,7 +142,7 @@ async def websocket_endpoint(websocket: WebSocket):
                                 await ws.send_json({"type": "CHAT", "author": "SYSTEM",
                                                     "message": f"Wygrywa: {winner_nick}"})
                             await room_manager.broadcast_room_state(room_name)
-                            await room_manager.broadcast_room_list()
+                            # Do not broadcast full list here; lobby unaffected by picking winner
 
                 elif mtype == 'PLAYER_READY':
                     if room.phase == Phase.SUMMARY:
@@ -142,14 +151,26 @@ async def websocket_endpoint(websocket: WebSocket):
                         await room_manager.broadcast_room_state(room_name)
 
                 elif mtype == 'LEAVE_ROOM':
-                    room_manager.disconnect(websocket)
+                    nick, room_name, room_removed = room_manager.disconnect(websocket)
                     await websocket.send_json({"type": "LEFT_ROOM"})
+                    # Send full room list to this client (now in lobby)
                     await room_manager.send_room_list(websocket)
-                    await room_manager.broadcast_room_list()
+                    # Notify lobby: if room was removed, send full list; otherwise send single-room update
+                    if room_removed:
+                        await room_manager.broadcast_room_list()
+                    elif room_name and room_name in room_manager.rooms:
+                        await room_manager.broadcast_room_count(room_name)
+                    # Update lobby players list
+                    await room_manager.broadcast_lobby_players()
 
     except WebSocketDisconnect:
-        nick, r_name = room_manager.disconnect(websocket)
+        nick, r_name, room_removed = room_manager.disconnect(websocket)
         if r_name and r_name in room_manager.rooms:
             await room_manager.broadcast_room_state(r_name)
-        # update lobby/room lists for remaining clients
-        await room_manager.broadcast_room_list()
+        # Notify lobby: only full list when a room was removed, otherwise update single room count
+        if room_removed:
+            await room_manager.broadcast_room_list()
+        elif r_name and r_name in room_manager.rooms:
+            await room_manager.broadcast_room_count(r_name)
+        # Update lobby players list
+        await room_manager.broadcast_lobby_players()
