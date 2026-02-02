@@ -1,0 +1,148 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "Listdomagowognia",
+    "display_name": "Listdomagowognia",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "Czcigodny Mistrzu Xardasie. Twój ostatni list napełnił nas <N>",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Natychmiast po otrzymaniu twojej odpowiedzi, poinformujemy kapłanów Innosa o <MSC>",
+        "slots": [
+          "MSC"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Nasi uczeni przeszukują obecnie prastare księgi w poszukiwaniu <D>",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Muszę się dostać do zamku. Mam <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "I myślisz, że wpuszczę cię tak po prostu do środka, żebyś oddał list i zgarnął <B> ?",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Przysyła mnie Corristo. Przyniosłem mu <B> z zewnątrz i mam wybrać sobie <M>",
+        "slots": [
+          "B",
+          "M"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Mam dla ciebie list! Ale najpierw chcę dostać <B> !",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "Rozumiem. Mam tu twoją nagrodę. Pokaż mi <B> . Teraz!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Jako zapłatę dostaniesz <B> . Ciesz się, posłańcy, którzy przynoszą otwarte listy zwykle nie dostają nic!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Ależ ten list zaadresowano do <D> !",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "Corristo każe Torrezowi wydać ci nagrodę, jak tylko obejrzy <M>",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Jestem sługą Innosa - nigdy nie kłamię. A teraz daj mi <M>",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0013",
+        "template": "Wolałbym oddać <B> Torrezowi.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}

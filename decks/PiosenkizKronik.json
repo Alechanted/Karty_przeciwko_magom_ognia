@@ -1,0 +1,191 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "PiosenkizKronik",
+    "display_name": "PiosenkizKronik",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "te wieże strzeliste",
+          "D": "tych wież strzelistych",
+          "C": "tym wieżom strzelistym",
+          "B": "te wieże strzeliste",
+          "N": "tymi wieżami strzelistymi",
+          "MSC": "tych wieżach strzelistych",
+          "W": "te wieże strzeliste"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "zwycięzcy pradawnych bitw",
+          "D": "zwycięzców pradawnych bitw",
+          "C": "zwycięzcom pradawnych bitw",
+          "B": "zwycięzców pradawnych bitw",
+          "N": "zwycięzcami pradawnych bitw",
+          "MSC": "zwycięzcach pradawnych bitw",
+          "W": "zwycięzcy pradawnych bitw"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "płomienna nadzieja bezimiennego",
+          "D": "płomiennej nadziei bezimiennego",
+          "C": "płomiennej nadziei bezimiennego",
+          "B": "płomienną nadzieję bezimiennego",
+          "N": "płomienną nadzieją bezimiennego",
+          "MSC": "płomiennej nadziei bezimiennego",
+          "W": "płomienna nadziejo bezimiennego"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "orkowe hordy zacierające szlak",
+          "D": "orkowych hord zacierających szlak",
+          "C": "orkowym hordom zacierającym szlak",
+          "B": "orkowe hordy zacierające szlak",
+          "N": "orkowymi hordami zacierającymi szlak",
+          "MSC": "orkowych hordach zacierających szlak",
+          "W": "orkowe hordy zacierające szlak"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0005",
+        "forms": {
+          "M": "ognisty deszcz",
+          "D": "ognistego deszczu",
+          "C": "ognistemu deszczowi",
+          "B": "ognisty deszcz",
+          "N": "ognistym deszczem",
+          "MSC": "ognistym deszczu",
+          "W": "ognisty deszczu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0006",
+        "forms": {
+          "M": "truchła wojów",
+          "D": "trucheł wojów",
+          "C": "truchłom wojów",
+          "B": "truchła wojów",
+          "N": "truchłami wojów",
+          "MSC": "truchłach wojów",
+          "W": "truchła wojów"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "Ja w noc księżycową poczekam na <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Przez mgły widzę <B>, jak z dziecinnych snów, jakże chciałbym zobaczyć to znów.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Nadzieje płomienną mam w sercu swym, by ujrzeć <B> przez mgły.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Dawnymi laty, u wrót zamku Vardhal tętniła bitwa o <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Trzy dni i trzy noce padał deszcz ognia! Pożar spalił wszystko wokół, zamek runął wyjąc! Ogień tlił się wiele dni, wewnątrz murów zamku! Aż Adanos zesłał <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Krotahk, Khaz-Tak, Dwachkarr, Orth-Antak - <M> - przyjaźni znak.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Do Słońca modlitwy śle kapłanki głos, gdy <M> opada na <M>",
+        "slots": [
+          "M",
+          "M"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "I tylko w pamięci mej wciąż będzie tkwić: <M>, <M>, <M>",
+        "slots": [
+          "M",
+          "M",
+          "M"
+        ],
+        "pick": 3,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}

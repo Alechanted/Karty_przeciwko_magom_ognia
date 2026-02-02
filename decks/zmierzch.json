@@ -1,0 +1,320 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "zmierzch",
+    "display_name": "zmierzch",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "Bezimienny cierpiący na permanentny kryzys tożsamości",
+          "D": "Bezimiennego cierpiącego na permanentny kryzys tożsamości",
+          "C": "Bezimiennemu cierpiącemu na permanentny kryzys tożsamości",
+          "B": "Bezimiennego cierpiącego na permanentny kryzys tożsamości",
+          "N": "Bezimiennym cierpiącym na permanentny kryzys tożsamości",
+          "MSC": "Bezimiennym cierpiącym na permanentnym kryzysie tożsamości",
+          "W": "Bezimienny cierpiący na permanentny kryzys tożsamości"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "Fabuła, która zapomniała o poprzednich częściach",
+          "D": "Fabuły, która zapomniała o poprzednich częściach",
+          "C": "Fabule, która zapomniała o poprzednich częściach",
+          "B": "Fabułę, która zapomniała o poprzednich częściach",
+          "N": "Fabułą, która zapomniała o poprzednich częściach",
+          "MSC": "Fabule, która zapomniała o poprzednich częściach",
+          "W": "Fabuło, która zapomniała o poprzednich częściach"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "Król Rhobar udający, że wszystko ma pod kontrolą",
+          "D": "Króla Rhobara udającego, że wszystko ma pod kontrolą",
+          "C": "Królowi Rhobarowi udającemu, że wszystko ma pod kontrolą",
+          "B": "Króla Rhobara udającego, że wszystko ma pod kontrolą",
+          "N": "Królem Rhobarem udającym, że wszystko ma pod kontrolą",
+          "MSC": "Królu Rhobarze udającym, że wszystko ma pod kontrolą",
+          "W": "Królu Rhobarze udający, że wszystko ma pod kontrolą"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "Rewolucja, która wyszła trochę niezręcznie",
+          "D": "Rewolucji, która wyszła trochę niezręcznie",
+          "C": "Rewolucji, która wyszła trochę niezręcznie",
+          "B": "Rewolucję, która wyszła trochę niezręcznie",
+          "N": "Rewolucją, która wyszła trochę niezręcznie",
+          "MSC": "Rewolucji, która wyszła trochę niezręcznie",
+          "W": "Rewolucjo, która wyszła trochę niezręcznie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0005",
+        "forms": {
+          "M": "Animacja walki jak z budżetowego teatru",
+          "D": "Animacji walki jak z budżetowego teatru",
+          "C": "Animacji walki jak z budżetowego teatru",
+          "B": "Animację walki jak z budżetowego teatru",
+          "N": "Animacją walki jak z budżetowego teatru",
+          "MSC": "Animacji walki jak z budżetowego teatru",
+          "W": "Animacjo walki jak z budżetowego teatru"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0006",
+        "forms": {
+          "M": "System reputacji, który obraził się na gracza",
+          "D": "Systemu reputacji, który obraził się na gracza",
+          "C": "Systemowi reputacji, który obraził się na gracza",
+          "B": "System reputacji, który obraził się na gracza",
+          "N": "Systemem reputacji, który obraził się na gracza",
+          "MSC": "Systemie reputacji, który obraził się na gracza",
+          "W": "Systemie reputacji, który obraził się na gracza"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0007",
+        "forms": {
+          "M": "Dialog, który brzmi jak patch notes",
+          "D": "Dialogu, który brzmi jak patch notes",
+          "C": "Dialogowi, który brzmi jak patch notes",
+          "B": "Dialog, który brzmi jak patch notes",
+          "N": "Dialogiem, który brzmi jak patch notes",
+          "MSC": "Dialogu, który brzmi jak patch notes",
+          "W": "Dialogu, który brzmi jak patch notes"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0008",
+        "forms": {
+          "M": "Epicka bitwa pięciu strażników i jednego krzesła",
+          "D": "Epickiej bitwy pięciu strażników i jednego krzesła",
+          "C": "Epickiej bitwie pięciu strażników i jednego krzesła",
+          "B": "Epicką bitwę pięciu strażników i jednego krzesła",
+          "N": "Epicką bitwą pięciu strażników i jednego krzesła",
+          "MSC": "Epickiej bitwie pięciu strażników i jednego krzesła",
+          "W": "Epicka bitwo pięciu strażników i jednego krzesła"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0009",
+        "forms": {
+          "M": "Zdrada, o której wszyscy wiedzieli od początku",
+          "D": "Zdrady, o której wszyscy wiedzieli od początku",
+          "C": "Zdradzie, o której wszyscy wiedzieli od początku",
+          "B": "Zdradę, o której wszyscy wiedzieli od początku",
+          "N": "Zdradą, o której wszyscy wiedzieli od początku",
+          "MSC": "Zdradzie, o której wszyscy wiedzieli od początku",
+          "W": "Zdrado, o której wszyscy wiedzieli od początku"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0010",
+        "forms": {
+          "M": "Wielkie przemówienie wygłoszone do trzech NPC-ów",
+          "D": "Wielkiego przemówienia wygłoszonego do trzech NPC-ów",
+          "C": "Wielkiemu przemówieniu wygłoszonemu do trzech NPC-ów",
+          "B": "Wielkie przemówienie wygłoszone do trzech NPC-ów",
+          "N": "Wielkim przemówieniem wygłoszonym do trzech NPC-ów",
+          "MSC": "Wielkim przemówieniu wygłoszonym do trzech NPC-ów",
+          "W": "Wielkie przemówienie wygłoszone do trzech NPC-ów"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0011",
+        "forms": {
+          "M": "Bezimienny jako własny antagonista",
+          "D": "Bezimiennego jako własnego antagonisty",
+          "C": "Bezimiennemu jako własnemu antagoniście",
+          "B": "Bezimiennego jako własnego antagonistę",
+          "N": "Bezimiennym jako własnym antagonistą",
+          "MSC": "Bezimiennym jako własnym antagoniście",
+          "W": "Bezimienny jako własny antagonisto"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0012",
+        "forms": {
+          "M": "Klimat końca świata w wersji demo",
+          "D": "Klimatu końca świata w wersji demo",
+          "C": "Klimatowi końca świata w wersji demo",
+          "B": "Klimat końca świata w wersji demo",
+          "N": "Klimatem końca świata w wersji demo",
+          "MSC": "Klimacie końca świata w wersji demo",
+          "W": "Klimacie końca świata w wersji demo"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "„Zmierzch Bogów” to przede wszystkim historia o <MSC>.",
+        "slots": [
+          "MSC"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Bezimienny wrócił tylko po to, żeby naprawić <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Największym wrogiem Myrtany okazało się <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Rhobar II przegrał z <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Rewolucjoniści walczą o <B>, ale dostali <B>.",
+        "slots": [
+          "B",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Najbardziej dramatycznym momentem było <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Twórcy zapomnieli dodać <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "Ten patch miał naprawić <B>, ale zepsuł <B>.",
+        "slots": [
+          "B",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Cały konflikt wybuchł przez <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Na końcu i tak chodziło o <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "Zmierzch Bogów udowodnił, że największym potworem jest <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Bezimienny spojrzał w lustro i zobaczył <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}
