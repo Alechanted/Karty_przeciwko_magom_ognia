@@ -364,7 +364,7 @@ button {
     display: grid;
     overflow-y: auto;
     grid-template-rows: 1fr auto;
-    gap: 5px;
+    gap: 8px;
 }
 
 #chat-messages {
