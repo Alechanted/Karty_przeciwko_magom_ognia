@@ -46,10 +46,17 @@ class GameEngine:
 
     def _load_selected_decks(self, selected_decks):
         for deck_name in selected_decks:
+            json_path = f"decks/{deck_name}.json"
             w_path = f"decks/{deck_name}.white"
             b_path = f"decks/{deck_name}.black"
-            if os.path.exists(w_path): self.white_deck_master.extend(self._load_file(w_path, WhiteCard))
-            if os.path.exists(b_path): self.black_deck_master.extend(self._load_file(b_path, BlackCard))
+            if os.path.exists(json_path):
+                # load from unified JSON
+                w, b = self._load_json_deck(json_path)
+                self.white_deck_master.extend(w)
+                self.black_deck_master.extend(b)
+            else:
+                if os.path.exists(w_path): self.white_deck_master.extend(self._load_file(w_path, WhiteCard))
+                if os.path.exists(b_path): self.black_deck_master.extend(self._load_file(b_path, BlackCard))
 
         logger.info(
             f"Pokój '{self.room_name}': Załadowano {len(self.white_deck_master)} w, {len(self.black_deck_master)} b.")
@@ -64,6 +71,34 @@ class GameEngine:
         except Exception:
             pass
         return items
+
+    def _load_json_deck(self, path):
+        white_items = []
+        black_items = []
+        try:
+            import json
+            from models import WhiteCard, BlackCard
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            cards = data.get('cards', {})
+            for w in cards.get('white', []):
+                try:
+                    white_items.append(WhiteCard.from_json(w))
+                except Exception:
+                    # fallback: construct from joined forms
+                    forms = w.get('forms')
+                    if isinstance(forms, dict):
+                        parts = [forms.get(k, '') for k in ["M","D","C","B","N","MSC","W"]]
+                        white_items.append(WhiteCard('|'.join(parts)))
+            for b in cards.get('black', []):
+                try:
+                    black_items.append(BlackCard.from_json(b))
+                except Exception:
+                    tmpl = b.get('template') or b.get('raw_text') or ''
+                    black_items.append(BlackCard(tmpl))
+        except Exception:
+            pass
+        return white_items, black_items
 
     def reset_game(self):
         self.game_started = False

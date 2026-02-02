@@ -1,0 +1,404 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "Ziele",
+    "display_name": "Ziele",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "to cholerne ziele",
+          "D": "tego cholernego ziela",
+          "C": "temu cholernemu zielu",
+          "B": "to cholerne ziele",
+          "N": "tym cholernym zielem",
+          "MSC": "tym cholernym zielu",
+          "W": "to cholerne ziele"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "byle włóczęga",
+          "D": "byle włóczęgi",
+          "C": "byle włóczęcze",
+          "B": "byle włóczęgę",
+          "N": "byle włóczęgą",
+          "MSC": "byle włóczędze",
+          "W": "byle włuczęgo"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "dzienna racja ziela",
+          "D": "dziennej racji ziela",
+          "C": "dziennej racji ziela",
+          "B": "dzienną rację ziela",
+          "N": "dzienną racją ziela",
+          "MSC": "dziennej racji ziela",
+          "W": "dzienna racjo ziela"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "przepijanie całego ziela w Nowym Obozie",
+          "D": "przepijania całego ziela w Nowym Obozie",
+          "C": "przepijaniu całego ziela w Nowym Obozie",
+          "B": "przepijanie całego ziela w Nowym Obozie",
+          "N": "przepijaniem całego ziela w Nowym Obozie",
+          "MSC": "przepijaniu całego ziela w Nowym Obozie",
+          "W": "przepijanie całego ziela w Nowym Obozie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0005",
+        "forms": {
+          "M": "drobna prowizja",
+          "D": "drobnej prowizji",
+          "C": "drobnej prowizji",
+          "B": "drobną prowizję",
+          "N": "drobną prowizją",
+          "MSC": "drobnej prowizji",
+          "W": "drobna prowizjo"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0006",
+        "forms": {
+          "M": "200 bryłek na głowę",
+          "D": "200 bryłek na głowę",
+          "C": "200 bryłek na głowę",
+          "B": "200 bryłek na głowę",
+          "N": "200 bryłek na głowę",
+          "MSC": "200 bryłek na głowę",
+          "W": "200 bryłek na głowę"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0007",
+        "forms": {
+          "M": "laboratorium alchemiczne Cor Kaloma",
+          "D": "laboratorium alchemicznego Cor Kaloma",
+          "C": "laboratorium alchemicznemu Cor Kaloma",
+          "B": "laboratorium alchemiczne Cor Kaloma",
+          "N": "laboratorium alchemicznym Cor Kaloma",
+          "MSC": "laboratorium alchemicznym Cor Kaloma",
+          "W": "laboratorium alchemiczne Cor Kaloma"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0008",
+        "forms": {
+          "M": "twoje \"bagienne ziele\"",
+          "D": "twojego \"bagiennego ziela\"",
+          "C": "twojemu \"bagiennemu zielu\"",
+          "B": "twoje \"bagienne ziele\"",
+          "N": "twoim \"bagienny zielem\"",
+          "MSC": "twoim \"bagiennym zielu\"",
+          "W": "twoje \"bagienne ziele\""
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0009",
+        "forms": {
+          "M": "palenie bagiennego ziela",
+          "D": "palenia bagiennego ziela",
+          "C": "paleniu bagiennego ziela",
+          "B": "palenie bagiennego ziela",
+          "N": "paleniem bagiennego ziela",
+          "MSC": "paleniu bagiennego ziela",
+          "W": "palenie bagiennego ziela"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0010",
+        "forms": {
+          "M": "czerwona latarnia",
+          "D": "czerwonej latarnii",
+          "C": "czerwonej latarnii",
+          "B": "czerwoną latarnię",
+          "N": "czerwoną latarnią",
+          "MSC": "czerwonej latarnii",
+          "W": "czerwona latarnio"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0011",
+        "forms": {
+          "M": "pewna paczka z zielem",
+          "D": "pewnej paczki z zielem",
+          "C": "pewnej paczce z zielem",
+          "B": "pewną paczkę z zielem",
+          "N": "pewną paczką z zielem",
+          "MSC": "pewnej paczce z zielem",
+          "W": "pewna paczko z zielem"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "Bractwo płaci Staremu Obozowi bagiennym zielem za <B> w kopalni.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Nie tak szybko. Najpierw pokaż <B>! Nie masz, co?!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Przyniosłem <B> dla Gomeza.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Zbieramy <B>, zostanie przetworzone przez naszych braci tak, by można było to palić.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Praca na bagnach jest bardzo niebezpieczna, ale pozwala na <B>. Oczywiście ma to również pewne zalety.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Pozostałe obozy nie mają do tego dostępu. Jesteśmy jedynym osiedlem w całej kolonii, które może <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Każdy mógłby się tutaj zjawić mówiąc <M>. I co wtedy? Mam wydać całe <B> byle włóczędze?",
+        "slots": [
+          "M",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "Przysyła mnie Baal Orun. Mam dostarczyć do obozu <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Cóż, znam pewnego człowieka w Nowym Obozie. Pewnie zainteresowałoby go <M>",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Tylko Bracia dostarczający Gomezowi <B> mają wstęp do zamku.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "Zbieramy bagienne ziele, i część zbiorów sprzedajemy do Starego Obozu w zamian za <B> z zewnętrznego świata.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Miał mi pomagać Baal Isidro, ale on woli spędzać całe dnie w karczmie na jeziorze i wymieniać swoje ziele na <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0013",
+        "template": "Sam pomyśl - dasz mi <B> i podzielimy się zyskami.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0014",
+        "template": "Pewien człowiek z Sekty, niejaki Baal Isidro, ma przy sobie <B> warte co najmniej 400 bryłek rudy. Chcę, żebyś mi to przyniósł. Jak tego dokonasz - to już twoja sprawa.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0015",
+        "template": "Balor powiedział mi, że interesuje cię <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0016",
+        "template": "<M> Tym właśnie zajmują się Nowicjusze.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0017",
+        "template": "Wielu z nich dołącza do nas tylko ze względu na <M>, ale przynajmniej pomagają nam w pracy.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0018",
+        "template": "Na górze tej drabiny znajdziesz <B> Cor Kaloma. Tu na dole rezyduje Fortuno, handlarz zielem.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0019",
+        "template": "Hej, ty! Sprzedaję <M> i różne wywary z obozu na bagnach. Może czegoś potrzebujesz?",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0020",
+        "template": "To niebywale rzadka roślina - ziele, zwane <B>. Poznasz je po intensywnym zapachu migdałów.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0021",
+        "template": "Wiem, kto sprzedaje ziele w mieście. To Borka, odźwierny z <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0022",
+        "template": "Nie mam pojęcia. Powiedział tylko, że znalazł <B> - a potem obaj zaczęli się śmiać niczym pijani orkowie.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}

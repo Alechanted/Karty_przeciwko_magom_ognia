@@ -1,0 +1,443 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "Śniący",
+    "display_name": "Śniący",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "posiadanie tych jaja przy sobie",
+          "D": "posiadania tych jaja przy sobie",
+          "C": "posiadaniu tych jaja przy sobie",
+          "B": "posiadanie tych jaj przy sobie",
+          "N": "posiadaniem tych jaj przy sobie",
+          "MSC": "posiadaniu tych jaj przy sobie",
+          "W": "posiadanie tych jaja przy sobie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "grupowe zjednoczenie duchowych sił",
+          "D": "grupowego zjednoczenia duchowych sił",
+          "C": "grupowemu zjednoczeniu duchowych sił",
+          "B": "grupowe zjednoczenie duchowych sił",
+          "N": "grupowym zjednoczeniem duchowych sił",
+          "MSC": "grupowym zjednoczeniu duchowych sił",
+          "W": "grupowe zjednoczenie duchowych sił"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "budzenie śpiocha",
+          "D": "budzenia śpiocha",
+          "C": "budzeniu śpiocha",
+          "B": "budzenie śpiocha",
+          "N": "budzeniem śpiocha",
+          "MSC": "budzeniu śpiocha",
+          "W": "budzenie śpiocha"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "tak zwany \"Śniący\"",
+          "D": "tak zwanego \"Śniącego\"",
+          "C": "tak zwanemu \"Śniącemu\"",
+          "B": "tak zwanego \"Śniącego\"",
+          "N": "tak zwanym \"Śniącym\"",
+          "MSC": "tak zwanym \"Śniącym\"",
+          "W": "tak zwany \"Śniący\""
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "Nasi Guru są wybrańcami Śniącego! Śniący posiada władzę <N>, a Guru objawiają nam <M>.",
+        "slots": [
+          "N",
+          "M"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "<M> Dzięki temu możemy nawiązywać kontakt ze Śniącym.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Ta zbroja chronić będzie twoje ciało, tak jak Śniący chroni <M>!",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Twierdził, że Śniący objawił się mu w wizji i wybrał go na <B>!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Oby Śniący nigdy nie odwrócił od ciebie swego <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Teraz Bractwo potrzebuje <D>. Przygotują z tego napój, który umożliwi im nawiązanie kontaktu ze Śniącym.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Śniący będzie naszym wyzwolicielem. Pięć lat temu ujawnił się nam przez <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "Bogowie przyglądali się bezczynnie, gdy byliśmy skazywani na dożywotnią katorgę w tym więzieniu. Ale Śniący wskaże nam drogę do <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Śniący jest niezwykle potężny, może nawet potężniejszy od <D>",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Ale Śniący jest miłosierny i wszystkim wątpiącym przysyła <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "W trakcie rytuału Śniący ujawni nam <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Śniący to <M>. Zsyła nam <M>. W każdym razie zsyła to Guru.",
+        "slots": [
+          "M",
+          "M"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0013",
+        "template": "Ziele ma działanie relaksujące i uspokajające. Dzięki niemu można osiągnąć stan umysłu pozwalający na nawiązanie kontaktu z <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0014",
+        "template": "Wtedy ja zapytam dlaczego podjąłeś taką decyzję, a ty odpowiesz: <M>",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0015",
+        "template": "Śniący wskazuje nam <B>. Ale niewierny nigdy tego nie zrozumie!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0016",
+        "template": "Y'Berion powiedział, że poznamy <B>, jak tylko uda się nam nawiązać kontakt ze Śniącym.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0017",
+        "template": "Nasz Mistrz przygotowuje rytuał <D>, podczas którego wspólnie z najlepszymi Nowicjuszami nastąpi <M>.",
+        "slots": [
+          "D",
+          "M"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0018",
+        "template": "Śniący przemówił do mnie ostatniej nocy i uczynił mnie <B>!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0019",
+        "template": "Dawno temu Śniący przybył tutaj i zesłał ludziom <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0020",
+        "template": "Śniący wskazał Y'Berionowi i jego uczniom <B>",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0021",
+        "template": "Tak zwany <M> okazał się ponoć potężnym <MSC>",
+        "slots": [
+          "M",
+          "MSC"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0022",
+        "template": "Ten demon... To <M>, prawda?",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0023",
+        "template": "Miast okazać wdzięczność, Śniący wyrwał ich <B> i skazał ich, oraz wszystkich, którzy pracowali przy budowie na <B>, zamieniając ich w Ożywieńców!",
+        "slots": [
+          "B",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0024",
+        "template": "Wrzeszczał, że Śniący kazał mu przygotować <B> i zamierzał wykonać to polecenie.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0025",
+        "template": "Módl się, aby Śniący wybaczył ci <B>!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0026",
+        "template": "Niech ta zbroja chroni cię równie dobrze jak Śniący chroni <B>!",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0027",
+        "template": "Powiem ci tylko tyle: Śniący będzie naszym <N>",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0028",
+        "template": "<M> ma się wkrótce przebudzić? Obyś się mylił.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0029",
+        "template": "Niech <M> będzie z tobą!",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0030",
+        "template": "<M> staje się potężniejszy z każdą minutą....",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0031",
+        "template": "Bractwo Śniącego nie głosiło samych kłamstw. <M> naprawdę istniał.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0032",
+        "template": "Mówił różne rzeczy. Nawet historie o wypędzeniu z tego świata potwora znanego jako <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0033",
+        "template": "Cena za zwycięstwo nad Śniącym okazała się bardzo wysoka. <M> to prawdziwa katastrofa.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0034",
+        "template": "Podejrzewałem to, ale miałem nadzieję, że się mylę. Czy to znaczy, że ON powrócił? Czy <M> znów jest w naszym świecie?",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0035",
+        "template": "Ktoś, kto rozprawił się ze Śniącym, nie będzie miał kłopotów z <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0036",
+        "template": "Swym ostatnim krzykiem rozpaczy <M> przywołał potężną armię zła.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}

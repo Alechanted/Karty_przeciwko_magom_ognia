@@ -1,0 +1,1369 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "base",
+    "display_name": "base",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "ładowanie Uriziela patrząc Cronosowi głęboko w oczy",
+          "D": "ładowania Uriziela patrząc Cronosowi głęboko w oczy",
+          "C": "ładowaniu Uriziela patrząc Cronosowi głęboko w oczy",
+          "B": "ładowanie Uriziela patrząc Cronosowi głęboko w oczy",
+          "N": "ładowaniem Uriziela patrząc Cronosowi głęboko w oczy",
+          "MSC": "ładowaniu Uriziela patrząc Cronosowi głęboko w oczy",
+          "W": "ładowanie Uriziela patrząc Cronosowi głęboko w oczy"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "handlowanie bagiennym zielem",
+          "D": "handlowania bagiennym zielem",
+          "C": "handlowaniu bagiennym zielem",
+          "B": "handlowanie bagiennym zielem",
+          "N": "handlowaniem bagiennym zielem",
+          "MSC": "handlowaniu bagiennym zielem",
+          "W": "handlowanie bagiennym zielem"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "igraszki z wężami błotnymi",
+          "D": "igraszek z wężami błotnymi",
+          "C": "igraszkom z wężami błotnymi",
+          "B": "igraszki z wężami błotnymi",
+          "N": "igraszkami z wężami błotnymi",
+          "MSC": "igraszkach z wężami błotnymi",
+          "W": "igraszki z wężami błotnymi"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "całowanie Gomeza w dupę",
+          "D": "całowania Gomeza w dupę",
+          "C": "całowaniu Gomeza w dupę",
+          "B": "całowanie Gomeza w dupę",
+          "N": "całowaniem Gomeza w dupę",
+          "MSC": "całowaniu Gomeza w dupę",
+          "W": "całowanie Gomeza w dupę"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0005",
+        "forms": {
+          "M": "...Pomyślmy... nie, nie przychodzi mi do głowy nic, co byłbyś w stanie zrozumieć",
+          "D": "...Pomyślenia... nie, nie przychodzi mi do głowy niczego, co byłbyś w stanie zrozumieć",
+          "C": "...Pomyśleniu... nie, nie przychodzi mi do głowy niczemu, co byłbyś w stanie zrozumieć",
+          "B": "...Pomyślmy... nie, nie przychodzi mi do głowy nic, co byłbyś w stanie zrozumieć",
+          "N": "...Pomyśleniem... nie, nie przychodzi mi do głowy niczym, co byłbyś w stanie zrozumieć",
+          "MSC": "...Pomyśleniu... nie, nie przychodzi mi do głowy niczym, co byłbyś w stanie zrozumieć",
+          "W": "...Pomyślmy... nie, nie przychodzi mi do głowy nic, co byłbyś w stanie zrozumieć"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0006",
+        "forms": {
+          "M": "siekanie cebulki",
+          "D": "siekania cebulki",
+          "C": "siekaniu cebulki",
+          "B": "siekanie cebulki",
+          "N": "siekaniem cebulki",
+          "MSC": "siekaniu cebulki",
+          "W": "siekanie cebulki"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0007",
+        "forms": {
+          "M": "błogosławienie nowicjusza do listu gończego z mordą Bezimiennego",
+          "D": "błogosławienia nowicjusza do listu gończego z mordą Bezimiennego",
+          "C": "błogosławieniu nowicjusza do listu gończego z mordą Bezimiennego",
+          "B": "błogosławienie nowicjusza do listu gończego z mordą Bezimiennego",
+          "N": "błogosławieniem nowicjusza do listu gończego z mordą Bezimiennego",
+          "MSC": "błogosławieniu nowicjusza do listu gończego z mordą Bezimiennego",
+          "W": "błogosławienie nowicjusza do listu gończego z mordą Bezimiennego"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0008",
+        "forms": {
+          "M": "spuszczanie się z drabiny",
+          "D": "spuszczania się z drabiny",
+          "C": "spuszczaniu się z drabiny",
+          "B": "spuszczanie się z drabiny",
+          "N": "spuszczaniem się z drabiny",
+          "MSC": "spuszczaniu się z drabiny",
+          "W": "spuszczanie się z drabiny"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0009",
+        "forms": {
+          "M": "mordowanie magów ognia",
+          "D": "mordowania magów ognia",
+          "C": "mordowaniu magów ognia",
+          "B": "mordowanie magów ognia",
+          "N": "mordowaniem magów ognia",
+          "MSC": "mordowaniu magów ognia",
+          "W": "mordowanie magów ognia"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0010",
+        "forms": {
+          "M": "dbanie o nowych",
+          "D": "dbania o nowych",
+          "C": "dbaniu o nowych",
+          "B": "dbanie o nowych",
+          "N": "dbaniem o nowych",
+          "MSC": "dbaniu o nowych",
+          "W": "dbanie o nowych"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0011",
+        "forms": {
+          "M": "bieganie po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "D": "biegania po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "C": "bieganiu po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "B": "bieganie po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "N": "bieganiem po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "MSC": "bieganiu po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”",
+          "W": "bieganie po mieście krzycząc „Hej, jestem buntownikiem, chodźcie mnie zabić!”"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0012",
+        "forms": {
+          "M": "wpływanie na delikatną strukturę zaklęcia",
+          "D": "wpływania na delikatną strukturę zaklęcia",
+          "C": "wpływaniu na delikatną strukturę zaklęcia",
+          "B": "wpływanie na delikatną strukturę zaklęcia",
+          "N": "wpływaniem na delikatną strukturę zaklęcia",
+          "MSC": "wpływaniu na delikatną strukturę zaklęcia",
+          "W": "wpływanie na delikatną strukturę zaklęcia"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0013",
+        "forms": {
+          "M": "Pocałowanie Gomeza w dupę",
+          "D": "Pocałowania Gomeza w dupę",
+          "C": "Pocałowaniu Gomeza w dupę",
+          "B": "Pocałowanie Gomeza w dupę",
+          "N": "Pocałowaniem Gomeza w dupę",
+          "MSC": "Pocałowaniu Gomeza w dupę",
+          "W": "Pocałowanie Gomeza w dupę"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0014",
+        "forms": {
+          "M": "Zgwałcenie owcy w klasztorze magów ognia",
+          "D": "Zgwałcenia owcy w klasztorze magów ognia",
+          "C": "Zgwałceniu owcy w klasztorze magów ognia",
+          "B": "Zgwałcenie owcy w klasztorze magów ognia",
+          "N": "Zgwałceniem owcy w klasztorze magów ognia",
+          "MSC": "Zgwałceniu owcy w klasztorze magów ognia",
+          "W": "Zgwałcenie owcy w klasztorze magów ognia"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0015",
+        "forms": {
+          "M": "Rozwolnienie po zupie z chrząszcza",
+          "D": "Rozwolnienia po zupie z chrząszcza",
+          "C": "Rozwolnieniu po zupie z chrząszcza",
+          "B": "Rozwolnienie po zupie z chrząszcza",
+          "N": "Rozwolnieniem po zupie z chrząszcza",
+          "MSC": "Rozwolnieniu po zupie z chrząszcza",
+          "W": "Rozwolnienie po zupie z chrząszcza"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0016",
+        "forms": {
+          "M": "Stanie w samym środku gówna",
+          "D": "Stania w samym środku gówna",
+          "C": "Staniu w samym środku gówna",
+          "B": "Stanie w samym środku gówna",
+          "N": "Staniem w samym środku gówna",
+          "MSC": "Staniu w samym środku gówna",
+          "W": "Stanie w samym środku gówna"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0017",
+        "forms": {
+          "M": "Ten wieśniak, co go zabiłeś",
+          "D": "Tego wieśniaka, co go zabiłeś",
+          "C": "Temu wieśniakowi, co go zabiłeś",
+          "B": "Tego wieśniaka, co go zabiłeś",
+          "N": "Tym wieśniakiem, co go zabiłeś",
+          "MSC": "Tym wieśniaku, co go zabiłeś",
+          "W": "Ten wieśniaku, co go zabiłeś"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0018",
+        "forms": {
+          "M": "Śmierdzący oddech Thorusa",
+          "D": "Śmierdzącego oddechu Thorusa",
+          "C": "Śmierdzącemu oddechowi Thorusa",
+          "B": "Śmierdzący oddech Thorusa",
+          "N": "Śmierdzącym oddechem Thorusa",
+          "MSC": "Śmierdzącym oddechu Thorusa",
+          "W": "Śmierdzący oddechu Thorusa"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0019",
+        "forms": {
+          "M": "Towary",
+          "D": "Towarów",
+          "C": "Towarom",
+          "B": "Towary",
+          "N": "Towarami",
+          "MSC": "Towarach",
+          "W": "Towary"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0020",
+        "forms": {
+          "M": "Lustereczko zrobione z dupy cieniostwora",
+          "D": "Lustereczka zrobionego z dupy cieniostwora",
+          "C": "Lustereczku zrobionemu z dupy cieniostwora",
+          "B": "Lustereczko zrobione z dupy cieniostwora",
+          "N": "Lustereczkiem zrobionym z dupy cieniostwora",
+          "MSC": "Lustereczku zrobionym z dupy cieniostwora",
+          "W": "Lustereczko zrobione z dupy cieniostwora"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0021",
+        "forms": {
+          "M": "Biedny, zapomniany Wrzód",
+          "D": "Biednego, zapomnianego Wrzoda",
+          "C": "Biednemu, zapomnianemu Wrzodowi",
+          "B": "Biednego, zapomnianego Wrzoda",
+          "N": "Biednym, zapomnianym Wrzodem",
+          "MSC": "Biednym, zapomnianym Wrzodzie",
+          "W": "Biedny, zapomniany Mudzie Wrzodzie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0022",
+        "forms": {
+          "M": "Magiczny kutas Beliara",
+          "D": "Magicznego kutasa Beliara",
+          "C": "Magicznemu kutasowi Beliara",
+          "B": "Magiczny kutas Beliara",
+          "N": "Magicznym kutasem Beliara",
+          "MSC": "Magicznym kutasie Beliara",
+          "W": "Magiczny kutasie Beliara"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0023",
+        "forms": {
+          "M": "Zbiorowy gwałt na kretoszczurze",
+          "D": "Zbiorowego gwałtu na kretoszczurze",
+          "C": "Zbiorowemu gwałtowi na kretoszczurze",
+          "B": "Zbiorowy gwałt na kretoszczurze",
+          "N": "Zbiorowym gwałtem na kretoszczurze",
+          "MSC": "Zbiorowym gwałcie na kretoszczurze",
+          "W": "Zbiorowy gwałcie na kretoszczurze"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0024",
+        "forms": {
+          "M": "Wydzielina z pełzacza (doodbytniczo)",
+          "D": "Wydzieliny z pełzacza (doodbytniczo)",
+          "C": "Wydzielinie z pełzacza (doodbytniczo)",
+          "B": "Wydzielinę z pełzacza (doodbytniczo)",
+          "N": "Wydzieliną z pełzacza (doodbytniczo)",
+          "MSC": "Wydzielinie z pełzacza (doodbytniczo)",
+          "W": "Wydzielino z pełzacza (doodbytniczo)"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0025",
+        "forms": {
+          "M": "Sperma Orka",
+          "D": "Spermy Orka",
+          "C": "Spermie Orka",
+          "B": "Spermę Orka",
+          "N": "Spermą Orka",
+          "MSC": "Spermie Orka",
+          "W": "Spermo Orka"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0026",
+        "forms": {
+          "M": "Zgniły ryż",
+          "D": "Zgniłego ryżu",
+          "C": "Zgniłemu ryżowi",
+          "B": "Zgniły ryż",
+          "N": "Zgniłym ryżem",
+          "MSC": "Zgniłym ryżu",
+          "W": "Zgniły ryżu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0027",
+        "forms": {
+          "M": "Ruda (ale taka z majtek)",
+          "D": "Rudy (ale takiej z majtek)",
+          "C": "Rudzie (ale takiej z majtek)",
+          "B": "Rudę (ale taką z majtek)",
+          "N": "Rudą (ale taką z majtek)",
+          "MSC": "Rudzie (ale takiej z majtek)",
+          "W": "Rudo (ale taka z majtek)"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0028",
+        "forms": {
+          "M": "Słabej jakości burdel w Khorinis",
+          "D": "Słabej jakości burdelu w Khorinis",
+          "C": "Słabej jakości burdelowi w Khorinis",
+          "B": "Słabej jakości burdel w Khorinis",
+          "N": "Słabej jakości burdelem w Khorinis",
+          "MSC": "Słabej jakości burdelu w Khorinis",
+          "W": "Słabej jakości burdelu w Khorinis"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0029",
+        "forms": {
+          "M": "Kobieta, która nie wygląda jak zlepek pikseli",
+          "D": "Kobiety, która nie wygląda jak zlepek pikseli",
+          "C": "Kobiecie, która nie wygląda jak zlepek pikseli",
+          "B": "Kobietę, która nie wygląda jak zlepek pikseli",
+          "N": "Kobietą, która nie wygląda jak zlepek pikseli",
+          "MSC": "Kobiecie, która nie wygląda jak zlepek pikseli",
+          "W": "Kobieto, która nie wygląda jak zlepek pikseli"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0030",
+        "forms": {
+          "M": "Obciąganie magom Wody",
+          "D": "Obciągania magom Wody",
+          "C": "Obciąganiu magom Wody",
+          "B": "Obciąganie magom Wody",
+          "N": "Obciąganiem magom Wody",
+          "MSC": "Obciąganiu magom Wody",
+          "W": "Obciąganie magom Wody"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0031",
+        "forms": {
+          "M": "Krwawy, brutalny seks z Harpią",
+          "D": "Krwawego, brutalnego seksu z Harpią",
+          "C": "Krwawemu, brutalnemu seksowi z Harpią",
+          "B": "Krwawy, brutalny seks z Harpią",
+          "N": "Krwawym, brutalnym seksem z Harpią",
+          "MSC": "Krwawym, brutalnym seksie z Harpią",
+          "W": "Krwawy, brutalny seksie z Harpią"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0032",
+        "forms": {
+          "M": "Jebana drabina w Starej Kopalni",
+          "D": "Jebanej drabiny w Starej Kopalni",
+          "C": "Jebanej drabinie w Starej Kopalni",
+          "B": "Jebaną drabinę w Starej Kopalni",
+          "N": "Jebaną drabiną w Starej Kopalni",
+          "MSC": "Jebanej drabinie w Starej Kopalni",
+          "W": "Jebana drabino w Starej Kopalni"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0033",
+        "forms": {
+          "M": "Gulasz z Wrzoda",
+          "D": "Gulaszu z Wrzoda",
+          "C": "Gulaszowi z Wrzoda",
+          "B": "Gulasz z Wrzoda",
+          "N": "Gulaszem z Wrzoda",
+          "MSC": "Gulaszu z Wrzoda",
+          "W": "Gulaszu z Wrzoda"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0034",
+        "forms": {
+          "M": "Ruchanie",
+          "D": "Ruchania",
+          "C": "Ruchaniu",
+          "B": "Ruchanie",
+          "N": "Ruchaniem",
+          "MSC": "Ruchaniu",
+          "W": "Ruchanie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0035",
+        "forms": {
+          "M": "Zablokowanie się w teksturze podczas srania",
+          "D": "Zablokowania się w teksturze podczas srania",
+          "C": "Zablokowaniu się w teksturze podczas srania",
+          "B": "Zablokowanie się w teksturze podczas srania",
+          "N": "Zablokowaniem się w teksturze podczas srania",
+          "MSC": "Zablokowaniu się w teksturze podczas srania",
+          "W": "Zablokowanie się w teksturze podczas srania"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0036",
+        "forms": {
+          "M": "Spadanie z wysokości dwóch metrów i łamanie karku",
+          "D": "Spadania z wysokości dwóch metrów i łamania karku",
+          "C": "Spadaniu z wysokości dwóch metrów i łamaniu karku",
+          "B": "Spadanie z wysokości dwóch metrów i łamanie karku",
+          "N": "Spadaniem z wysokości dwóch metrów i łamaniem karku",
+          "MSC": "Spadaniu z wysokości dwóch metrów i łamaniu karku",
+          "W": "Spadanie z wysokości dwóch metrów i łamanie karku"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0037",
+        "forms": {
+          "M": "Masturbacja przy użyciu tarki do warzyw",
+          "D": "Masturbacji przy użyciu tarki do warzyw",
+          "C": "Masturbacji przy użyciu tarki do warzyw",
+          "B": "Masturbację przy użyciu tarki do warzyw",
+          "N": "Masturbacją przy użyciu tarki do warzyw",
+          "MSC": "Masturbacji przy użyciu tarki do warzyw",
+          "W": "Masturbacjo przy użyciu tarki do warzyw"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0038",
+        "forms": {
+          "M": "Dzik z Gothica 3",
+          "D": "Dzika z Gothica 3",
+          "C": "Dzikowi z Gothica 3",
+          "B": "Dzika z Gothica 3",
+          "N": "Dzikiem z Gothica 3",
+          "MSC": "Dziku z Gothica 3",
+          "W": "Dziku z Gothica 3"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0039",
+        "forms": {
+          "M": "Bezimienny machający rękami jak upośledzony wiatrak",
+          "D": "Bezimiennego machającego rękami jak upośledzony wiatrak",
+          "C": "Bezimiennemu machającemu rękami jak upośledzony wiatrak",
+          "B": "Bezimiennego machającego rękami jak upośledzony wiatrak",
+          "N": "Bezimiennym machającym rękami jak upośledzony wiatrak",
+          "MSC": "Bezimiennym machającym rękami jak upośledzony wiatrak",
+          "W": "Bezimienny machający rękami jak upośledzony wiatrak"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0040",
+        "forms": {
+          "M": "Wczytanie gry, bo ork uderzył mnie przez ścianę",
+          "D": "Wczytania gry, bo ork uderzył mnie przez ścianę",
+          "C": "Wczytaniu gry, bo ork uderzył mnie przez ścianę",
+          "B": "Wczytanie gry, bo ork uderzył mnie przez ścianę",
+          "N": "Wczytaniem gry, bo ork uderzył mnie przez ścianę",
+          "MSC": "Wczytaniu gry, bo ork uderzył mnie przez ścianę",
+          "W": "Wczytanie gry, bo ork uderzył mnie przez ścianę"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0041",
+        "forms": {
+          "M": "Zbugowany quest z Laresem",
+          "D": "Zbugowanego questu z Laresem",
+          "C": "Zbugowanemu questowi z Laresem",
+          "B": "Zbugowany quest z Laresem",
+          "N": "Zbugowanym questem z Laresem",
+          "MSC": "Zbugowanym queście z Laresem",
+          "W": "Zbugowany quest z Laresem"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0042",
+        "forms": {
+          "M": "Tekstury naciągnięte jak skóra na naplecie",
+          "D": "Tekstur naciągniętych jak skóra na naplecie",
+          "C": "Teksturom naciągniętym jak skóra na naplecie",
+          "B": "Tekstury naciągnięte jak skóra na naplecie",
+          "N": "Teksturami naciągniętymi jak skóra na naplecie",
+          "MSC": "Teksturach naciągniętych jak skóra na naplecie",
+          "W": "Tekstury naciągnięte jak skóra na naplecie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0043",
+        "forms": {
+          "M": "Toporne sterowanie z 2001 roku",
+          "D": "Topornego sterowania z 2001 roku",
+          "C": "Topornemu sterowaniu z 2001 roku",
+          "B": "Toporne sterowanie z 2001 roku",
+          "N": "Topornym sterowaniem z 2001 roku",
+          "MSC": "Topornym sterowaniu z 2001 roku",
+          "W": "Toporne sterowanie z 2001 roku"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0044",
+        "forms": {
+          "M": "F5 i F9 co 15 sekund",
+          "D": "F5 i F9 co 15 sekund",
+          "C": "F5 i F9 co 15 sekund",
+          "B": "F5 i F9 co 15 sekund",
+          "N": "F5 i F9 co 15 sekund",
+          "MSC": "F5 i F9 co 15 sekund",
+          "W": "F5 i F9 co 15 sekund"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0045",
+        "forms": {
+          "M": "Jagody (te, co zbierał Gorn)",
+          "D": "Jagód (tych, co zbierał Gorn)",
+          "C": "Jagodom (tym, co zbierał Gorn)",
+          "B": "Jagody (te, co zbierał Gorn)",
+          "N": "Jagodami (tymi, co zbierał Gorn)",
+          "MSC": "Jagodach (tych, co zbierał Gorn)",
+          "W": "Jagody (te, co zbierał Gorn)"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0046",
+        "forms": {
+          "M": "Stary, ślepy Sędzia",
+          "D": "Starego, ślepego Sędziego",
+          "C": "Staremu, ślepemu Sędziemu",
+          "B": "Starego, ślepego Sędziego",
+          "N": "Starym, ślepym Sędzią",
+          "MSC": "Starym, ślepym Sędzi",
+          "W": "Stary, ślepy Sędzio"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0047",
+        "forms": {
+          "M": "Wstawanie o 12:00 w południe",
+          "D": "Wstawania o 12:00 w południe",
+          "C": "Wstawaniu o 12:00 w południe",
+          "B": "Wstawanie o 12:00 w południe",
+          "N": "Wstawaniem o 12:00 w południe",
+          "MSC": "Wstawaniu o 12:00 w południe",
+          "W": "Wstawanie o 12:00 w południe"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0048",
+        "forms": {
+          "M": "Mocz Lewusa zamiast wody",
+          "D": "Moczu Lewusa zamiast wody",
+          "C": "Moczowi Lewusa zamiast wody",
+          "B": "Mocz Lewusa zamiast wody",
+          "N": "Moczem Lewusa zamiast wody",
+          "MSC": "Moczu Lewusa zamiast wody",
+          "W": "Moczu Lewusa zamiast wody"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0049",
+        "forms": {
+          "M": "Fani Kronik Myrtany",
+          "D": "Fanów Kronik Myrtany",
+          "C": "Fanom Kronik Myrtany",
+          "B": "Fanów Kronik Myrtany",
+          "N": "Fanami Kronik Myrtany",
+          "MSC": "Fanach Kronik Myrtany",
+          "W": "Fani Kronik Myrtany"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0050",
+        "forms": {
+          "M": "Pancerz z pancerzy pełzaczy (nie działa na kiłę)",
+          "D": "Pancerza z pancerzy pełzaczy (nie działa na kiłę)",
+          "C": "Pancerzowi z pancerzy pełzaczy (nie działa na kiłę)",
+          "B": "Pancerz z pancerzy pełzaczy (nie działa na kiłę)",
+          "N": "Pancerzem z pancerzy pełzaczy (nie działa na kiłę)",
+          "MSC": "Pancerzu z pancerzy pełzaczy (nie działa na kiłę)",
+          "W": "Pancerzu z pancerzy pełzaczy (nie działa na kiłę)"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0051",
+        "forms": {
+          "M": "Obóz pełen spoconych kopaczy",
+          "D": "Obozu pełnego spoconych kopaczy",
+          "C": "Obozowi pełnemu spoconych kopaczy",
+          "B": "Obóz pełen spoconych kopaczy",
+          "N": "Obozem pełnym spoconych kopaczy",
+          "MSC": "Obozie pełnym spoconych kopaczy",
+          "W": "Obozie pełen spoconych kopaczy"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0052",
+        "forms": {
+          "M": "Bagienne ziele zmieszane z podejrzaną zupą",
+          "D": "Bagiennego ziela zmieszanego z podejrzaną zupą",
+          "C": "Bagiennemu zielu zmieszanemu z podejrzaną zupą",
+          "B": "Bagienne ziele zmieszane z podejrzaną zupą",
+          "N": "Bagiennym zielem zmieszanym z podejrzaną zupą",
+          "MSC": "Bagiennym zielu zmieszanym z podejrzaną zupą",
+          "W": "Bagienne ziele zmieszane z podejrzaną zupą"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0053",
+        "forms": {
+          "M": "Niespodziewany wpierdol od kretoszczura",
+          "D": "Niespodziewanego wpierdolu od kretoszczura",
+          "C": "Niespodziewanemu wpierdolowi od kretoszczura",
+          "B": "Niespodziewany wpierdol od kretoszczura",
+          "N": "Niespodziewanym wpierdolem od kretoszczura",
+          "MSC": "Niespodziewanym wpierdolu od kretoszczura",
+          "W": "Niespodziewany wpierdolu od kretoszczura"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0054",
+        "forms": {
+          "M": "Gulasz, który pamięta jeszcze pierwszą Barierę",
+          "D": "Gulaszu, który pamięta jeszcze pierwszą Barierę",
+          "C": "Gulaszowi, który pamięta jeszcze pierwszą Barierę",
+          "B": "Gulasz, który pamięta jeszcze pierwszą Barierę",
+          "N": "Gulaszem, który pamięta jeszcze pierwszą Barierę",
+          "MSC": "Gulaszu, który pamięta jeszcze pierwszą Barierę",
+          "W": "Gulaszu, który pamięta jeszcze pierwszą Barierę"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0055",
+        "forms": {
+          "M": "Zgubienie się na prostej ścieżce do Starego Obozu",
+          "D": "Zgubienia się na prostej ścieżce do Starego Obozu",
+          "C": "Zgubieniu się na prostej ścieżce do Starego Obozu",
+          "B": "Zgubienie się na prostej ścieżce do Starego Obozu",
+          "N": "Zgubieniem się na prostej ścieżce do Starego Obozu",
+          "MSC": "Zgubieniu się na prostej ścieżce do Starego Obozu",
+          "W": "Zgubienie się na prostej ścieżce do Starego Obozu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0056",
+        "forms": {
+          "M": "Przekonanie, że drabina tym razem zadziała",
+          "D": "Przekonania, że drabina tym razem zadziała",
+          "C": "Przekonaniu, że drabina tym razem zadziała",
+          "B": "Przekonanie, że drabina tym razem zadziała",
+          "N": "Przekonaniem, że drabina tym razem zadziała",
+          "MSC": "Przekonaniu, że drabina tym razem zadziała",
+          "W": "Przekonanie, że drabina tym razem zadziała"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0057",
+        "forms": {
+          "M": "Ork, który widzi cię przez trzy ściany",
+          "D": "Orka, który widzi cię przez trzy ściany",
+          "C": "Orkowi, który widzi cię przez trzy ściany",
+          "B": "Orka, który widzi cię przez trzy ściany",
+          "N": "Orkiem, który widzi cię przez trzy ściany",
+          "MSC": "Orku, który widzi cię przez trzy ściany",
+          "W": "Orku, który widzi cię przez trzy ściany"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0058",
+        "forms": {
+          "M": "Magiczna aura taniego patosu",
+          "D": "Magicznej aury taniego patosu",
+          "C": "Magicznej aurze taniego patosu",
+          "B": "Magiczną aurę taniego patosu",
+          "N": "Magiczną aurą taniego patosu",
+          "MSC": "Magicznej aurze taniego patosu",
+          "W": "Magiczna auru taniego patosu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0059",
+        "forms": {
+          "M": "Próba zabicia ścierwojada pięściami",
+          "D": "Próby zabicia ścierwojada pięściami",
+          "C": "Próbie zabicia ścierwojada pięściami",
+          "B": "Próbę zabicia ścierwojada pięściami",
+          "N": "Próbą zabicia ścierwojada pięściami",
+          "MSC": "Próbie zabicia ścierwojada pięściami",
+          "W": "Próbo zabicia ścierwojada pięściami"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0060",
+        "forms": {
+          "M": "Toporny romans napisany w notatniku Bezimiennego",
+          "D": "Topornego romansu napisanego w notatniku Bezimiennego",
+          "C": "Topornemu romansowi napisanemu w notatniku Bezimiennego",
+          "B": "Toporny romans napisany w notatniku Bezimiennego",
+          "N": "Topornym romansem napisanym w notatniku Bezimiennego",
+          "MSC": "Topornym romansie napisanym w notatniku Bezimiennego",
+          "W": "Toporny romansie napisany w notatniku Bezimiennego"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0061",
+        "forms": {
+          "M": "Zbroja, która wygląda groźnie, ale chroni jak koszula nocna",
+          "D": "Zbroi, która wygląda groźnie, ale chroni jak koszula nocna",
+          "C": "Zbroi, która wygląda groźnie, ale chroni jak koszula nocna",
+          "B": "Zbroję, która wygląda groźnie, ale chroni jak koszula nocna",
+          "N": "Zbroją, która wygląda groźnie, ale chroni jak koszula nocna",
+          "MSC": "Zbroi, która wygląda groźnie, ale chroni jak koszula nocna",
+          "W": "Zbrojo, która wygląda groźnie, ale chroni jak koszula nocna"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0062",
+        "forms": {
+          "M": "Wielkie plany Xardasa i jeszcze większy bałagan",
+          "D": "Wielkich planów Xardasa i jeszcze większego bałaganu",
+          "C": "Wielkim planom Xardasa i jeszcze większemu bałaganowi",
+          "B": "Wielkie plany Xardasa i jeszcze większy bałagan",
+          "N": "Wielkimi planami Xardasa i jeszcze większym bałaganem",
+          "MSC": "Wielkich planach Xardasa i jeszcze większym bałaganie",
+          "W": "Wielkie plany Xardasa i jeszcze większy bałaganie"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0063",
+        "forms": {
+          "M": "Bezimienny, który znowu wszystko zepsuł",
+          "D": "Bezimiennego, który znowu wszystko zepsuł",
+          "C": "Bezimiennemu, który znowu wszystko zepsuł",
+          "B": "Bezimiennego, który znowu wszystko zepsuł",
+          "N": "Bezimiennym, który znowu wszystko zepsuł",
+          "MSC": "Bezimiennym, który znowu wszystko zepsuł",
+          "W": "Bezimienny, który znowu wszystko zepsuł"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0064",
+        "forms": {
+          "M": "Złudne poczucie, że to już koniec questa",
+          "D": "Złudnego poczucia, że to już koniec questa",
+          "C": "Złudnemu poczuciu, że to już koniec questa",
+          "B": "Złudne poczucie, że to już koniec questa",
+          "N": "Złudnym poczuciem, że to już koniec questa",
+          "MSC": "Złudnym poczuciu, że to już koniec questa",
+          "W": "Złudne poczucie, że to już koniec questa"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "Powiedzmy sobie szczerze. Przyszłeś tu tylko po to, żeby <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Pokaż mi swoje <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Co tak naprawdę obudziło <B>?",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Ty też <M>, czy tylko ten z przodu?",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Chwała Innosowi! A dla ciebie <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Stój! Nie wejdziesz do Górnego Miasta bez <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Xardas w swojej wieży tak naprawdę całe dnie zajmuje się <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "To z przodu twojej głowy to twarz, czy <M>?",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Nowy obóz to nic w porównaniu z <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Tajemnym składnikiem gulaszu Thekli jest <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "Co Cor Kalom miesza z bagiennym zielem i <N>?",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Wymienię ten stary miecz na <B> i pół litra ryżówki.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0013",
+        "template": "W kopalniach orków najbardziej brakuje mi <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0014",
+        "template": "Gdyby nie <M>, Bezimienny nigdy nie opuściłby Świątyni Śniącego.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0015",
+        "template": "Prawo pięści? Wolę prawo <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0016",
+        "template": "System walki w Gothicu 1 przypomina <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0017",
+        "template": "Dlaczego gra wyrzuciła <B>?",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0018",
+        "template": "Wcisnąłem CTRL + strzałka w górę i przypadkowo <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0019",
+        "template": "Jedyną rzeczą gorszą od sterowania drabiną jest <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0020",
+        "template": "Tryb MARVIN służy mi wyłącznie do <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0021",
+        "template": "Bezimienny nie ma imienia, bo twórcy zapomnieli o <MSC>.",
+        "slots": [
+          "MSC"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0022",
+        "template": "Co tak naprawdę znajduje się za palisadą orków? <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0023",
+        "template": "Twoja matka obcuje z <N>!",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0024",
+        "template": "Kto ukradł <B>?",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0025",
+        "template": "Nazywają mnie Rączka, bo <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0026",
+        "template": "Gomez patrzy na mnie i mówi: „Potrzebuję <D>”.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0027",
+        "template": "Cor Kalom twierdzi, że Śniący domaga się <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0028",
+        "template": "Nie wchodź tam. Ostatni raz skończyło się to <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0029",
+        "template": "Xardas ostrzegał mnie przed <N>, ale oczywiście go nie posłuchałem.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0030",
+        "template": "W Starym Obozie wszyscy plotkują o <MSC>.",
+        "slots": [
+          "MSC"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0031",
+        "template": "Nie pytaj, skąd mam <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0032",
+        "template": "Bezimienny osiągnął oświecenie dzięki <C>.",
+        "slots": [
+          "C"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0033",
+        "template": "Innos wystawił mnie na próbę poprzez <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0034",
+        "template": "Największym sekretem Nowego Obozu jest <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0035",
+        "template": "Strażnik w bramie przepuści cię tylko z <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0036",
+        "template": "System walki nagradza gracza za <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0037",
+        "template": "Najbardziej realistycznym elementem Gothica jest <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0038",
+        "template": "Legenda głosi, że pod Barierą ukryto <B> i <B>.",
+        "slots": [
+          "B",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0039",
+        "template": "Po 200 godzinach gry nadal nie rozumiem <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}

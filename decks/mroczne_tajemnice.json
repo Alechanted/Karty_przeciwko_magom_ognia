@@ -1,0 +1,289 @@
+{
+  "format_version": "1.0",
+  "meta": {
+    "name": "mroczne_tajemnice",
+    "display_name": "mroczne_tajemnice",
+    "authors": [],
+    "description": "",
+    "language": "pl",
+    "tags": [],
+    "version": ""
+  },
+  "cards": {
+    "white": [
+      {
+        "id": "w0001",
+        "forms": {
+          "M": "Mroczna przepowiednia napisana czcionką Comic Sans",
+          "D": "Mrocznej przepowiedni napisanej czcionką Comic Sans",
+          "C": "Mrocznej przepowiedni napisanej czcionką Comic Sans",
+          "B": "Mroczną przepowiednię napisaną czcionką Comic Sans",
+          "N": "Mroczną przepowiednią napisaną czcionką Comic Sans",
+          "MSC": "Mrocznej przepowiedni napisanej czcionką Comic Sans",
+          "W": "Mroczna przepowiednio napisana czcionką Comic Sans"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0002",
+        "forms": {
+          "M": "Dialog czytany z kartki przez kuzyna autora",
+          "D": "Dialogu czytanego z kartki przez kuzyna autora",
+          "C": "Dialogowi czytanemu z kartki przez kuzyna autora",
+          "B": "Dialog czytany z kartki przez kuzyna autora",
+          "N": "Dialogiem czytanym z kartki przez kuzyna autora",
+          "MSC": "Dialogu czytanym z kartki przez kuzyna autora",
+          "W": "Dialogu czytany z kartki przez kuzyna autora"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0003",
+        "forms": {
+          "M": "Mroczny bohater z fryzurą na żel",
+          "D": "Mrocznego bohatera z fryzurą na żel",
+          "C": "Mrocznemu bohaterowi z fryzurą na żel",
+          "B": "Mrocznego bohatera z fryzurą na żel",
+          "N": "Mrocznym bohaterem z fryzurą na żel",
+          "MSC": "Mrocznym bohaterze z fryzurą na żel",
+          "W": "Mroczny bohaterze z fryzurą na żel"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0004",
+        "forms": {
+          "M": "Epicka walka, w której nikt nie wie o co chodzi",
+          "D": "Epickiej walki, w której nikt nie wie o co chodzi",
+          "C": "Epickiej walce, w której nikt nie wie o co chodzi",
+          "B": "Epicką walkę, w której nikt nie wie o co chodzi",
+          "N": "Epicką walką, w której nikt nie wie o co chodzi",
+          "MSC": "Epickiej walce, w której nikt nie wie o co chodzi",
+          "W": "Epicka walko, w której nikt nie wie o co chodzi"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0005",
+        "forms": {
+          "M": "Notatnik pełen edgy cytatów o przeznaczeniu",
+          "D": "Notatnika pełnego edgy cytatów o przeznaczeniu",
+          "C": "Notatnikowi pełnemu edgy cytatów o przeznaczeniu",
+          "B": "Notatnik pełen edgy cytatów o przeznaczeniu",
+          "N": "Notatnikiem pełnym edgy cytatów o przeznaczeniu",
+          "MSC": "Notatniku pełnym edgy cytatów o przeznaczeniu",
+          "W": "Notatniku pełen edgy cytatów o przeznaczeniu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0006",
+        "forms": {
+          "M": "Boss, który ma 200 poziom i drewniany miecz",
+          "D": "Bossa, który ma 200 poziom i drewniany miecz",
+          "C": "Bossowi, który ma 200 poziom i drewniany miecz",
+          "B": "Bossa, który ma 200 poziom i drewniany miecz",
+          "N": "Bossem, który ma 200 poziom i drewniany miecz",
+          "MSC": "Bossie, który ma 200 poziom i drewniany miecz",
+          "W": "Bossie, który ma 200 poziom i drewniany miecz"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0007",
+        "forms": {
+          "M": "Mroczna energia w kolorze fioletowego Painta",
+          "D": "Mrocznej energii w kolorze fioletowego Painta",
+          "C": "Mrocznej energii w kolorze fioletowego Painta",
+          "B": "Mroczną energię w kolorze fioletowego Painta",
+          "N": "Mroczną energią w kolorze fioletowego Painta",
+          "MSC": "Mrocznej energii w kolorze fioletowego Painta",
+          "W": "Mroczna energio w kolorze fioletowego Painta"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0008",
+        "forms": {
+          "M": "Przerywnik filmowy z muzyką z Windows Movie Maker",
+          "D": "Przerywnika filmowego z muzyką z Windows Movie Maker",
+          "C": "Przerywnikowi filmowemu z muzyką z Windows Movie Maker",
+          "B": "Przerywnik filmowy z muzyką z Windows Movie Maker",
+          "N": "Przerywnikiem filmowym z muzyką z Windows Movie Maker",
+          "MSC": "Przerywniku filmowym z muzyką z Windows Movie Maker",
+          "W": "Przerywniku filmowy z muzyką z Windows Movie Maker"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0009",
+        "forms": {
+          "M": "Wielkie Zło, które brzmi jak gimnazjalny nick",
+          "D": "Wielkiego Zła, które brzmi jak gimnazjalny nick",
+          "C": "Wielkiemu Złu, które brzmi jak gimnazjalny nick",
+          "B": "Wielkie Zło, które brzmi jak gimnazjalny nick",
+          "N": "Wielkim Złem, które brzmi jak gimnazjalny nick",
+          "MSC": "Wielkim Złu, które brzmi jak gimnazjalny nick",
+          "W": "Wielkie Zło, które brzmi jak gimnazjalny nick"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "w0010",
+        "forms": {
+          "M": "Postać, która umiera w dramatycznym slow motion bez powodu",
+          "D": "Postaci, która umiera w dramatycznym slow motion bez powodu",
+          "C": "Postaci, która umiera w dramatycznym slow motion bez powodu",
+          "B": "Postać, która umiera w dramatycznym slow motion bez powodu",
+          "N": "Postacią, która umiera w dramatycznym slow motion bez powodu",
+          "MSC": "Postaci, która umiera w dramatycznym slow motion bez powodu",
+          "W": "Postaci, która umiera w dramatycznym slow motion bez powodu"
+        },
+        "theme": [],
+        "tags": [],
+        "weight": 1
+      }
+    ],
+    "black": [
+      {
+        "id": "b0001",
+        "template": "W „Mrocznych Tajemnicach” wszystko zaczyna się od <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0002",
+        "template": "Prawdziwą moc bohater zdobył dzięki <C>.",
+        "slots": [
+          "C"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0003",
+        "template": "Ten quest ma sens tylko jeśli wierzysz w <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0004",
+        "template": "Autor moda chciał przekazać światu <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0005",
+        "template": "Najbardziej epickim momentem było <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0006",
+        "template": "Nie rozumiesz fabuły? To przez <B>.",
+        "slots": [
+          "B"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0007",
+        "template": "Główny antagonista żywi się <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0008",
+        "template": "Wersja 1.0 została zniszczona przez <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0009",
+        "template": "Najbardziej klimatyczna rzecz w modzie to <M>.",
+        "slots": [
+          "M"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0010",
+        "template": "Cały dramat wynika z <D>.",
+        "slots": [
+          "D"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0011",
+        "template": "Na końcu okazuje się, że chodziło o <B> i <B>.",
+        "slots": [
+          "B",
+          "B"
+        ],
+        "pick": 2,
+        "tags": [],
+        "weight": 1
+      },
+      {
+        "id": "b0012",
+        "template": "Ten dialog był inspirowany <N>.",
+        "slots": [
+          "N"
+        ],
+        "pick": 1,
+        "tags": [],
+        "weight": 1
+      }
+    ]
+  }
+}
