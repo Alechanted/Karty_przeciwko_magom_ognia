@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Editor - Karty</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/editor.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Edytor decków</h1>
+    </header>
+
+    <section class="controls">
+      <div class="controls-row controls-top">
+        <label>Wybierz deck z serwera:
+          <select id="server-deck-select"><option value="">-- wybierz --</option></select>
+          <button id="load-server-deck">Wczytaj</button>
+        </label>
+
+        <label>Lub wczytaj lokalny plik:
+          <input id="local-file" type="file" accept=".json,.white,.black" />
+        </label>
+      </div>
+
+      <div class="controls-row controls-bottom">
+        <div>
+          <button id="new-deck">Nowy deck</button>
+          <button id="download-deck">Pobierz deck (.json)</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="meta">
+      <h2>Metadane</h2>
+      <input id="meta-name" placeholder="imienie pliku" />
+      <input id="meta-display" placeholder="nazwa wyświetlana" />
+      <input id="meta-authors" placeholder="autory (oddzielone przecinkiem)" />
+      <input id="meta-language" placeholder="mowa" value="pl" />
+      <textarea id="meta-desc" placeholder="opiz"></textarea>
+    </section>
+
+    <section class="editor">
+      <div class="tabs">
+        <button class="tab active" data-tab="white">Białe karty</button>
+        <button class="tab" data-tab="black">Czarne karty</button>
+      </div>
+
+      <div id="white-tab" class="tab-panel active">
+        <div class="toolbar">
+          <button id="add-white">Dodaj białą</button>
+        </div>
+        <ul id="white-list" class="card-list"></ul>
+      </div>
+
+      <div id="black-tab" class="tab-panel">
+        <div class="toolbar">
+          <button id="add-black">Dodaj czarną</button>
+        </div>
+        <ul id="black-list" class="card-list"></ul>
+      </div>
+    </section>
+
+    <div id="editor-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title">Edytuj kartę</h3>
+        <div id="modal-body"></div>
+        <div class="modal-actions">
+          <button id="modal-save" class="green-btn">Zapisz</button>
+          <button id="modal-cancel" class="red-btn">Anuluj</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/static/editor.js"></script>
+</body>
+</html>
