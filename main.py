@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from room_manager import RoomManager
-from message_handler import GameMessageHandler, LobbyMessageHandler
+from message_handler import MessageHandler
 import asyncio
 import run as run_cfg
 from enums import Phase
@@ -49,8 +49,7 @@ async def get_locales():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    lobbyHandler = LobbyMessageHandler(room_manager, websocket)
-    gameHandler = GameMessageHandler(room_manager, websocket)
+    handler = MessageHandler(room_manager, websocket)
 
     await room_manager.connect(websocket)
 
@@ -68,31 +67,31 @@ async def websocket_endpoint(websocket: WebSocket):
                     await websocket.send_json({"type": "DECK_LIST", "decks": decks})
 
                 case 'SET_NICK':
-                    await lobbyHandler.set_nick(data.get('nickname'))
+                    await handler.set_nick(data.get('nickname'))
 
                 case 'CHAT_MSG':
-                    await lobbyHandler.send_chat_message(data.get('message'))
+                    await handler.send_chat_message(data.get('message'))
 
                 case 'CREATE_ROOM':
-                    await lobbyHandler.create_room(data['name'], data['password'], data['settings'])
+                    await handler.create_room(data['name'], data['password'], data['settings'])
 
                 case 'JOIN_ROOM':
-                    await lobbyHandler.join_room(data['name'], data['password'])
+                    await handler.join_room(data['name'], data['password'])
 
                 case 'START_GAME':
-                    await gameHandler.start_game()
+                    await handler.start_game()
 
                 case 'SUBMIT_CARDS':
-                    await gameHandler.submit_cards(data['cards'])
+                    await handler.submit_cards(data['cards'])
 
                 case 'PICK_WINNER':
-                    await gameHandler.pick_winner(data['index'])
+                    await handler.pick_winner(data['index'])
 
                 case 'PLAYER_READY':
-                    await gameHandler.set_ready()
+                    await handler.set_ready()
 
                 case 'LEAVE_ROOM':
-                    await gameHandler.leave_room()
+                    await handler.leave_room()
 
     except WebSocketDisconnect:
         nick, r_name, room_removed = room_manager.disconnect(websocket)

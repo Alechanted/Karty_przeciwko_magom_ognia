@@ -16,39 +16,6 @@ class MessageHandler:
         else:
             await self._broadcast_to_all({"type": "CHAT", "author": nick, "message": message, "scope": "LOBBY"})
 
-    def _get_player_nick(self):
-        return self.room_manager.active_connections.get(self.websocket)
-    
-    def _get_player_room_name(self):
-        return self.room_manager.player_room_map.get(self.websocket)
-
-    def _get_player_room(self):
-        return self._get_room(self._get_player_room_name())
-
-    async def _broadcast_to_all(self, message):
-        for ws in list(self.room_manager.active_connections.keys()):
-            if self.room_manager.player_room_map.get(ws) is None:
-                await self._send(ws, message)
-
-    async def _broadcast_to_room(self, room, message):
-        if room:
-            for ws in list(room.players_data):
-                await self._send(ws, message)
-
-    async def _send_to_self(self, message):
-        await self._send(self.websocket, message)
-
-    async def _send(self, ws, message):
-        try:
-            await ws.send_json(message)
-        except Exception:
-            pass
-
-    def _get_room(self, room_name):
-        return self.room_manager.rooms.get(room_name)
-
-
-class LobbyMessageHandler(MessageHandler):
     async def set_nick(self, nick: str):
         if nick:
             self.room_manager.active_connections[self.websocket] = nick
@@ -79,7 +46,6 @@ class LobbyMessageHandler(MessageHandler):
         else:
             await self._send_to_self({"type": "ERROR", "message": result})
 
-class GameMessageHandler(MessageHandler):
     async def start_game(self):
         room = self._get_player_room()
 
@@ -122,3 +88,34 @@ class GameMessageHandler(MessageHandler):
             await self.room_manager.broadcast_room_count(room_name)
         # Update lobby players list
         await self.room_manager.broadcast_lobby_players()
+
+    def _get_player_nick(self):
+        return self.room_manager.active_connections.get(self.websocket)
+    
+    def _get_player_room_name(self):
+        return self.room_manager.player_room_map.get(self.websocket)
+
+    def _get_player_room(self):
+        return self._get_room(self._get_player_room_name())
+
+    async def _broadcast_to_all(self, message):
+        for ws in list(self.room_manager.active_connections.keys()):
+            if self.room_manager.player_room_map.get(ws) is None:
+                await self._send(ws, message)
+
+    async def _broadcast_to_room(self, room, message):
+        if room:
+            for ws in list(room.players_data):
+                await self._send(ws, message)
+
+    async def _send_to_self(self, message):
+        await self._send(self.websocket, message)
+
+    async def _send(self, ws, message):
+        try:
+            await ws.send_json(message)
+        except Exception:
+            pass
+
+    def _get_room(self, room_name):
+        return self.room_manager.rooms.get(room_name)
