@@ -5,8 +5,6 @@ import random
 import logging
 import time
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(nick)s] %(message)s", datefmt="%H:%M:%S")
-
 
 class GameBot:
     def __init__(self, nickname, server_url):
