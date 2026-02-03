@@ -15,6 +15,7 @@ logger = logging.getLogger("CAH_Main")
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/decks", StaticFiles(directory="decks"), name="decks")
 
 room_manager = RoomManager()
 
