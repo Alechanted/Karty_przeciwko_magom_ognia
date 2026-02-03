@@ -1,5 +1,5 @@
-body{font-family: 'Segoe UI', serif; margin:0; padding:0; background:var(--bg-main); color:var(--text-main)}
-#app{max-width:1100px;margin:20px auto;padding:16px}
+body{font-family: 'Segoe UI', serif; overflow-y: auto; margin:0; padding:0; background:var(--bg-main); color:var(--text-main)}
+#app{max-width:94%;margin:20px auto;padding:16px; overflow-y: auto}
 header h1{margin:0 0 4px}
 .muted{color:var(--text-muted);font-size:0.9em}
 .controls{display:flex;flex-direction:column;gap:8px;margin:12px 0}
