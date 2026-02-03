@@ -107,9 +107,8 @@ class GameMessageHandler(MessageHandler):
     async def set_ready(self):
         room = self._get_player_room()
         if room.phase == Phase.SUMMARY:
-            next_round = await room.mark_player_ready(self.websocket)
-            if not next_round:
-                await self.room_manager.broadcast_room_state(room.room_name)
+            await room.mark_player_ready(self.websocket)
+            await self.room_manager.broadcast_room_state(room.room_name)
 
     async def leave_room(self):
         room_name, room_removed = await self.room_manager.disconnect(self.websocket)
