@@ -119,45 +119,35 @@ class RoomManager:
         return "OK"
 
     async def send_room_list(self, websocket):
-        rooms_list = []
-        for name, engine in self.rooms.items():
-            rooms_list.append({
-                "name": name,
-                "players": len(engine.players_data),
-                "max": engine.settings['max_players'],
-                "has_password": bool(engine.settings.get('password'))
-            })
+        rooms_list = [{
+            "name": name,
+            "players": len(engine.players_data),
+            "max": engine.settings['max_players'],
+            "has_password": bool(engine.settings.get('password'))
+        } for name, engine in self.rooms.items()]
 
-        players_list = []
-        for ws, nick in self.active_connections.items():
-            if not nick: continue
-            players_list.append({
-                "nick": nick,
-                "room": self.player_room_map.get(ws)
-            })
+        players_list = [{
+            "nick": nick,
+            "room": self.player_room_map.get(ws)
+        } for ws, nick in self.active_connections.items() if nick]
 
         await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
 
     async def broadcast_room_list(self):
         # Full room list is intended only for lobby clients.
-        rooms_list = []
-        for name, engine in self.rooms.items():
-            rooms_list.append({
-                "name": name,
-                "players": len(engine.players_data),
-                "max": engine.settings['max_players'],
-                "has_password": bool(engine.settings.get('password'))
-            })
+        rooms_list = [{
+            "name": name,
+            "players": len(engine.players_data),
+            "max": engine.settings['max_players'],
+            "has_password": bool(engine.settings.get('password'))
+        } for name, engine in self.rooms.items()]
 
-        players_list = []
-        for ws, nick in self.active_connections.items():
-            if not nick: continue
-            players_list.append({
-                "nick": nick,
-                "room": self.player_room_map.get(ws)
-            })
+        players_list = [{
+            "nick": nick,
+            "room": self.player_room_map.get(ws)
+        } for ws, nick in self.active_connections.items() if nick]
 
-        for ws, nick in list(self.active_connections.items()):
+        for ws in list(self.active_connections.keys()):
             try:
                 if self.player_room_map.get(ws) is None:
                     await ws.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
