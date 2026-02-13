@@ -76,8 +76,8 @@ class MessageHandler:
             await room.mark_player_ready(self.websocket)
             await self.room_manager.broadcast_room_state(room.room_name)
 
-#poprawka pisana na kolanie, nie mam tu dostępu do mojego ide i klepię w chujowniku ms windows
-async def leave_room(self):
+    #poprawka pisana na kolanie, nie mam tu dostępu do mojego ide i klepię w chujowniku ms windows
+    async def leave_room(self):
         # POPRAWKA z chrząszcza: Dodano _ na początku, aby odebrać 'nick', którego tu nie używamy
         _, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
         
