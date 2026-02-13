@@ -76,17 +76,17 @@ class MessageHandler:
             await room.mark_player_ready(self.websocket)
             await self.room_manager.broadcast_room_state(room.room_name)
 
-    async def leave_room(self):
-        room_name, room_removed = await self.room_manager.disconnect(self.websocket)
+#poprawka pisana na kolanie, nie mam tu dostępu do mojego ide i klepię w chujowniku ms windows
+async def leave_room(self):
+        # POPRAWKA z chrząszcza: Dodano _ na początku, aby odebrać 'nick', którego tu nie używamy
+        _, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
+        
         await self._send_to_self({"type": "LEFT_ROOM"})
-        # Send full room list to this client (now in lobby)
         await self.room_manager.send_room_list(self.websocket)
-        # Notify lobby: if room was removed, send full list; otherwise send single-room update
         if room_removed:
             await self.room_manager.broadcast_room_list()
         elif room_name and room_name in self.room_manager.rooms:
             await self.room_manager.broadcast_room_count(room_name)
-        # Update lobby players list
         await self.room_manager.broadcast_lobby_players()
 
     def _get_player_nick(self):
