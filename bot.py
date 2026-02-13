@@ -83,7 +83,7 @@ class GameBot:
                 self.latest_state = data
 
             elif mtype == 'LEFT_ROOM':
-                cooldown = 20.0 + random.uniform(0, 5.0)
+                cooldown = 60.0 + random.uniform(0, 5.0)
                 self.next_search_timestamp = time.time() + cooldown
 
                 self.logger.info(f"Opuszczono pokój. Odpoczywam {cooldown:.1f}s zanim poszukam nowego...")
