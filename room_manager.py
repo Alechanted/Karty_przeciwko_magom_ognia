@@ -114,7 +114,9 @@ class RoomManager:
         if len(room.players_data) >= room.settings['max_players']:
             return TEXTS["ERR_ROOM_FULL"]
 
-        nick = self.active_connections[websocket]
+        nick = self.active_connections.get(websocket)
+        if not nick:
+            return "ERR_NO_NICK"
         self.player_room_map[websocket] = room_name
         room.add_player(websocket, nick)
         return "OK"
@@ -208,3 +210,4 @@ class RoomManager:
             except Exception:
 
                 pass
+
