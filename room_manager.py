@@ -21,7 +21,8 @@ class RoomManager:
         await websocket.accept()
         self.active_connections[websocket] = None
 
-    def disconnect(self, websocket: WebSocket):
+#zmiana pisana na kolanie, nie mam dostępu do moich plików i IDE, klepię w chujowniku ms windows
+    async def disconnect(self, websocket: WebSocket):
         nick = self.active_connections.pop(websocket, None)
         room_name = self.player_room_map.pop(websocket, None)
         room_removed = False
