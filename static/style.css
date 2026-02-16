@@ -84,6 +84,11 @@ button {
     transition: var(--transition);
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .green-btn,
 .big-green-btn,
 .action-btn {
@@ -129,6 +134,12 @@ button {
     border-radius: var(--radius);
     border: none;
     width: 220px;
+}
+
+#game-settings {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px;
 }
 
 /* ========================================

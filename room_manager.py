@@ -5,6 +5,7 @@ from typing import Dict, Optional
 from fastapi import WebSocket
 
 from game_engine import GameEngine
+from models import GameSettings
 from enums import Phase
 from locales import TEXTS
 
@@ -56,8 +57,8 @@ class RoomManager:
             "room": {
                 "name": room_name,
                 "players": len(room.players_data),
-                "max": room.settings['max_players'],
-                "has_password": bool(room.settings.get('password'))
+                "max": room.settings.max_players,
+                "has_password": room.settings.password is not None
             }
         }
 
@@ -87,31 +88,24 @@ class RoomManager:
             except Exception:
                 pass
 
-    def create_room(self, name, password, settings):
-        if name in self.rooms: return False
-        final_settings = {
-            "password": password,
-            "max_players": int(settings.get('max_players', 8)),
-            "hand_size": int(settings.get('hand_size', 10)),
-            "win_score": int(settings.get('win_score', 5)),
-            "timeout": int(settings.get('timeout', 60)) if settings.get('timeout') != 'inf' else 0,
-            "decks": settings.get('decks', [])
-        }
-
-        engine = GameEngine(name, final_settings)
+    def create_room(self, owner_name: str, settings: GameSettings):
+        if settings.name in self.rooms:
+            return False
+        
+        engine = GameEngine(owner_name, settings)
         engine.broadcast_callback = self.broadcast_room_state
 
-        self.rooms[name] = engine
+        self.rooms[settings.name] = engine
         return True
 
     async def join_room(self, websocket, room_name, password):
         room = self.rooms.get(room_name)
         if not room: return TEXTS["ERR_NO_ROOM"]
 
-        if room.settings.get('password') and room.settings['password'] != password:
+        if room.settings.password is not None and room.settings.password != password:
             return TEXTS["ERR_WRONG_PASS"]
 
-        if len(room.players_data) >= room.settings['max_players']:
+        if len(room.players_data) >= room.settings.max_players:
             return TEXTS["ERR_ROOM_FULL"]
 
         nick = self.active_connections.get(websocket)
@@ -122,38 +116,18 @@ class RoomManager:
         return "OK"
 
     async def send_room_list(self, websocket):
-        rooms_list = [{
-            "name": name,
-            "players": len(engine.players_data),
-            "max": engine.settings['max_players'],
-            "has_password": bool(engine.settings.get('password'))
-        } for name, engine in self.rooms.items()]
-
-        players_list = [{
-            "nick": nick,
-            "room": self.player_room_map.get(ws)
-        } for ws, nick in self.active_connections.items() if nick]
-
-        await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
+        rooms, players = self._get_rooms_and_players()
+        
+        await websocket.send_json({"type": "ROOM_LIST", "rooms": rooms, "players": players})
 
     async def broadcast_room_list(self):
         # Full room list is intended only for lobby clients.
-        rooms_list = [{
-            "name": name,
-            "players": len(engine.players_data),
-            "max": engine.settings['max_players'],
-            "has_password": bool(engine.settings.get('password'))
-        } for name, engine in self.rooms.items()]
-
-        players_list = [{
-            "nick": nick,
-            "room": self.player_room_map.get(ws)
-        } for ws, nick in self.active_connections.items() if nick]
+        rooms, players = self._get_rooms_and_players()
 
         for ws in list(self.active_connections.keys()):
             try:
                 if self.player_room_map.get(ws) is None:
-                    await ws.send_json({"type": "ROOM_LIST", "rooms": rooms_list, "players": players_list})
+                    await ws.send_json({"type": "ROOM_LIST", "rooms": rooms, "players": players})
             except Exception:
                 pass
 
@@ -190,7 +164,9 @@ class RoomManager:
 
         for ws in list(room.players_data.keys()):
             try:
-                hand = room.players_data.get(ws, {}).get('hand', [])
+                player = room.players_data.get(ws, {})
+                hand = player.get('hand', [])
+                nick = player.get('nick', '')
                 hand_data = [{"id": c.id, "text": c.get_nominative()} for c in hand]
 
                 await ws.send_json({
@@ -205,9 +181,25 @@ class RoomManager:
                     "am_i_ready": (ws in room.ready_players),
                     "players_list": players_list,
                     "winner": room.winner_nick,
-                    "room_name": room_name
+                    "room_name": room_name,
+                    "can_start_game": room.phase == Phase.LOBBY and
+                        len(room.players_data) > 1 and
+                        (room.settings.anyone_can_start or room.owner_name == nick)
                 })
             except Exception:
-
                 pass
 
+    def _get_rooms_and_players(self):
+        rooms_list = [{
+            "name": name,
+            "players": len(engine.players_data),
+            "max": engine.settings.max_players,
+            "has_password": engine.settings.password is not None
+        } for name, engine in self.rooms.items()]
+
+        players_list = [{
+            "nick": nick,
+            "room": self.player_room_map.get(ws)
+        } for ws, nick in self.active_connections.items() if nick]
+
+        return rooms_list, players_list

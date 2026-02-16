@@ -4,6 +4,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
+from models import GameSettings
 from room_manager import RoomManager
 from message_handler import MessageHandler
 import asyncio
@@ -19,23 +20,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/decks", StaticFiles(directory="decks"), name="decks")
 
 room_manager = RoomManager()
-
-
-async def _lobby_broadcaster_loop():
-    # Periodically broadcast room/player list to all connected clients
-    interval = getattr(run_cfg, 'LOBBY_REFRESH', 3)
-    while True:
-        try:
-            await room_manager.broadcast_room_list()
-        except Exception:
-            pass
-        await asyncio.sleep(interval)
-
-
-@app.on_event("startup")
-async def _startup_tasks():
-    # No periodic lobby broadcaster: full ROOM_LIST is sent only on room create/remove.
-    pass
 
 @app.get("/")
 async def get():
@@ -73,7 +57,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     await handler.send_chat_message(data.get('message'))
 
                 case 'CREATE_ROOM':
-                    await handler.create_room(data['name'], data['password'], data['settings'])
+                    settings = GameSettings(**data['settings'])
+                    await handler.create_room(settings)
 
                 case 'JOIN_ROOM':
                     await handler.join_room(data['name'], data['password'])

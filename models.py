@@ -1,7 +1,7 @@
 import re
 import uuid
 from typing import List
-
+from dataclasses import dataclass
 
 class WhiteCard:
     def __init__(self, raw_line: str):
@@ -71,3 +71,15 @@ class BlackCard:
             obj.tags = [f"<{s}>" for s in slots]
             obj.pick_count = max(1, len(obj.tags))
         return obj
+
+
+@dataclass(frozen=True)
+class GameSettings:
+    name: str
+    password: str | None
+    max_players: int
+    hand_size: int
+    win_score: int
+    timeout: int | None # in seconds
+    anyone_can_start: bool
+    decks: List[str]

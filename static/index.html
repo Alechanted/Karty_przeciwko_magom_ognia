@@ -49,14 +49,31 @@
     <div id="create-room-modal" class="modal hidden">
         <div class="modal-content">
             <h3>Załóż nowy pokój</h3>
-            <label>Nazwa pokoju: <input type="text" id="new-room-name"></label>
-            <label>Hasło (opcjonalne): <input type="text" id="new-room-pass"></label>
+            
+            <div id="game-settings">
+                <label for="new-room-name">Nazwa pokoju:</label>
+                <input type="text" id="new-room-name">
 
-            <div class="settings-grid">
-                <label>Max graczy: <input type="number" id="conf-max" value="8" min="3" max="20"></label>
-                <label>Karty na ręce: <input type="number" id="conf-hand" value="10" min="5" max="20"></label>
-                <label>Punkty do win: <input type="number" id="conf-win" value="5" min="3" max="20"></label>
-                <label>Timeout (s): <input type="text" id="conf-timeout" value="60" placeholder="np. 60 lub inf"></label>
+                <label for="new-room-pass">Hasło (opcjonalne):</label>
+                <input type="text" id="new-room-pass">
+
+                <label for="conf-max">Max graczy:</label>
+                <input type="number" id="conf-max" value="8" min="3" max="20">
+
+                <label for="conf-hand">Karty na ręce:</label>
+                <input type="number" id="conf-hand" value="10" min="5" max="20">
+
+                <label for="conf-win">Punkty do win:</label>
+                <input type="number" id="conf-win" value="5" min="3" max="20">
+
+                <label for="conf-timeout">Timeout (s):</label>
+                <input type="number" id="conf-timeout" value="60" placeholder="np. 60 lub inf">
+
+                <label for="conf-wait-for-all">Czekamy na wszystkich:</label>
+                <input type="checkbox" id="conf-wait-for-all">
+
+                <label for="conf-anyone-can-start">Każdy może rozpocząć grę:</label>
+                <input type="checkbox" id="conf-anyone-can-start">
             </div>
 
             <h4>Wybierz talie:</h4>
