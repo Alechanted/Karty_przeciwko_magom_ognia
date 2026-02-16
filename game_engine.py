@@ -127,8 +127,11 @@ class GameEngine:
 
     def remove_player(self, ws):
         if ws in self.players_data:
+            p = self.players_data[ws]
             del self.players_data[ws]
             self.ready_players.discard(ws)
+            
+            if p['nick'] == self.owner_name: self.owner_name = None
             if ws == self.czar_socket: self.czar_socket = None
             if ws in self.round_submissions: del self.round_submissions[ws]
 
