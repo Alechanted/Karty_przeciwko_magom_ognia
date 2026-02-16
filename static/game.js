@@ -170,7 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const waitForAll = document.getElementById('conf-wait-for-all').checked;
         const timeout = document.getElementById('conf-timeout').value;
-        if (!waitForAll && !timeout) return alert("Wybierz timeout lub czekaj!")
+
+        if (!waitForAll && (!timeout || parseInt(timeout) <= 0)) return alert("Wybierz poprawny timeout lub czekaj!")
 
         const settings = {
             name: newRoomName.value,
