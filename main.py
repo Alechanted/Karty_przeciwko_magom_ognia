@@ -61,7 +61,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     await handler.create_room(settings)
 
                 case 'JOIN_ROOM':
-                    await handler.join_room(data['name'], data['password'])
+                    await handler.join_room(data['name'], data.get('password', None))
 
                 case 'START_GAME':
                     await handler.start_game()

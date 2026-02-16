@@ -132,6 +132,9 @@ class GameEngine:
             if ws == self.czar_socket: self.czar_socket = None
             if ws in self.round_submissions: del self.round_submissions[ws]
 
+    def is_password_correct(self, password: str):
+        return not self.settings.has_password() or self.settings.password == password
+
 
     # FIX: Gra duplikuje karty
     # Gra miała nieprzemyślane zabezpieczenie przed przedwczesnym zakończeniem gry z powodu brak kart

@@ -83,3 +83,6 @@ class GameSettings:
     timeout: int | None # in seconds
     anyone_can_start: bool
     decks: List[str]
+
+    def has_password(self):
+        return self.password is not None and self.password is not ''

@@ -58,7 +58,7 @@ class RoomManager:
                 "name": room_name,
                 "players": len(room.players_data),
                 "max": room.settings.max_players,
-                "has_password": room.settings.password is not None
+                "has_password": room.settings.has_password()
             }
         }
 
@@ -102,7 +102,7 @@ class RoomManager:
         room = self.rooms.get(room_name)
         if not room: return TEXTS["ERR_NO_ROOM"]
 
-        if room.settings.password is not None and room.settings.password != password:
+        if not room.is_password_correct(password):
             return TEXTS["ERR_WRONG_PASS"]
 
         if len(room.players_data) >= room.settings.max_players:
@@ -194,7 +194,7 @@ class RoomManager:
             "name": name,
             "players": len(engine.players_data),
             "max": engine.settings.max_players,
-            "has_password": engine.settings.password is not None
+            "has_password": engine.settings.has_password()
         } for name, engine in self.rooms.items()]
 
         players_list = [{
