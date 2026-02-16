@@ -135,6 +135,8 @@ class GameEngine:
     def is_password_correct(self, password: str):
         return not self.settings.has_password() or self.settings.password == password
 
+    def can_start_game(self, nick: str):
+        return self.settings.anyone_can_start or self.owner_name is None or self.owner_name == nick
 
     # FIX: Gra duplikuje karty
     # Gra miała nieprzemyślane zabezpieczenie przed przedwczesnym zakończeniem gry z powodu brak kart

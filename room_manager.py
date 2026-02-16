@@ -168,7 +168,8 @@ class RoomManager:
                 hand = player.get('hand', [])
                 nick = player.get('nick', '')
                 hand_data = [{"id": c.id, "text": c.get_nominative()} for c in hand]
-
+                can_start_game = room.phase == Phase.LOBBY and len(room.players_data) > 1 and room.can_start_game(nick)
+                
                 await ws.send_json({
                     "type": "GAME_UPDATE",
                     "phase": room.phase.value,
@@ -182,9 +183,7 @@ class RoomManager:
                     "players_list": players_list,
                     "winner": room.winner_nick,
                     "room_name": room_name,
-                    "can_start_game": room.phase == Phase.LOBBY and
-                        len(room.players_data) > 1 and
-                        (room.settings.anyone_can_start or room.owner_name == nick)
+                    "can_start_game": can_start_game
                 })
             except Exception:
                 pass

@@ -54,7 +54,7 @@ class MessageHandler:
             await self._send_to_self({"type": "ERROR", "message": "ERR_GAME_ALREADY_STARTED"})
             return
 
-        if not room.settings.anyone_can_start and room.owner_name != self._get_player_nick():
+        if not room.can_start_game(self._get_player_nick()):
             await self._send_to_self({"type": "ERROR", "message": "ERR_NOT_ALLOWED_TO_START"})
             return
 
@@ -89,8 +89,12 @@ class MessageHandler:
     #poprawka pisana na kolanie, nie mam tu dostępu do mojego ide i klepię w chujowniku ms windows
     async def leave_room(self):
         # POPRAWKA z chrząszcza: Dodano _ na początku, aby odebrać 'nick', którego tu nie używamy
-        _, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
-        
+        room = self._get_player_room()
+        nick, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
+
+        if room.owner_name == nick:
+            room.owner_name = None
+
         await self._send_to_self({"type": "LEFT_ROOM"})
         await self.room_manager.send_room_list(self.websocket)
         if room_removed:
