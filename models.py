@@ -85,4 +85,5 @@ class GameSettings:
     decks: List[str]
 
     def has_password(self):
-        return self.password is not None and self.password is not ''
+        return self.password is not None and self.password != ''
+
