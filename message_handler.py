@@ -1,5 +1,6 @@
 from fastapi import WebSocket
 from enums import Phase
+from models import GameSettings
 from room_manager import RoomManager
 
 class MessageHandler:
@@ -26,11 +27,12 @@ class MessageHandler:
             # Notify lobby clients about updated player list
             await self.room_manager.broadcast_lobby_players()
 
-    async def create_room(self, name, password, settings):
-        success = self.room_manager.create_room(name, password, settings)
+    async def create_room(self, settings: GameSettings):
+        owner_name = self._get_player_nick()
+        success = self.room_manager.create_room(owner_name, settings)
         if success:
             await self.room_manager.broadcast_room_list()
-            await self.join_room(name, password)
+            await self.join_room(settings.name, settings.password)
         else:
             await self._send_to_self({"type": "ERROR", "message": "Pokój o tej nazwie już istnieje!"})
 
@@ -48,13 +50,21 @@ class MessageHandler:
 
     async def start_game(self):
         room = self._get_player_room()
+        if room.game_started:
+            await self._send_to_self({"type": "ERROR", "message": "ERR_GAME_ALREADY_STARTED"})
+            return
+
+        if not room.can_start_game(self._get_player_nick()):
+            await self._send_to_self({"type": "ERROR", "message": "ERR_NOT_ALLOWED_TO_START"})
+            return
 
         if len(room.players_data) < 2:
-            await self._send({"type": "ERROR", "message": "ERR_MIN_PLAYERS"})
-        elif not room.game_started:
-            room.game_started = True
-            await room.start_round()
-            await self.room_manager.broadcast_room_state(room.room_name)
+            await self._send_to_self({"type": "ERROR", "message": "ERR_MIN_PLAYERS"})
+            return
+
+        room.game_started = True
+        await room.start_round()
+        await self.room_manager.broadcast_room_state(room.room_name)
 
     async def submit_cards(self, cards):
         room = self._get_player_room()
@@ -80,7 +90,7 @@ class MessageHandler:
     async def leave_room(self):
         # POPRAWKA z chrząszcza: Dodano _ na początku, aby odebrać 'nick', którego tu nie używamy
         _, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
-        
+
         await self._send_to_self({"type": "LEFT_ROOM"})
         await self.room_manager.send_room_list(self.websocket)
         if room_removed:

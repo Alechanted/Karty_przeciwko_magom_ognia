@@ -2,9 +2,8 @@ import os
 import random
 import logging
 import asyncio
-from typing import List, Dict, Tuple, Set
 
-from models import WhiteCard, BlackCard
+from models import GameSettings, WhiteCard, BlackCard
 from enums import Phase
 from locales import TEXTS
 
@@ -12,15 +11,16 @@ logger = logging.getLogger(__name__)
 
 
 class GameEngine:
-    def __init__(self, room_name, settings):
-        self.room_name = room_name
+    def __init__(self, owner_name: str, settings: GameSettings):
+        self.owner_name = owner_name
+        self.room_name = settings.name
         self.settings = settings  # dict: max_players, hand_size, win_score, timeout, decks
 
         self.white_deck_master = []
         self.black_deck_master = []
 
         # 1. Ładowanie Masterów
-        self._load_selected_decks(settings.get('decks', []))
+        self._load_selected_decks(settings.decks)
 
         self.game_started = False
         self.phase = Phase.LOBBY
@@ -127,11 +127,19 @@ class GameEngine:
 
     def remove_player(self, ws):
         if ws in self.players_data:
+            p = self.players_data[ws]
             del self.players_data[ws]
             self.ready_players.discard(ws)
+            
+            if p['nick'] == self.owner_name: self.owner_name = None
             if ws == self.czar_socket: self.czar_socket = None
             if ws in self.round_submissions: del self.round_submissions[ws]
 
+    def is_password_correct(self, password: str):
+        return not self.settings.has_password() or self.settings.password == password
+
+    def can_start_game(self, nick: str):
+        return self.settings.anyone_can_start or self.owner_name is None or self.owner_name == nick
 
     # FIX: Gra duplikuje karty
     # Gra miała nieprzemyślane zabezpieczenie przed przedwczesnym zakończeniem gry z powodu brak kart
@@ -153,7 +161,7 @@ class GameEngine:
         self.judging_order = []
         self.ready_players = set()
 
-        hand_limit = int(self.settings.get('hand_size', 10))
+        hand_limit = int(self.settings.hand_size)
 
         for ws, p_data in self.players_data.items():
             while len(p_data['hand']) < hand_limit and self.white_deck:
@@ -172,7 +180,7 @@ class GameEngine:
             except ValueError:
                 self.czar_socket = random.choice(active)
 
-        timeout_sec = self.settings.get('timeout')
+        timeout_sec = self.settings.timeout
         if timeout_sec and timeout_sec > 0:
             self._timeout_task = asyncio.create_task(
                 self._round_timeout_logic(timeout_sec)
@@ -244,7 +252,7 @@ class GameEngine:
                 self.players_data[winner_ws]['score'] += 1
                 winner_nick = self.players_data[winner_ws]['nick']
 
-            win_score = int(self.settings.get('win_score', 5))
+            win_score = int(self.settings.win_score)
             if self.players_data.get(winner_ws, {}).get('score', 0) >= win_score:
                 self.phase = Phase.GAME_OVER
                 self.winner_nick = winner_nick

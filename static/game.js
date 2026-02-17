@@ -164,16 +164,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('confirm-create-room').onclick = () => {
         const name = newRoomName.value.trim();
         if (!name) return alert("Podaj nazwę pokoju");
+
         const checkedDecks = Array.from(document.querySelectorAll('.deck-checkbox:checked')).map(cb => cb.value);
         if (checkedDecks.length === 0) return alert("Wybierz talię!");
+
+        const waitForAll = document.getElementById('conf-wait-for-all').checked;
+        const timeout = document.getElementById('conf-timeout').value;
+
+        if (!waitForAll && (!timeout || parseInt(timeout) <= 0)) return alert("Wybierz poprawny timeout lub czekaj!")
+
         const settings = {
-            max_players: document.getElementById('conf-max').value,
-            hand_size: document.getElementById('conf-hand').value,
-            win_score: document.getElementById('conf-win').value,
-            timeout: document.getElementById('conf-timeout').value,
+            name: newRoomName.value,
+            password: !!newRoomPass.value ? newRoomPass.value : null,
+            max_players: parseInt(document.getElementById('conf-max').value),
+            hand_size: parseInt(document.getElementById('conf-hand').value),
+            win_score: parseInt(document.getElementById('conf-win').value),
+            anyone_can_start: document.getElementById('conf-anyone-can-start').checked,
+            timeout: waitForAll ? null : parseInt(timeout),
             decks: checkedDecks
         };
-        ws.send(JSON.stringify({ type: 'CREATE_ROOM', name: name, password: newRoomPass.value, settings: settings }));
+
+        ws.send(JSON.stringify({ type: 'CREATE_ROOM', settings: settings }));
     };
 
     document.getElementById('confirm-join-pass').onclick = () => ws.send(JSON.stringify({ type: 'JOIN_ROOM', name: pendingJoinRoomName, password: joinRoomPass.value }));
@@ -271,6 +282,9 @@ function renderGame(data) {
             if (startBtnInfo && data.players_list) {
                 startBtnInfo.innerText = `Graczy w pokoju: ${data.players_list.length}`;
             }
+
+            const startBtn = document.getElementById('start-game-btn');
+            startBtn.disabled = !data.can_start_game;
 
         } else if (data.phase === 'GAME_OVER') {
             lobbyView.classList.add('hidden');
