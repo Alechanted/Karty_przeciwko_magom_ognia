@@ -54,37 +54,35 @@ Przykładowa struktura (może ewoluować):
 
 ```text
 /static
+    editor.css
+    editor.html
+    editor.js
     game.js
     index.html    
     style.css 
 /decks
-    example.white
-    example.black
+    example.json
 bot.py
-README.md
-debug.py
+enums.py
+game_engine.py
 locales.py
 main.py
+message_handler.py
 models.py
+README.md
 room_manager.py
 run.py
 ```
-- static/ – *interfejs użytkownika (JS/HTML/CSS)*
-
-- decks/ – *pliki z kartami (bez logiki)*
-
+- static/ – *interfejs użytkownika (JS/HTML/CSS), w tym edytor decków*
+- decks/ – *pliki z deckami w formacie JSON (bez logiki)*
 - bot.py - *logika botów*
-
-- debug.py – *skrypt do sprawdzania poprawności decków*
-
+- enums.py – *enumy / stałe*
+- game_engine.py – *silnik gry / logika rozgrywki*
+- message_handler.py – *obsługa komunikacji / wiadomości*
 - locales.py - *słownik, żeby dało się to konwertować, jakbyśmy chcieli jednak zrobić karty przeciwko forknife*
-
 - main.py - *główny backend gry*
-
 - models.py - *karteluszki*
-
 - room_manager - *logika pokoi*
-
 - run.py - *uruchamiacz*
 
 ### Branch główny
@@ -120,65 +118,80 @@ fix/disconnect-bug
 deck/finanse
 
 ## Decki – format plików
-Decki są prostymi plikami tekstowymi, łatwymi do edycji nawet dla osób bez doświadczenia programistycznego.
 
-### Informacje ogólne
-Decki umieszczamy w katalogu decks/
+Decki trzymamy w katalogu `decks/` jako pliki **`.json`**.
 
-Wystarczy:
+### Szybki workflow (dodanie/zmiana decku)
+1. Utwórz / edytuj plik `decks/<nazwa>.json` (najwygodniej przez edytor – patrz niżej)
+2. Zrestartuj backend, żeby serwer wczytał nowy plik
 
-1. wrzucić plik do katalogu
+---
 
-2. zrestartować program
+## Edytor decków (GUI)
+W repo jest prosty edytor, który pozwala:
+- wczytać deck z serwera,
+- wczytać lokalny plik `.json`,
+- edytować metadane i karty (białe/czarne),
+- pobrać gotowy deck jako `.json`.
 
-Każda linijka pliku = jedna karta
+Plik: `static/editor.html`
 
-### Odmiana przez przypadki (PL)
+Uwaga: edytor działa sensownie, gdy backend jest uruchomiony (wczytywanie decków z serwera).
 
-Skróty używane w kartach:
+---
 
-`<M>` – Mianownik (kto? co?)
+## Format JSON (v1.0)
 
-`<D>` – Dopełniacz (kogo? czego?)
+Każdy deck ma postać:
+- `format_version`: aktualnie `"1.0"`
+- `meta`: metadane decku
+- `cards.white`: lista kart białych
+- `cards.black`: lista kart czarnych
 
-`<C>` – Celownik (komu? czemu?)
+Minimalny szkielet:
 
-`<B>` – Biernik (kogo? co?)
 
-`<N>` – Narzędnik (z kim? z czym?)
+json { "format_version": "1.0", "meta": { "name": "my_deck", "display_name": "Mój deck", "authors": [], "description": "", "language": "pl", "tags": [], "version": "" }, "cards": { "white": [], "black": [] } }``` 
 
-`<MSC>` – Miejscownik (o kim? o czym?)
+### Karta biała (`cards.white[]`)
+Biała karta zawiera odmianę przez przypadki (PL) w polu `forms`.
 
+- `id`: identyfikator karty (unikalny w ramach decku)
+- `forms`: obiekt z kluczami: `M, D, C, B, N, MSC, W`
+- `theme`: lista stringów (opcjonalna kategoryzacja)
+- `tags`: lista tagów
+- `weight`: waga losowania (domyślnie `1`)
+
+Przykład (schematyczny):
+
+
+json { "id": "w0001", "forms": { "M": "…", "D": "…", "C": "…", "B": "…", "N": "…", "MSC": "…", "W": "…" }, "theme": [], "tags": [], "weight": 1 }``` 
+
+### Karta czarna (`cards.black[]`)
+Czarna karta używa placeholderów przypadków, np. `<M>`, `<B>`, itd.  
+Placeholder wskazuje, której formy z białej karty użyć w danym slocie.
+
+- `template`: treść karty czarnej z placeholderami
+- `slots`: lista placeholderów wykrytych w `template` (np. `["B"]` albo `["B","B"]`)
+- `pick`: ile białych kart jest dobieranych (zwykle liczba slotów; jeśli brak slotów → `1`)
+- `id`, `tags`, `weight`: jak wyżej
+
+Przykład:
+
+
+json { "id": "b0001", "template": "Tekst z placeholderem .", "slots": ["B"], "pick": 1, "tags": [], "weight": 1 }``` 
+
+### Odmiana przez przypadki (PL) – placeholdery
+Skróty używane w kartach czarnych:
+
+`<M>` – Mianownik (kto? co?)  
+`<D>` – Dopełniacz (kogo? czego?)  
+`<C>` – Celownik (komu? czemu?)  
+`<B>` – Biernik (kogo? co?)  
+`<N>` – Narzędnik (z kim? z czym?)  
+`<MSC>` – Miejscownik (o kim? o czym?)  
 `<W>` – Wołacz
 
-### Pliki .white
-Każda linijka zawiera kartę białą odmienioną przez wszystkie przypadki  
-Odmiany oddzielone są znakiem |
-
-Przykład:
-```text
-błogosławienie nowicjusza do listu gończego z mordą Bezimiennego | błogosławienia nowicjusza do listu gończego z mordą Bezimiennego | błogosławieniu nowicjusza do listu gończego z mordą Bezimiennego | błogosławienie nowicjusza do listu gończego z mordą Bezimiennego | błogosławieniem nowicjusza do listu gończego z mordą Bezimiennego | błogosławieniu nowicjusza do listu gończego z mordą Bezimiennego | błogosławienie nowicjusza do listu gończego z mordą Bezimiennego
-spuszczanie się z drabiny | spuszczania się z drabiny | spuszczaniu się z drabiny | spuszczanie się z drabiny | spuszczaniem się z drabiny | spuszczaniu się z drabiny | spuszczanie się z drabiny
-mordowanie magów ognia | mordowania magów ognia | mordowaniu magów ognia | mordowanie magów ognia | mordowaniem magów ognia | mordowaniu magów ognia | mordowanie magów ognia
-```
-
-### Pliki .black
-Każda linijka to karta czarna  
-Karta zawiera jedno lub dwa puste pola  
-Puste pole oznaczamy skrótem przypadku w ostrych nawiasach
-
-Przykład:
-```text
-Jestem Ur-Shak. Jestem Syn Ducha, ludzie mówią: <M>
-Nie interesuje mnie kim jesteś, Jesteś tu nowy, a do mnie należy dbanie o <B>
-Nie. Po namyśle doszedłem do wniosku, że bardziej przydasz się tutaj. Będziesz dla mnie <B>
-```
-
-### Sprawdzanie decków
-Format decków można szybko sprawdzić:
-```bash
-python debug.py
-```
 ## Wersjonowanie
 Stosujemy (xD) semantyczne wersjonowanie:
 
@@ -215,9 +228,3 @@ Projekt jest rozwijany iteracyjnie.
 Nie wszystko musi być idealne — ważne, żeby był fun, gra działała i projekt nie ciągnął się jak dzieje khorinis.
 
 ### Miłej zabawy
-
-
-
-
-
-
