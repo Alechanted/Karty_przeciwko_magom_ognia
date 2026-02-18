@@ -10,6 +10,7 @@ class WhiteCard:
         self.forms = parts if len(parts) >= 7 else [base_word] * 7
         self.id = str(uuid.uuid4())
         self.text = self.forms[0]  # Dla łatwego dostępu
+        self.source_id = None
 
     def get_nominative(self) -> str:
         return self.forms[0]
@@ -29,11 +30,11 @@ class WhiteCard:
             parts = forms_data
         else:
             parts = [''] * 7
+
         obj = cls('|'.join(parts))
-        # preserve id if present
-        if data.get('id'):
-            obj.id = data['id']
-        # override forms if provided explicitly
+        # Runtime ID MUSI być unikalne per instancja karty (żeby UI i backend nie miały kolizji).
+        # Jeśli w JSON jest "id", zachowujemy je tylko informacyjnie jako source_id.
+        obj.source_id = data.get('id')
         obj.forms = parts
         obj.text = obj.forms[0] if obj.forms else ''
         return obj
@@ -45,6 +46,7 @@ class BlackCard:
         self.tags = re.findall(r'<[A-Z]+>', self.raw_text)
         self.pick_count = max(1, len(self.tags))
         self.id = str(uuid.uuid4())
+        self.source_id = None
 
     def get_display_text(self) -> str:
         return re.sub(r'<[A-Z]+>', '__________', self.raw_text)
@@ -65,6 +67,9 @@ class BlackCard:
         obj = cls(raw)
         if data.get('id'):
             obj.id = data['id']
+
+        obj.source_id = data.get('id')
+
         # if slots provided, ensure tags reflect them
         slots = data.get('slots')
         if isinstance(slots, list) and slots:
