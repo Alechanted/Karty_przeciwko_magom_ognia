@@ -79,14 +79,6 @@ async def websocket_endpoint(websocket: WebSocket):
                     await handler.leave_room()
 
     except WebSocketDisconnect:
-        nick, r_name, room_removed = await room_manager.disconnect(websocket)
-        if r_name and r_name in room_manager.rooms:
-            await room_manager.broadcast_room_state(r_name)
-        # Notify lobby: only full list when a room was removed, otherwise update single room count
-        if room_removed:
-            await room_manager.broadcast_room_list()
-        elif r_name and r_name in room_manager.rooms:
-            await room_manager.broadcast_room_count(r_name)
-        # Update lobby players list
-        await room_manager.broadcast_lobby_players()
+        await room_manager.remove_player(websocket, remove_connection=True)
+
 

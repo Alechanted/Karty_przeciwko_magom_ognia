@@ -126,6 +126,7 @@ class GameEngine:
         self.players_data[ws] = {'nick': nick, 'hand': [], 'score': 0}
 
     def remove_player(self, ws):
+        """ Usuwa gracza z pokoju. Zwraca True jeśli pokój jest teraz pusty i powinien zostać usunięty."""
         if ws in self.players_data:
             p = self.players_data[ws]
             del self.players_data[ws]
@@ -134,6 +135,8 @@ class GameEngine:
             if p['nick'] == self.owner_name: self.owner_name = None
             if ws == self.czar_socket: self.czar_socket = None
             if ws in self.round_submissions: del self.round_submissions[ws]
+
+        return len(self.players_data) == 0
 
     def is_password_correct(self, password: str):
         return not self.settings.has_password() or self.settings.password == password

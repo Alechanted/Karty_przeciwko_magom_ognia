@@ -88,16 +88,8 @@ class MessageHandler:
 
     #poprawka pisana na kolanie, nie mam tu dostępu do mojego ide i klepię w chujowniku ms windows
     async def leave_room(self):
-        # POPRAWKA z chrząszcza: Dodano _ na początku, aby odebrać 'nick', którego tu nie używamy
-        _, room_name, room_removed = await self.room_manager.disconnect(self.websocket)
-
+        await self.room_manager.remove_player(self.websocket, remove_connection=False)
         await self._send_to_self({"type": "LEFT_ROOM"})
-        await self.room_manager.send_room_list(self.websocket)
-        if room_removed:
-            await self.room_manager.broadcast_room_list()
-        elif room_name and room_name in self.room_manager.rooms:
-            await self.room_manager.broadcast_room_count(room_name)
-        await self.room_manager.broadcast_lobby_players()
 
     def _get_player_nick(self):
         return self.room_manager.active_connections.get(self.websocket)
