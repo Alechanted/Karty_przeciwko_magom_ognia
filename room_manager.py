@@ -33,17 +33,13 @@ class RoomManager:
             remove_room = room.remove_player(websocket)
             if remove_room:
                 logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
-                await self.remove_room(room_name)
+                del self.rooms[room_name]
+                await self.broadcast_room_list()
             else:
                 await self.broadcast_room_state(room_name)
                 await self.broadcast_room_count(room_name)
 
         await self.broadcast_lobby_players()
-
-    async def remove_room(self, room_name: str):
-        if room_name in self.rooms:
-            del self.rooms[room_name]
-            await self.broadcast_room_list()
 
     def get_deck_list(self):
         files = glob.glob("decks/*.*")
