@@ -61,9 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let ws;
     let myNick = "";
     let currentRoom = null;
+
     let selectedCards = [];
     let requiredPick = 1;
     let currentHand = [];
+
+    // NOWE: lokalny “optimistic UI” po potwierdzeniu (żeby ręka znikała od razu)
+    let awaitingSubmitAck = false;
+
+    // NOWE: wybór tzara (index w submissions)
+    let selectedSubmissionIndex = null;
 
     // Elementy
     const loginScreen = document.getElementById('login-screen');
@@ -214,6 +221,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- RENDERY ---
 
+    // NOWE: jednolita belka “Potwierdź”
+    function renderConfirmBar({ enabled, text, onConfirm }) {
+        const oldBtn = document.getElementById('confirm-selection-btn');
+        if (oldBtn) oldBtn.remove();
+
+        if (!enabled) return;
+
+        const btn = document.createElement('button');
+        btn.id = 'confirm-selection-btn';
+        btn.className = 'big-green-btn';
+        btn.innerText = text;
+
+        btn.onclick = onConfirm;
+
+        handContainer.after(btn);
+    }
+
     function renderRoomList(rooms) {
         roomsContainer.innerHTML = '';
         if (rooms.length === 0) {
@@ -270,8 +294,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-function renderGame(data) {
+    function renderGame(data) {
         currentHand = data.hand || [];
+
+        // reset lokalnych “czekam na ack”, jeśli serwer już wie że wysłaliśmy
+        if (data.has_submitted) awaitingSubmitAck = false;
+
+        // reset wyboru tzara, gdy wyjdziemy z JUDGING (żeby nie “przeciekało” do kolejnej rundy)
+        if (data.phase !== 'JUDGING') selectedSubmissionIndex = null;
 
         if (data.phase === 'LOBBY') {
             lobbyView.classList.remove('hidden');
@@ -311,6 +341,7 @@ function renderGame(data) {
         const blackCardParent = blackCardText.parentElement;
         const existingFooter = blackCardParent ? blackCardParent.querySelector('.card-footer') : null;
         if (existingFooter) existingFooter.remove();
+
         requiredPick = data.black_card ? data.black_card.pick : 1;
         handContainer.innerHTML = '';
 
@@ -352,14 +383,32 @@ function renderGame(data) {
             roleInfo.innerText = data.is_czar ? msgCzar : msgPlayer;
             renderSubmissions(data.submissions, data.is_czar);
 
+            // NOWE: belka potwierdzenia dla tzara (unifikacja UI)
+            if (data.is_czar) {
+                renderConfirmBar({
+                    enabled: selectedSubmissionIndex !== null,
+                    text: TEXTS['BTN_CONFIRM_SELECTION'],
+                    onConfirm: () => {
+                        ws.send(JSON.stringify({ type: 'PICK_WINNER', index: selectedSubmissionIndex }));
+                        selectedSubmissionIndex = null;
+                        // UX: po kliknięciu natychmiast “zamyka” możliwość klikania
+                        handContainer.innerHTML = `<p style="color:#aaa; text-align:center; width:100%">${TEXTS['INFO_PLAYER_WAIT']}</p>`;
+                        renderConfirmBar({ enabled: false, text: '', onConfirm: () => {} });
+                    }
+                });
+            }
+
         } else if (data.phase === 'SELECTING') {
             if (data.is_czar) {
                 const czarTitle = TEXTS['ROLE_CZAR'];
                 roleInfo.innerText = TEXTS['INFO_CZAR_WAIT'].replace('{czar}', czarTitle);
                 handContainer.innerHTML = `<p style="color:#aaa; text-align:center; width:100%">${TEXTS['INFO_CZAR_DESC']}</p>`;
-            } else if (data.has_submitted) {
+
+            } else if (data.has_submitted || awaitingSubmitAck) {
+                // NOWE: awaitingSubmitAck sprawia, że ręka znika natychmiast po potwierdzeniu
                 roleInfo.innerText = TEXTS['INFO_PLAYER_WAIT'];
                 handContainer.innerHTML = `<p style="color:#aaa; text-align:center; width:100%">${TEXTS['CARD_SENT_MSG']}</p>`;
+
             } else {
                 roleInfo.innerText = TEXTS['INFO_PICK_CARDS'].replace('{count}', requiredPick);
                 renderHand(currentHand);
@@ -374,10 +423,14 @@ function renderGame(data) {
             div.className = 'card';
             div.dataset.id = card.id;
             div.innerHTML = `<div class="card-content">${card.text}</div>`;
-            if (selectedCards.indexOf(card.id) !== -1) {
+
+            const pickIndex = selectedCards.indexOf(card.id);
+            if (pickIndex !== -1) {
                 div.classList.add('selected');
-                div.innerHTML += `<div class="selection-badge">${selectedCards.indexOf(card.id)+1}</div>`;
+                // Wskaźnik kolejności wyboru (1,2,3...) — widoczny, mały
+                div.innerHTML += `<div class="selection-badge">${pickIndex + 1}</div>`;
             }
+
             div.onclick = () => toggleCard(card.id);
             handContainer.appendChild(div);
         });
@@ -385,37 +438,42 @@ function renderGame(data) {
 
     function toggleCard(id) {
         const idx = selectedCards.indexOf(id);
-        if (idx !== -1) selectedCards.splice(idx, 1);
-        else {
-            if (selectedCards.length < requiredPick) selectedCards.push(id);
-            else { selectedCards.pop(); selectedCards.push(id); }
+
+        if (idx !== -1) {
+            selectedCards.splice(idx, 1);
+        } else {
+            // ZACHOWUJEMY KOLEJNOŚĆ kliknięć.
+            // Jeśli limit osiągnięty, wyrzucamy OSTATNIO wybraną (żeby nowy click wszedł “na koniec”).
+            if (selectedCards.length >= requiredPick) selectedCards.pop();
+            selectedCards.push(id);
         }
-        handContainer.innerHTML = ''; renderHand(currentHand); renderConfirmButton();
+
+        handContainer.innerHTML = '';
+        renderHand(currentHand);
+        renderConfirmButton();
     }
 
     // FIX: Odklikiwanie
     // szybki fix, dodałem usuwanie guzika po odkliknięciu karty
     // https://github.com/Alechanted/Karty_przeciwko_magom_ognia/issues/3#issue-3869884755
     function renderConfirmButton() {
-        const oldBtn = document.getElementById('confirm-selection-btn');
-        if (oldBtn) oldBtn.remove();
-
-        if (selectedCards.length === requiredPick) {
-            const btn = document.createElement('button');
-            btn.id = 'confirm-selection-btn';
-            btn.className = 'big-green-btn';
-            btn.innerText = TEXTS['BTN_CONFIRM_SELECTION'];
-
-            btn.onclick = () => {
+        renderConfirmBar({
+            enabled: selectedCards.length === requiredPick,
+            text: TEXTS['BTN_CONFIRM_SELECTION'],
+            onConfirm: () => {
+                // UWAGA: wysyłamy dokładnie w kolejności kliknięć (selectedCards)
                 ws.send(JSON.stringify({
                     type: 'SUBMIT_CARDS',
                     cards: selectedCards
                 }));
-                selectedCards = [];
-            };
 
-            handContainer.after(btn);
-        }
+                // UX: ręka znika natychmiast, bez czekania na broadcast
+                awaitingSubmitAck = true;
+                selectedCards = [];
+                handContainer.innerHTML = `<p style="color:#aaa; text-align:center; width:100%">${TEXTS['CARD_SENT_MSG']}</p>`;
+                renderConfirmBar({ enabled: false, text: '', onConfirm: () => {} });
+            }
+        });
     }
 
     function renderSubmissions(submissions, isCzar) {
@@ -423,16 +481,32 @@ function renderGame(data) {
             const div = document.createElement('div');
             div.className = 'card black-card-render';
             div.style.background = '#ddd'; div.style.color = '#333';
+
             div.innerHTML = `<div class="card-content">${sub.full_text}</div><div class="card-footer">${isCzar ? TEXTS['CARD_FOOTER_CZAR'] : ''}</div>`;
+
             if (isCzar) {
-                // Zamiast przestarzałego pop-upu dodajemy przycisk do wyboru zwycięzcy
-                const pickBtn = document.createElement('button');
-                pickBtn.className = 'green-btn';
-                pickBtn.style.marginTop = '8px';
-                pickBtn.innerText = TEXTS['BTN_CONFIRM_SELECTION'];
-                pickBtn.onclick = () => ws.send(JSON.stringify({ type: 'PICK_WINNER', index: sub.id }));
-                div.appendChild(pickBtn);
+                // NOWE: klik na kartę = zaznaczenie (bez guzików na karcie)
+                if (selectedSubmissionIndex === sub.id) div.classList.add('selected');
+
+                div.onclick = () => {
+                    selectedSubmissionIndex = (selectedSubmissionIndex === sub.id) ? null : sub.id;
+
+                    handContainer.innerHTML = '';
+                    renderSubmissions(submissions, isCzar);
+
+                    renderConfirmBar({
+                        enabled: selectedSubmissionIndex !== null,
+                        text: TEXTS['BTN_CONFIRM_SELECTION'],
+                        onConfirm: () => {
+                            ws.send(JSON.stringify({ type: 'PICK_WINNER', index: selectedSubmissionIndex }));
+                            selectedSubmissionIndex = null;
+                            handContainer.innerHTML = `<p style="color:#aaa; text-align:center; width:100%">${TEXTS['INFO_PLAYER_WAIT']}</p>`;
+                            renderConfirmBar({ enabled: false, text: '', onConfirm: () => {} });
+                        }
+                    });
+                };
             }
+
             handContainer.appendChild(div);
         });
     }
