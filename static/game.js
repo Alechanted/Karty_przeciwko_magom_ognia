@@ -72,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // NOWE: wybór tzara (index w submissions)
     let selectedSubmissionIndex = null;
 
+    // NOWE: cache SUMMARY, żeby nie restartować animacji winner-badge przy samym ready_status update
+    let lastPhase = null;
+    let lastSummaryKey = null;
+
     // Elementy
     const loginScreen = document.getElementById('login-screen');
     const roomListScreen = document.getElementById('room-list-screen');
@@ -294,6 +298,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function getSummaryKey(submissions) {
+        if (!Array.isArray(submissions)) return '';
+        // Klucz ma być stabilny dla "tego samego wyniku" — bez ready_status itp.
+        return JSON.stringify(submissions.map(s => ({
+            id: s.id,
+            is_winner: !!s.is_winner,
+            full_text: s.full_text,
+            author: s.author
+        })));
+    }
+
     function renderGame(data) {
         currentHand = data.hand || [];
 
@@ -302,6 +317,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // reset wyboru tzara, gdy wyjdziemy z JUDGING (żeby nie “przeciekało” do kolejnej rundy)
         if (data.phase !== 'JUDGING') selectedSubmissionIndex = null;
+
+        const summaryKey = (data.phase === 'SUMMARY') ? getSummaryKey(data.submissions) : null;
+        const canReuseSummary =
+            data.phase === 'SUMMARY' &&
+            lastPhase === 'SUMMARY' &&
+            summaryKey === lastSummaryKey;
 
         if (data.phase === 'LOBBY') {
             lobbyView.classList.remove('hidden');
@@ -321,6 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
             playView.classList.remove('hidden');
             waitingRoomView.classList.add('hidden');
             renderGameOver(data.winner);
+
+            lastPhase = data.phase;
+            lastSummaryKey = null;
             return;
 
         } else {
@@ -337,22 +361,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         blackCardText.innerHTML = data.black_card ? data.black_card.text : "...";
+
         // Usuń ewentualny podpis autora na centralnej karcie, jeśli nie jesteśmy w SUMMARY
-        const blackCardParent = blackCardText.parentElement;
-        const existingFooter = blackCardParent ? blackCardParent.querySelector('.card-footer') : null;
-        if (existingFooter) existingFooter.remove();
+        if (data.phase !== 'SUMMARY') {
+            const blackCardParent = blackCardText.parentElement;
+            const existingFooter = blackCardParent ? blackCardParent.querySelector('.card-footer') : null;
+            if (existingFooter) existingFooter.remove();
+        }
 
         requiredPick = data.black_card ? data.black_card.pick : 1;
-        handContainer.innerHTML = '';
 
-        // Sprzątanie guzików
-        const oldBtn = document.getElementById('confirm-selection-btn'); if(oldBtn) oldBtn.remove();
-        const rBtn = document.getElementById('ready-container'); if(rBtn) rBtn.remove();
+        // Sprzątanie guzików (confirm zawsze, ready tylko gdy nie jesteśmy w SUMMARY albo nie reużywamy widoku)
+        const oldBtn = document.getElementById('confirm-selection-btn'); if (oldBtn) oldBtn.remove();
+        const rBtn = document.getElementById('ready-container');
+        if (rBtn && (data.phase !== 'SUMMARY' || !canReuseSummary)) rBtn.remove();
+
+        // Jeśli to SUMMARY i nic się nie zmieniło poza ready_status, nie rebuildujemy kart (nie restartujemy animacji plakietki)
+        if (!canReuseSummary) handContainer.innerHTML = '';
 
         // LOGIKA FAZ
         if (data.phase === 'SUMMARY') {
             roleInfo.innerText = TEXTS['SUMMARY_TITLE'];
-            renderSummary(data.submissions);
+
+            if (!canReuseSummary) renderSummary(data.submissions);
             renderReadyButton(data.ready_status, data.am_i_ready);
 
             // Pokaż wygraną białą kartę na czarnej karcie centralnej
@@ -415,6 +446,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderConfirmButton();
             }
         }
+
+        lastPhase = data.phase;
+        lastSummaryKey = (data.phase === 'SUMMARY') ? summaryKey : null;
     }
 
     function renderHand(cards) {
@@ -524,20 +558,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderReadyButton(status, amIReady) {
-        const div = document.createElement('div');
-        div.id = 'ready-container';
-        div.style.width='100%'; div.style.textAlign='center';
+        // Update-in-place: nie twórz od nowa kontenera (mniej "mrugania" UI)
+        let div = document.getElementById('ready-container');
+        if (!div) {
+            div = document.createElement('div');
+            div.id = 'ready-container';
+            div.style.width = '100%';
+            div.style.textAlign = 'center';
+            handContainer.after(div);
+        } else {
+            div.innerHTML = '';
+        }
+
         const btn = document.createElement('button');
         btn.className = 'big-green-btn';
-        if(amIReady) {
+
+        if (amIReady) {
             btn.innerText = `${TEXTS['BTN_WAITING']} (${status.ready}/${status.total})`;
-            btn.disabled=true; btn.style.background='#555';
+            btn.disabled = true;
+            btn.style.background = '#555';
         } else {
             btn.innerText = `${TEXTS['BTN_NEXT_SHIFT']} (${status.ready}/${status.total})`;
-            btn.onclick = () => ws.send(JSON.stringify({type: 'PLAYER_READY'}));
+            btn.onclick = () => ws.send(JSON.stringify({ type: 'PLAYER_READY' }));
         }
+
         div.appendChild(btn);
-        handContainer.after(div);
     }
 
     function renderGameOver(winner) {
