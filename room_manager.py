@@ -28,16 +28,16 @@ class RoomManager:
         await websocket.accept()
         self.active_connections[websocket] = None
 
-#zmiana pisana na kolanie, nie mam dostępu do moich plików i IDE, klepię w chujowniku ms windows
-    async def disconnect(self, websocket: WebSocket):
-        nick = self.active_connections.pop(websocket, None)
-        room_name = self.player_room_map.pop(websocket, None)
-        room_removed = False
+    async def remove_player(self, websocket: WebSocket, remove_connection: bool):
+        if remove_connection:
+            del self.active_connections[websocket]
 
-        if room_name and room_name in self.rooms:
-            room = self.rooms[room_name]
-            room.remove_player(websocket)
-            if not room.players_data:
+        room_name = self.player_room_map.pop(websocket, None)
+        room = self.rooms.get(room_name)
+
+        if room:
+            remove_room = room.remove_player(websocket)
+            if remove_room:
                 logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
                 del self.rooms[room_name]
                 room_removed = True
@@ -82,19 +82,16 @@ class RoomManager:
 
     async def broadcast_lobby_players(self):
         """Send current list of connected players (with room info) to lobby clients."""
-        players_list = []
-        for ws, nick in self.active_connections.items():
-            if not nick: continue
-            players_list.append({
-                'nick': nick,
-                'room': self.player_room_map.get(ws)
-            })
+        players_list = [{
+            'nick': nick,
+            'room': self.player_room_map.get(ws)
+        } for ws, nick in self.active_connections.items() if nick]
 
         payload = {"type": "LOBBY_PLAYERS", "players": players_list}
 
-        for ws, nick in list(self.active_connections.items()):
+        for ws, _ in list(self.active_connections.items()):
             try:
-                if self.player_room_map.get(ws) is None:
+                if not self.player_room_map.get(ws):
                     await ws.send_json(payload)
             except Exception:
                 pass
