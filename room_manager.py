@@ -1,6 +1,8 @@
 import os
 import glob
 import logging
+import random
+import time
 from typing import Dict, Optional
 from fastapi import WebSocket
 
@@ -18,6 +20,10 @@ class RoomManager:
         self.player_room_map: Dict[WebSocket, str] = {}
         self.active_connections: Dict[WebSocket, Optional[str]] = {}
 
+        # Anti-spam dla lobby
+        self.last_lobby_sound_time = 0
+        self.lobby_sound_cooldown = 2.0  # sekundy
+
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections[websocket] = None
@@ -34,12 +40,13 @@ class RoomManager:
             if remove_room:
                 logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
                 del self.rooms[room_name]
-                await self.broadcast_room_list()
-            else:
-                await self.broadcast_room_state(room_name)
-                await self.broadcast_room_count(room_name)
+                room_removed = True
 
-        await self.broadcast_lobby_players()
+        # Jeśli gracz był w lobby (nie w pokoju) i miał nick -> dźwięk wyjścia
+        if not room_name and nick:
+            await self.broadcast_lobby_sound("goodbye")
+
+        return nick, room_name, room_removed
 
     def get_deck_list(self):
         files = glob.glob("decks/*.*")
@@ -95,6 +102,7 @@ class RoomManager:
         
         engine = GameEngine(owner_name, settings)
         engine.broadcast_callback = self.broadcast_room_state
+        engine.sound_callback = self.broadcast_sound_to_room
 
         self.rooms[settings.name] = engine
         return True
@@ -203,3 +211,58 @@ class RoomManager:
         } for ws, nick in self.active_connections.items() if nick]
 
         return rooms_list, players_list
+
+        # --- SOUND SYSTEM ---
+
+    def _get_random_sound_file(self, prefix: str) -> Optional[str]:
+        """Skanuje static/sounds w poszukiwaniu plików pasujących do prefixu i losuje jeden."""
+        # Szukamy plików zaczynających się od prefixu (np. welcome*)
+        search_pattern = os.path.join("static", "sounds", f"{prefix}*")
+        files = glob.glob(search_pattern)
+
+        # Filtrujemy tylko audio
+        valid_exts = {'.mp3', '.wav', '.ogg', '.m4a'}
+        audio_files = [f for f in files if os.path.splitext(f)[1].lower() in valid_exts]
+
+        if not audio_files:
+            return None
+
+        selected = random.choice(audio_files)
+        # Zamieniamy ścieżkę na URL (np. static/sounds/welcome1.mp3 -> /static/sounds/welcome1.mp3)
+        return "/" + selected.replace(os.sep, "/")
+
+    async def broadcast_lobby_sound(self, prefix: str):
+        """Odtwarza dźwięk wszystkim w lobby (z anty-spamem)."""
+        now = time.time()
+        if now - self.last_lobby_sound_time < self.lobby_sound_cooldown:
+            return
+
+        sound_src = self._get_random_sound_file(prefix)
+        if not sound_src:
+            return
+
+        self.last_lobby_sound_time = now
+        payload = {"type": "PLAY_SOUND", "src": sound_src}
+
+        for ws in list(self.active_connections.keys()):
+            # Tylko gracze, którzy nie są w żadnym pokoju
+            if self.player_room_map.get(ws) is None:
+                try:
+                    await ws.send_json(payload)
+                except Exception:
+                    pass
+
+    async def broadcast_sound_to_room(self, room_name: str, prefix: str):
+        """Odtwarza dźwięk wszystkim w danym pokoju."""
+        sound_src = self._get_random_sound_file(prefix)
+        if not sound_src:
+            return
+
+        payload = {"type": "PLAY_SOUND", "src": sound_src}
+        room = self.rooms.get(room_name)
+        if room:
+            for ws in list(room.players_data):
+                try:
+                    await ws.send_json(payload)
+                except Exception:
+                    pass

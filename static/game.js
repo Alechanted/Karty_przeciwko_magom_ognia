@@ -149,13 +149,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 roomListScreen.classList.remove('hidden');
                 currentRoom = null;
                 break;
-            case 'ERROR':
-                const msg = TEXTS[data.message] || data.message; // Próba tłumaczenia błędu z klucza
-                if (!loginScreen.classList.contains('hidden')) document.getElementById('login-error').innerText = msg;
-                else alert(msg);
+                case 'ERROR':
+                    const msg = TEXTS[data.message] || data.message; // Próba tłumaczenia błędu z klucza
+                    if (!loginScreen.classList.contains('hidden')) document.getElementById('login-error').innerText = msg;
+                    else alert(msg);
+                    break;
+            case 'PLAY_SOUND':
+                if (data.src) {
+                    try {
+                        const audio = new Audio(data.src);
+                        audio.volume = 0.5;
+                        audio.play().catch(e => console.warn("Audio blocked:", e));
+                    } catch (e) { console.error(e); }
+                }
                 break;
+            }
         }
-    }
 
     // Eventy przycisków
     document.getElementById('set-nick-btn').onclick = () => {

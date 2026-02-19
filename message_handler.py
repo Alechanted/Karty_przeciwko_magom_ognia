@@ -26,6 +26,9 @@ class MessageHandler:
             await self.room_manager.send_room_list(self.websocket)
             # Notify lobby clients about updated player list
             await self.room_manager.broadcast_lobby_players()
+            
+            # Dźwięk powitalny w lobby
+            await self.room_manager.broadcast_lobby_sound("welcome")
 
     async def create_room(self, settings: GameSettings):
         owner_name = self._get_player_nick()
@@ -78,6 +81,10 @@ class MessageHandler:
             winner_nick = room.pick_winner(winner)
             if winner_nick:
                 await self.send_chat_message(f"Wygrywa: {winner_nick}", "SYSTEM")
+                
+                if room.phase == Phase.GAME_OVER:
+                    await self.room_manager.broadcast_sound_to_room(room.room_name, "win")
+                    
                 await self.room_manager.broadcast_room_state(room.room_name)
 
     async def set_ready(self):
