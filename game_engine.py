@@ -28,6 +28,9 @@ class GameEngine:
         self.czar_socket = None
         self.winner_nick = None
 
+        self.round_number = 0
+        self.sound_callback = None  # async func(room_name, sound_prefix)
+
         # 2. Inicjalizacja pustych talii roboczych
         self.white_deck = []
         self.black_deck = []
@@ -106,6 +109,7 @@ class GameEngine:
         self.current_black_card = None
         self.czar_socket = None
         self.winner_nick = None
+        self.round_number = 0
 
         # Kopiowanie i tasowanie
         self.white_deck = self.white_deck_master.copy()
@@ -141,10 +145,6 @@ class GameEngine:
     def can_start_game(self, nick: str):
         return self.settings.anyone_can_start or self.owner_name is None or self.owner_name == nick
 
-    # FIX: Gra duplikuje karty
-    # Gra miała nieprzemyślane zabezpieczenie przed przedwczesnym zakończeniem gry z powodu brak kart
-    # Usunąłem zabezpieczenie i dodałem kończenie rundy przy braku kart na ręce gracza
-    # https://github.com/Alechanted/Karty_przeciwko_magom_ognia/issues/1#issue-3869636354
     async def start_round(self):
         self._cancel_timeout()
 
@@ -153,6 +153,12 @@ class GameEngine:
             self.phase = Phase.GAME_OVER
             self.winner_nick = TEXTS["MSG_DECK_EMPTY"]
             return
+
+        # Dźwięki rundy
+        self.round_number += 1
+        if self.sound_callback:
+            prefix = "game_start" if self.round_number == 1 else "round_start"
+            await self.sound_callback(self.room_name, prefix)
 
         # Dobieramy czarną kartę
         self.current_black_card = self.black_deck.pop()
