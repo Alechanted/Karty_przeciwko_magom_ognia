@@ -29,21 +29,26 @@ class RoomManager:
         self.active_connections[websocket] = None
 
     async def remove_player(self, websocket: WebSocket, remove_connection: bool):
+        room_removed = False
+
+        nick = None
         if remove_connection:
-            del self.active_connections[websocket]
+            nick = self.active_connections.pop(websocket, None)
+        else:
+            nick = self.active_connections.get(websocket)
 
         room_name = self.player_room_map.pop(websocket, None)
-        room = self.rooms.get(room_name)
+        room = self.rooms.get(room_name) if room_name else None
 
         if room:
-            remove_room = room.remove_player(websocket)
-            if remove_room:
+            room.remove_player(websocket)
+            if not room.players_data:
                 logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
                 del self.rooms[room_name]
                 room_removed = True
 
         # Jeśli gracz był w lobby (nie w pokoju) i miał nick -> dźwięk wyjścia
-        if not room_name and nick:
+        if room_name is None and nick:
             await self.broadcast_lobby_sound("goodbye")
 
         return nick, room_name, room_removed
