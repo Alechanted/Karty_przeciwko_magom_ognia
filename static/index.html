@@ -1,141 +1,219 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Karty Przeciwko Magom Ognia</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="/static/gameV2.js"></script>
 </head>
+
 <body>
     <!-- Tło graficzne jest w CSS body::before -->
 
     <!-- EKRAN 1: WYBÓR NICKU -->
-    <div id="login-screen" class="screen">
+    <div id="login-screen" class="screen" x-data="login" x-show="show">
         <h1 id="game-main-title" class="game-title">Karty przeciwko<br>Magom Ognia</h1>
-        <input type="text" id="nickname-input" placeholder="Podaj swój nick" maxlength="15">
-        <button id="set-nick-btn">Wejdź do Lobby</button>
-        <p id="login-error" class="error"></p>
+        <input type="text" x-model="nickname" id="nickname-input" placeholder="Podaj swój nick" maxlength="15">
+        <button @click="login" id="set-nick-btn">Wejdź do Lobby</button>
+        <p x-text="loginError" id="login-error" class="error"></p>
     </div>
 
     <!-- EKRAN 2: LISTA POKOI -->
-    <div id="room-list-screen" class="screen hidden">
+    <div id="room-list-screen" class="screen" x-data="roomList" x-show="show">
         <header>
-            <span id="lobby-user-display">Gracz: ???</span>
-            <button id="create-room-btn" class="action-btn">Załóż Pokój</button>
+            <span id="lobby-user-display">Gracz: <span x-text="$store.nickname"></span></span>
+            <button @click="createRoom" id="create-room-btn" class="action-btn">Załóż Pokój</button>
         </header>
         <div class="container">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <div style="flex:2">
                     <h2>Dostępne Obozy</h2>
                     <div id="rooms-container">
-                        <!-- Tu wpadną kafelki pokoi -->
-                        <p>Ładowanie...</p>
+                        <p x-show="loading">Ładowanie...</p>
+                        <template x-for="room in rooms">
+                            <div class="room-card">
+                                <h4 x-text="room.name"></h4>
+                                <div class="room-info">
+                                    <span x-text="$store.texts['ROOM_PLAYERS']"></span>
+                                    <span x-text="room.players"></span>/<span x-text="room.maxPlayers"></span><br>
+                                    Hasło: <span
+                                        x-text="room.hasPassword ? $store.texts['ROOM_PASS_YES'] : $store.texts['ROOM_PASS_NO']"></span>
+                                </div>
+                                <button @click="joinRoom(room)" x-text="$store.texts['JOIN_BTN']" class="join-btn"></button>
+                            </div>
+                        </template>
                     </div>
-                    <!-- Auto-refresh enabled; manual refresh button removed -->
                 </div>
-                <aside style="flex:1; max-width:320px;">
+                <aside style="flex:1; max-width:320px;" x-data="chat">
                     <h3>Lobby — Czat</h3>
-                    <div id="lobby-chat-messages" style="height:220px; overflow-y:auto; background:rgba(0,0,0,0.25); padding:8px; border-radius:10px; margin-bottom:8px;"></div>
-                    <div style="display:flex; gap:8px; margin-bottom:12px;"><input id="lobby-chat-input" type="text" placeholder="Napisz..." style="flex:1; padding:6px; border-radius:8px;"><button id="send-lobby-chat" class="green-btn">Wyślij</button></div>
+                    <div id="lobby-chat-messages"
+                        style="height:220px; overflow-y:auto; background:rgba(0,0,0,0.25); padding:8px; border-radius:10px; margin-bottom:8px;">
+                        <template x-for="msg in messages">
+                            <div>
+                                <strong x-text="msg.author"></strong>: <span x-text="msg.message"></span>
+                            </div>
+                        </template>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:12px;">
+                        <input x-model="newMessage" id="lobby-chat-input" type="text" placeholder="Napisz..." style="flex:1; padding:6px; border-radius:8px;">
+                        <button id="send-lobby-chat" class="green-btn" @click="sendMessage">Wyślij</button>
+                    </div>
 
                     <h3>Wszyscy gracze</h3>
-                    <ul id="global-player-list" style="max-height:240px; overflow-y:auto; padding-left:18px;"></ul>
+                    <ul id="global-player-list" style="max-height:240px; overflow-y:auto; padding-left:18px;">
+                        <template x-for="player in players">
+                            <li>
+                                <span x-bind:style="player.room ? null : 'color: #9a8f92;'">
+                                    <span x-text="player.nick"></span>
+                                    -
+                                    <span x-text="player.room ? player.room : '(lobby)'"></span>
+                                </span>
+                            </li>
+                        </template>
+                    </ul>
                 </aside>
             </div>
         </div>
     </div>
 
     <!-- MODAL: TWORZENIE POKOJU -->
-    <div id="create-room-modal" class="modal hidden">
+    <div id="create-room-modal" class="modal" x-data="roomCreator" x-show="show">
         <div class="modal-content">
             <h3>Załóż nowy pokój</h3>
-            
+
             <div id="game-settings">
                 <label for="new-room-name">Nazwa pokoju:</label>
-                <input type="text" id="new-room-name">
+                <input x-model="roomName" type="text" id="new-room-name">
 
                 <label for="new-room-pass">Hasło (opcjonalne):</label>
-                <input type="text" id="new-room-pass">
+                <input x-model="password" type="text" id="new-room-pass">
 
                 <label for="conf-max">Max graczy:</label>
-                <input type="number" id="conf-max" value="8" min="3" max="20">
+                <input x-model="maxPlayers" type="number" id="conf-max" value="8" min="3" max="20">
 
                 <label for="conf-hand">Karty na ręce:</label>
-                <input type="number" id="conf-hand" value="10" min="5" max="20">
+                <input x-model="handSize" type="number" id="conf-hand" value="10" min="5" max="20">
 
                 <label for="conf-win">Punkty do win:</label>
-                <input type="number" id="conf-win" value="5" min="3" max="20">
+                <input x-model="pointsToWin" type="number" id="conf-win" value="5" min="3" max="20">
 
                 <label for="conf-wait-for-all">Czekamy na wszystkich:</label>
-                <input type="checkbox" id="conf-wait-for-all" checked>
-                
+                <input x-model="waitForAll" type="checkbox" id="conf-wait-for-all">
+
                 <label for="conf-timeout">Timeout (s):</label>
-                <input type="number" id="conf-timeout" value="60" placeholder="np. 60 lub inf">
+                <input x-model="timeout" type="number" id="conf-timeout" value="60" placeholder="np. 60 lub inf">
 
                 <label for="conf-anyone-can-start">Każdy może rozpocząć grę:</label>
-                <input type="checkbox" id="conf-anyone-can-start">
+                <input x-model="anyoneCanStart" type="checkbox" id="conf-anyone-can-start">
             </div>
 
             <h4>Wybierz talie:</h4>
             <div id="deck-list" class="deck-grid">
-                <!-- Tu wpadną checkboxy -->
+                <template x-for="deck in decks">
+                    <div class="deck-option">
+                        <input x-model="deck.selected" type="checkbox" class="deck-checkbox">
+                        <span x-text="deck.name"></span>
+                    </div>
+                </template>
             </div>
 
             <div class="modal-actions">
-                <button id="confirm-create-room" class="green-btn">Stwórz i graj</button>
-                <button id="cancel-create-room" class="red-btn">Anuluj</button>
+                <button @click="createRoom" id="confirm-create-room" class="green-btn">Stwórz i graj</button>
+                <button @click="cancel" id="cancel-create-room" class="red-btn">Anuluj</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL: HASŁO DO POKOJU -->
-    <div id="password-modal" class="modal hidden">
+    <div id="password-modal" class="modal" x-data="roomList" x-show="$store.passwordModal.show">
         <div class="modal-content">
-            <h3>Podaj hasło</h3>
-            <input type="text" id="join-room-pass">
+            <h3>Podaj hasło do <span x-text="$store.passwordModal.roomToJoin"></span></h3>
+            <input x-model="$store.passwordModal.password" type="text" id="join-room-pass">
             <div class="modal-actions">
-                <button id="confirm-join-pass" class="green-btn">Dołącz</button>
-                <button id="cancel-join-pass" class="red-btn">Anuluj</button>
+                <button @click="$store.passwordModal.joinRoom()" id="confirm-join-pass" class="green-btn">Dołącz</button>
+                <button @click="$store.passwordModal.hide()" id="cancel-join-pass" class="red-btn">Anuluj</button>
             </div>
         </div>
     </div>
 
     <!-- EKRAN 3: WŁAŚCIWA GRA (Z poprzedniej wersji) -->
-    <div id="game-screen" class="screen hidden">
+    <div id="game-screen" class="screen" x-data="gameRoom" x-show="show">
         <header>
-            <span id="room-display">Pokój: ???</span>
+            <span id="room-display"><span x-text="$store.texts['ROOM_HEADER']"></span> <span x-text="roomName"></span></span>
             <div class="controls">
                 <button id="panic-btn">PANIC</button>
-                <button id="leave-room-btn">Wyjdź z pokoju</button>
+                <button @click="leaveRoom" id="leave-room-btn">Wyjdź z pokoju</button>
             </div>
         </header>
 
         <main class="layout">
             <!-- LEWA STRONA: Obszar gry / Lobby -->
             <section id="game-area" class="panel">
-                <div id="lobby-view">
+                <div id="lobby-view" x-show="showLobby">
                     <h2 id="lobby-waiting-title">Oczekiwanie na start...</h2>
                     <p id="lobby-waiting-desc">Gdy wszyscy będą gotowi, gra się rozpocznie.</p>
-
                     <!-- Nowy licznik graczy -->
-                    <p id="lobby-players-count" style="font-weight: bold; color: #4CAF50; margin: 10px 0;">
-                        Ładowanie statusu...
-                    </p>
+                    <p x-text="'Graczy w pokoju: ' + players.length" id="lobby-players-count" style="font-weight: bold; color: #4CAF50; margin: 10px 0;"></p>
 
-                    <button id="start-game-btn" class="big-green-btn">ROZPOCZNIJ GRĘ</button>
+                    <button :disabled="!canStartGame" @click="startGame" id="start-game-btn" class="big-green-btn">ROZPOCZNIJ GRĘ</button>
                 </div>
 
-                <div id="play-view" class="hidden">
+                <div x-show="showPlayView" id="play-view">
                     <div id="black-card-container">
                         <div class="card black-card-render">
-                            <div class="card-content" id="black-card-text">...</div>
+                            <div x-text="blackCard ? blackCard.text : ''" class="card-content" id="black-card-text"></div>
                         </div>
                     </div>
-                    <div id="status-bar"><span id="role-info">Rola: ???</span></div>
-                    <div id="hand-container"></div>
-                </div>
+                    <div id="status-bar"><span x-text="statusMessage"></span></div>
+                    <div class="cards-container" x-show="phase === 'SELECTING' && !isCzar && !awaitingSubmission">
+                        <template x-for="card in hand">
+                            <div class="card" @click="selectWhiteCard(card)">
+                                <div x-text="card.text" class="card-content"></div>
+                                <div class="selection-badge" x-show="selected.indexOf(card) !== -1" x-text="selected.indexOf(card) + 1"></div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="cards-container" x-show="phase === 'SELECTING' && isCzar && awaitingSubmission">
+                        <p x-text="$store.texts['CARD_SENT_MSG']"></p>
+                    </div>
+                    <div class="cards-container" x-show="phase === 'SELECTING' && isCzar">
+                        <p x-text="$store.texts['INFO_CZAR_DESC']"></p>
+                    </div>
+                    <div class="cards-container" x-show="phase === 'JUDGING'">
+                        <template x-for="submission in submissions">
+                            <div class="card black-card-render" style="color: #333; background: #ddd;" @click="selectWinner(submission)" :class="{'selected': winner === submission}">
+                                <div class="card-content" x-html="submission.text"></div>
+                                <div class="card-footer" x-show="isCzar" x-text="$store.texts['CARD_FOOTER_CZAR']"></div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="cards-container" x-show="phase === 'SUMMARY'">
+                        <template x-for="submission in submissions">
+                            <div class="card black-card-render" style="color: #333; background: #ddd;" :class="{'winner-card': submission.winner}">
+                                <div class="winner-badge" x-show="submission.winner" x-text="$store.texts['WINNER_BADGE']"></div>
+                                <div class="card-content" x-html="submission.text"></div>
+                                <div class="card-footer" x-show="isCzar" x-text="$store.texts['AUTHOR_LABEL'] + ' ' + submission.author"></div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="cards-container" x-show="phase === 'GAME_OVER'">
+                        <div style="text-align:center; color:gold; width:100%">
+                        <h2 x-text="$store.texts['GAME_OVER_TITLE']"></h2>
+                        <h3 x-text="gameWinner + ' ' + $store.texts['GAME_OVER_SUBTITLE']"></h3>
+                        <p x-text="$store.texts['GAME_OVER_GLORY']"></p>
+                        <button class="big-green-btn" @click="leaveRoom" x-text="$store.texts['BTN_BACK_LOBBY']"></button>
+                    </div>
+                    </div>
+                    <div class="button-container">
+                        <button x-show="showSubmitButton" @click="submitCards" :disabled="!blackCard || selected.length !== blackCard.pick || awaitingSubmission" class="big-green-btn" x-text="$store.texts['BTN_CONFIRM_SELECTION']"></button>
+                        <button x-show="isCzar && phase === 'JUDGING'" :disabled="!winner" @click="submitWinner" class="big-green-btn" x-text="$store.texts['BTN_CONFIRM_SELECTION']"></button>
+                        <button x-show="phase === 'SUMMARY'" :disabled="isReady" @click="setReady" class="big-green-btn" x-text="$store.texts[isReady ? 'BTN_WAITING' : 'BTN_NEXT_SHIFT']"></button>
+                    </div>
 
-                <div id="waiting-room-view" class="hidden">
+                <div x-show="showWaitingRoom" id="waiting-room-view">
                     <h3>Gra w toku...</h3>
                     <p>Dołączysz w następnej rundzie.</p>
                 </div>
@@ -145,13 +223,27 @@
             <section id="sidebar" class="panel">
                 <div id="player-list-container">
                     <h3>Gracze</h3>
-                    <ul id="player-list"></ul>
+                    <ul id="player-list">
+                        <template x-for="player in players">
+                            <li>
+                                <span x-text="player.nick"></span>
+                                <span x-show="player.isCzar">👑</span>
+                                (<span x-text="player.score"></span>)
+                            </li>
+                        </template>
+                    </ul>
                 </div>
-                <div id="chat-container">
-                    <div id="chat-messages"></div>
+                <div id="chat-container" x-data="chat">
+                    <div id="chat-messages">
+                        <template x-for="msg in messages">
+                            <div>
+                                <strong x-text="msg.author"></strong>: <span x-text="msg.message"></span>
+                            </div>
+                        </template>
+                    </div>
                     <div class="chat-input-row">
-                        <input type="text" id="chat-input" placeholder="...">
-                        <button id="send-chat">></button>
+                        <input x-model="newMessage" type="text" id="chat-input" placeholder="...">
+                        <button @click="sendMessage" id="send-chat">></button>
                     </div>
                 </div>
             </section>
@@ -164,12 +256,13 @@
             <h2>Microsoft Teams</h2>
             <p>Spotkanie: "Status projektu Q3" - Trwa nagrywanie</p>
             <div class="avatar-grid">
-                <div class="avatar">Szef</div> <div class="avatar">HR</div> <div class="avatar">Ty</div>
+                <div class="avatar">Szef</div>
+                <div class="avatar">HR</div>
+                <div class="avatar">Ty</div>
             </div>
         </div>
     </div>
     <script src="/locales.js"></script>
-    <script src="/static/game.js"></script>
     <footer class="site-footer">
         <div class="footer-inner">
             <span class="footer-title">Karty przeciwko magom ognia</span>
