@@ -163,9 +163,7 @@ function createRoomList(gameApiClient) {
 
         joinRoom(room) {
             if (room.hasPassword) {
-                let modal = Alpine.store('passwordModal')
-                console.log(modal);
-                modal.showModal(room.name);
+                Alpine.store('passwordModal').showModal(room.name);
             } else {
                 gameApiClient.joinRoom(room.name, null);
             }
