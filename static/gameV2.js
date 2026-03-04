@@ -174,11 +174,6 @@ function createRoomList(gameApiClient) {
         joinRoomWithPassword() {
             gameApiClient.joinRoom(this.roomToJoin, this.password);
             this.roomToJoin = null;
-        },
-
-        hidePasswordModal() {
-            this.roomToJoin = null;
-            this.password = null;
         }
     }));
 }
