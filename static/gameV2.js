@@ -377,7 +377,7 @@ function createGameRoom(gameApiClient) {
 
         updatePlayerList(players) {
             if (!players) return;
-            this.players = players.map(p => new LobbyPlayer(p.nick, p.is_czar, p.score, p.id));
+            this.players = players.map(p => new LobbyPlayer(p.id, p.nick, p.is_czar, p.score));
         },
 
         startGame() {
@@ -490,11 +490,11 @@ class PlayerListItem {
 }
 
 class LobbyPlayer {
-    constructor(nick, isCzar, score, id) {
+    constructor(id, nick, isCzar, score) {
+        this.id = id;
         this.nick = nick;
         this.isCzar = isCzar;
         this.score = score;
-        this.id = id;
     }
 }
 
