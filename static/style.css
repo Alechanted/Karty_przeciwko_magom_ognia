@@ -241,6 +241,10 @@ button:disabled {
     padding: 15px;
 }
 
+.current-player {
+    font-weight: bold;
+}
+
 /* ========================================
    PLAY VIEW
 ======================================== */

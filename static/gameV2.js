@@ -60,9 +60,13 @@ class GameApiClient {
         this.send({ type: 'PICK_WINNER', index });
     }
 
-    setReady(){
+    setReady() {
         this.send({ type: 'PLAYER_READY' });
     }
+}
+
+function on(eventType, callback) {
+    window.addEventListener(eventType, callback);
 }
 
 function initialize() {
@@ -79,22 +83,15 @@ function initialize() {
 
     gameApiClient = new GameApiClient(ws);
 
+    on('ERROR', (e) => alert(e.detail.message));
+
     createLogin(gameApiClient);
     createRoomList(gameApiClient);
     createChat(gameApiClient);
     createRoomCreator(gameApiClient);
-    createGameRoom(gameApiClient);
     createRoomPasswordModal(gameApiClient);
-
-    window.addEventListener('PLAY_SOUND', (e) => {
-        if (e.detail.src) {
-            try {
-                const audio = new Audio(e.detail.src);
-                audio.volume = 0.5;
-                audio.play().catch(e => console.warn("Audio blocked:", e));
-            } catch (e) { console.error(e); }
-        }
-    });
+    createGameRoom(gameApiClient);
+    createSoundPlayer();
 }
 
 function createLogin(gameApiClient) {
@@ -104,13 +101,7 @@ function createLogin(gameApiClient) {
         loginError: "",
 
         init() {
-            window.addEventListener('NICK_OK', () => {
-                this.show = false;
-            });
-
-            window.addEventListener('ERROR', (e) => {
-                this.loginError = e.detail.message;
-            });
+            on('NICK_OK', () => this.show = false);
         },
 
         login() {
@@ -130,24 +121,17 @@ function createRoomList(gameApiClient) {
         nickname: "UNSET",
 
         init() {
-            window.addEventListener('NICK_OK', () => {
-                this.show = true;
-            });
-            window.addEventListener('JOIN_ROOM_OK', () => {
-                this.show = false;
-            });
-            window.addEventListener('LEFT_ROOM', () => {
-                this.show = true;
-            });
-            window.addEventListener('ROOM_LIST', (e) => {
-                this.updateRoomList(e.detail);
-            });
-            window.addEventListener('LOBBY_PLAYERS', (e) => {
-                this.updatePlayerList(e.detail);
-            });
-            window.addEventListener('ROOM_UPDATE', (e) => {
-                this.updateRoom(e.detail);
-            });
+            on('NICK_OK', () => this.show = true);
+
+            on('JOIN_ROOM_OK', () => this.show = false);
+
+            on('LEFT_ROOM', () => this.show = true);
+
+            on('ROOM_LIST', (e) => this.updateRoomList(e.detail));
+
+            on('LOBBY_PLAYERS', (e) => this.updatePlayerList(e.detail));
+
+            on('ROOM_UPDATE', (e) => this.updateRoom(e.detail));
         },
 
         updateRoomList({ rooms, players }) {
@@ -181,7 +165,7 @@ function createRoomList(gameApiClient) {
             if (room.hasPassword) {
                 let modal = Alpine.store('passwordModal')
                 console.log(modal);
-                modal.show(room.name);
+                modal.showModal(room.name);
             } else {
                 gameApiClient.joinRoom(room.name, null);
             }
@@ -205,14 +189,17 @@ function createRoomPasswordModal(gameApiClient) {
         roomToJoin: null,
         password: null,
 
+        init() {
+            on('JOIN_ROOM_OK', () => this.hide());
+        },
+
         joinRoom() {
             if (!this.roomToJoin) return;
 
             gameApiClient.joinRoom(this.roomToJoin, this.password);
-            this.hide();
         },
 
-        show(roomName) {
+        showModal(roomName) {
             this.roomToJoin = roomName;
             this.show = true;
         },
@@ -266,14 +253,12 @@ function createRoomCreator(gameApiClient) {
         decks: [],
 
         init() {
-            window.addEventListener('DECK_LIST', (e) => {
+            on('DECK_LIST', (e) => {
                 this.show = true;
                 this.decks = e.detail.decks.map(d => new DeckItem(d));
             });
 
-            window.addEventListener('JOIN_ROOM_OK', () => {
-                this.cancel();
-            });
+            on('JOIN_ROOM_OK', () => this.cancel());
         },
 
         createRoom() {
@@ -312,7 +297,6 @@ function createRoomCreator(gameApiClient) {
     }));
 }
 
-
 function createGameRoom(gameApiClient) {
     Alpine.data('gameRoom', () => ({
         show: false,
@@ -320,6 +304,7 @@ function createGameRoom(gameApiClient) {
         showPlayView: false,
         showWaitingRoom: false,
         showSubmitButton: false,
+        id: null,
         canStartGame: false,
         roomName: "UNSET",
         phase: "LOBBY",
@@ -336,23 +321,22 @@ function createGameRoom(gameApiClient) {
         blackCard: null,
         winner: null,
         gameWinner: null,
-        
+
         init() {
-            window.addEventListener('JOIN_ROOM_OK', (e) => {
-                this.onRoomJoined(e.detail.room);
-            });
-            window.addEventListener('LEFT_ROOM', () => {
+            on('JOIN_ROOM_OK', (e) => this.onRoomJoined(e.detail));
+            
+            on('GAME_UPDATE', (e) => this.updateGameState(e.detail));
+            
+            on('LEFT_ROOM', () => {
                 this.show = false;
                 this.updateGameState({ phase: "LOBBY", hand: [], submissions: [], players_list: [] });
             });
-            window.addEventListener('GAME_UPDATE', (e) => { 
-                this.updateGameState(e.detail);
-            });
         },
 
-        onRoomJoined(room) {
-            this.show = true;
+        onRoomJoined({room, connection_id}) {
+            this.id = connection_id;
             this.roomName = room;
+            this.show = true;
         },
 
         leaveRoom() {
@@ -376,19 +360,19 @@ function createGameRoom(gameApiClient) {
                 this.selected = [];
                 this.winner = null;
             }
-            
+
             this.showLobby = this.phase === "LOBBY";
             this.showWaitingRoom = this.hand.length === 0 && !this.isCzar;
             this.showPlayView = !this.showLobby && !this.showWaitingRoom;
             this.showSubmitButton = !this.awaitingSubmission && this.phase === "SELECTING" && this.hand.length > 0 && !this.isCzar;
             this.statusMessage = this.statusDictionary[this.phase](this);
-            
+
             this.updatePlayerList(gameState.players_list);
         },
 
         updatePlayerList(players) {
             if (!players) return;
-            this.players = players.map(p => new LobbyPlayer(p.nick, p.is_czar, p.score));
+            this.players = players.map(p => new LobbyPlayer(p.nick, p.is_czar, p.score, p.id));
         },
 
         startGame() {
@@ -415,9 +399,9 @@ function createGameRoom(gameApiClient) {
         },
 
         selectWinner(submission) {
-            if (this.isCzar) {
-                this.winner = submission;
-            }
+            if (!this.isCzar) return;
+
+            this.winner = this.winner == submission ? null : submission;
         },
 
         submitWinner() {
@@ -435,7 +419,7 @@ function createGameRoom(gameApiClient) {
         leaveRoom() {
             gameApiClient.leaveRoom();
         },
-        
+
         statusDictionary: {
             "LOBBY": () => "",
             "GAME_OVER": () => "",
@@ -458,6 +442,32 @@ function createGameRoom(gameApiClient) {
     }));
 }
 
+function createSoundPlayer() {
+    Alpine.data('soundPlayer', () => ({
+        mute: false,
+
+        init() {
+            on('PLAY_SOUND', (e) => this.playSound(e.detail.src));
+            this.mute = localStorage.getItem('mute_sounds') === 'true';
+        },
+
+        playSound(src) {
+            if (localStorage.getItem('mute_sounds') === 'true') return;
+
+            try {
+                const audio = new Audio(src);
+                audio.volume = 0.5;
+                audio.play().catch(e => console.warn("Audio blocked:", e));
+            } catch (e) { console.error(e); }
+        },
+
+        toggleMute() {
+            this.mute = !this.mute;
+            localStorage.setItem('mute_sounds', this.mute);
+        }
+    }));
+}
+
 class RoomListItem {
     constructor(name, players, maxPlayers, hasPassword) {
         this.name = name;
@@ -475,10 +485,11 @@ class PlayerListItem {
 }
 
 class LobbyPlayer {
-    constructor(nick, isCzar, score) {
+    constructor(nick, isCzar, score, id) {
         this.nick = nick;
         this.isCzar = isCzar;
         this.score = score;
+        this.id = id;
     }
 }
 

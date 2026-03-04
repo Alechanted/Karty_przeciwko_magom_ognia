@@ -226,7 +226,7 @@
                     <ul id="player-list">
                         <template x-for="player in players">
                             <li>
-                                <span x-text="player.nick"></span>
+                                <span x-bind:class="{ 'current-player': player.id === id }" x-text="player.nick"></span>
                                 <span x-show="player.isCzar">👑</span>
                                 (<span x-text="player.score"></span>)
                             </li>
@@ -272,6 +272,8 @@
                 <a href="https://discord.gg/nE3jskQCVg" target="_blank">discord</a>
                 <span class="sep">•</span>
                 <a href="mailto:alechanted@gmail.com">kontakt</a>
+                <span class="sep">•</span>
+                <a href="#" x-data="soundPlayer" @click="toggleMute" x-text="mute ? 'włącz dźwięk' : 'wycisz'"></a>
             </span>
         </div>
     </footer>

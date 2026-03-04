@@ -109,7 +109,7 @@ class RoomManager:
         self.rooms[settings.name] = engine
         return True
 
-    async def join_room(self, websocket, room_name, password):
+    async def join_room(self, websocket, room_name, password, connection_id):
         room = self.rooms.get(room_name)
         if not room: return TEXTS["ERR_NO_ROOM"]
 
@@ -123,7 +123,7 @@ class RoomManager:
         if not nick:
             return "ERR_NO_NICK"
         self.player_room_map[websocket] = room_name
-        room.add_player(websocket, nick)
+        room.add_player(websocket, nick, connection_id)
         return "OK"
 
     async def send_room_list(self, websocket):
@@ -167,11 +167,9 @@ class RoomManager:
         if not relevant: relevant = list(room.players_data.keys())
         ready_count = len([s for s in room.ready_players if s in relevant])
 
-        players_list = []
-        for ws, p in room.players_data.items():
-            players_list.append({
-                "nick": p['nick'], "score": p['score'], "is_czar": (ws == room.czar_socket)
-            })
+        players_list = [{
+            "nick": p['nick'], "score": p['score'], "is_czar": (ws == room.czar_socket), "id": p['id']
+        } for ws, p in room.players_data.items()]
 
         for ws in list(room.players_data.keys()):
             try:

@@ -35,7 +35,7 @@ class GameEngine:
         self.white_deck = []
         self.black_deck = []
 
-        self.players_data = {}  # ws -> {nick, hand, score}
+        self.players_data = {}  # ws -> {nick, hand, score, id}
         self.round_submissions = {}
         self.judging_order = []
         self.ready_players = set()
@@ -126,8 +126,8 @@ class GameEngine:
         self.ready_players = set()
         self._cancel_timeout()
 
-    def add_player(self, ws, nick):
-        self.players_data[ws] = {'nick': nick, 'hand': [], 'score': 0}
+    def add_player(self, ws, nick, connection_id):
+        self.players_data[ws] = {'nick': nick, 'hand': [], 'score': 0, 'id': connection_id}
 
     def remove_player(self, ws):
         """ Usuwa gracza z pokoju. Zwraca True jeśli pokój jest teraz pusty i powinien zostać usunięty."""
