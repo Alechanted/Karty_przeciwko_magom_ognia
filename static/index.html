@@ -212,7 +212,7 @@
                         <button x-show="isCzar && phase === 'JUDGING'" :disabled="!winner" @click="submitWinner" class="big-green-btn" x-text="$store.texts['BTN_CONFIRM_SELECTION']"></button>
                         <button x-show="phase === 'SUMMARY'" :disabled="isReady" @click="setReady" class="big-green-btn" x-text="$store.texts[isReady ? 'BTN_WAITING' : 'BTN_NEXT_SHIFT']"></button>
                     </div>
-
+                </div>
                 <div x-show="showWaitingRoom" id="waiting-room-view">
                     <h3>Gra w toku...</h3>
                     <p>Dołączysz w następnej rundzie.</p>
