@@ -135,7 +135,7 @@ function createRoomList(gameApiClient) {
         },
 
         updateRoomList({ rooms, players }) {
-            if (rooms) this.rooms = rooms.map(r => new RoomListItem(r.name, r.players, r.max, r.has_password));
+            if (rooms) this.rooms = rooms.map(models.roomListItem);
             if (players) this.updatePlayerList({ players });
             this.loading = false;
         },
@@ -154,7 +154,7 @@ function createRoomList(gameApiClient) {
         updatePlayerList({ players }) {
             if (!players) return;
 
-            this.players = players.map(p => new PlayerListItem(p.nick, p.room));
+            this.players = players.map(models.lobbyPlayer);
         },
 
         createRoom() {
@@ -219,7 +219,7 @@ function createChat(gameApiClient) {
 
         init() {
             on('CHAT', (e) => {
-                let message = new ChatMessage(e.detail.author, e.detail.message);
+                let message = models.chatMessage(e.detail);
                 this.messages.push(message);
                 // todo scroll to bottom of chat
             });
@@ -260,7 +260,7 @@ function createRoomCreator(gameApiClient) {
         init() {
             on('DECK_LIST', (e) => {
                 this.show = true;
-                this.decks = e.detail.decks.map(d => new DeckItem(d));
+                this.decks = e.detail.decks.map(models.deck);
             });
 
             on('JOIN_ROOM_OK', () => this.cancel());
@@ -352,10 +352,10 @@ function createGameRoom(gameApiClient) {
             this.phase = gameState.phase;
             this.isCzar = gameState.is_czar;
             this.isReady = gameState.am_i_ready;
-            this.hand = [...gameState.hand].map(c => new HandCard(c.id, c.text));
+            this.hand = [...gameState.hand].map(models.handCard);
             this.readyStatus = gameState.ready_status;
             this.blackCard = gameState.black_card;
-            this.submissions = [...gameState.submissions].map(s => new Submission(s.id, s.full_text, s.author, s.is_winner));
+            this.submissions = [...gameState.submissions].map(models.submission);
             this.canStartGame = gameState.can_start_game;
             this.hasSubmittedCards = gameState.has_submitted;
             this.gameWinner = gameState.winner;
@@ -367,7 +367,7 @@ function createGameRoom(gameApiClient) {
             }
 
             this.showLobby = this.phase === "LOBBY";
-            this.showWaitingRoom = this.hand.length === 0 && !this.isCzar;
+            this.showWaitingRoom = this.hand.length === 0 && this.phase !== "LOBBY";
             this.showPlayView = !this.showLobby && !this.showWaitingRoom;
             this.showSubmitButton = !this.awaitingSubmission && this.phase === "SELECTING" && this.hand.length > 0 && !this.isCzar;
             this.statusMessage = this.statusDictionary[this.phase](this);
@@ -377,7 +377,7 @@ function createGameRoom(gameApiClient) {
 
         updatePlayerList(players) {
             if (!players) return;
-            this.players = players.map(p => new LobbyPlayer(p.id, p.nick, p.is_czar, p.score));
+            this.players = players.map(models.roomPlayer);
         },
 
         startGame() {
@@ -473,59 +473,47 @@ function createSoundPlayer() {
     }));
 }
 
-class RoomListItem {
-    constructor(name, players, maxPlayers, hasPassword) {
-        this.name = name;
-        this.players = players;
-        this.maxPlayers = maxPlayers;
-        this.hasPassword = hasPassword;
-    }
-}
+const models = {
+    roomListItem: (data) => ({
+        name: data.name,
+        maxPlayers: data.max,
+        players: data.players,
+        hasPassword: data.has_password,
+    }),
 
-class PlayerListItem {
-    constructor(nick, room) {
-        this.nick = nick;
-        this.room = room;
-    }
-}
+    lobbyPlayer: (data) => ({
+        nick: data.nick,
+        room: data.room,
+    }),
 
-class LobbyPlayer {
-    constructor(id, nick, isCzar, score) {
-        this.id = id;
-        this.nick = nick;
-        this.isCzar = isCzar;
-        this.score = score;
-    }
-}
+    roomPlayer: (data) => ({
+        id: data.id,
+        nick: data.nick,
+        score: data.score,
+        isCzar: data.is_czar,
+    }),
 
-class ChatMessage {
-    constructor(author, message) {
-        this.author = author;
-        this.message = message;
-    }
-}
+    chatMessage: (data) => ({
+        author: data.author,
+        message: data.message,
+    }),
 
-class DeckItem {
-    constructor(name) {
-        this.name = name;
-        this.selected = true;
-    }
-}
+    deck: (data) => ({
+        selected: true,
+        name: data,
+    }),
 
-class HandCard {
-    constructor(id, text) {
-        this.id = id;
-        this.text = text;
-    }
-}
+    handCard: (data) => ({
+        id: data.id,
+        text: data.text
+    }),
 
-class Submission {
-    constructor(id, text, author, winner) {
-        this.id = id;
-        this.text = text;
-        this.author = author;
-        this.winner = winner;
-    }
+    submission: (data) => ({
+        id: data.id,
+        text: data.full_text,
+        author: data.author,
+        winner: data.is_winner,
+    }),
 }
 
 document.addEventListener('alpine:init', () => {
