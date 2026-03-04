@@ -355,7 +355,7 @@ function createGameRoom(gameApiClient) {
             this.hand = [...gameState.hand].map(c => new HandCard(c.id, c.text));
             this.readyStatus = gameState.ready_status;
             this.blackCard = gameState.black_card;
-            this.submissions = [...gameState.submissions].map(s => new PlayerEntry(s.id, s.full_text, s.author, s.is_winner));
+            this.submissions = [...gameState.submissions].map(s => new Submission(s.id, s.full_text, s.author, s.is_winner));
             this.canStartGame = gameState.can_start_game;
             this.hasSubmittedCards = gameState.has_submitted;
             this.gameWinner = gameState.winner;
@@ -519,7 +519,7 @@ class HandCard {
     }
 }
 
-class PlayerEntry {
+class Submission {
     constructor(id, text, author, winner) {
         this.id = id;
         this.text = text;
