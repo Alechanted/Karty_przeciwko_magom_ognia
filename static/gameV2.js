@@ -229,7 +229,7 @@ function createChat(gameApiClient) {
                 this.messages = [];
             });
 
-            on('LEFT_ROOM', () =>{
+            on('LEFT_ROOM', () => {
                 this.newMessage = "";
                 this.messages = [];
             });
