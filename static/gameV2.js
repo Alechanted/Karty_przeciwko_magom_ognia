@@ -213,18 +213,23 @@ function createRoomPasswordModal(gameApiClient) {
 }
 
 function createChat(gameApiClient) {
-    Alpine.data('chat', () => ({
+    Alpine.store('chat', () => ({
         messages: [],
         newMessage: "",
 
         init() {
-            window.addEventListener('CHAT', (e) => {
+            on('CHAT', (e) => {
                 let message = new ChatMessage(e.detail.author, e.detail.message);
                 this.messages.push(message);
                 // todo scroll to bottom of chat
             });
 
-            window.addEventListener('JOIN_ROOM_OK', () => {
+            on('JOIN_ROOM_OK', () => {
+                this.newMessage = "";
+                this.messages = [];
+            });
+
+            on('LEFT_ROOM', () =>{
                 this.newMessage = "";
                 this.messages = [];
             });

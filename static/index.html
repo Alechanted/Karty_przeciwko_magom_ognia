@@ -47,7 +47,7 @@
                         </template>
                     </div>
                 </div>
-                <aside style="flex:1; max-width:320px;" x-data="chat">
+                <aside style="flex:1; max-width:320px;" x-data="$store.chat">
                     <h3>Lobby — Czat</h3>
                     <div id="lobby-chat-messages"
                         style="height:220px; overflow-y:auto; background:rgba(0,0,0,0.25); padding:8px; border-radius:10px; margin-bottom:8px;">
@@ -233,7 +233,7 @@
                         </template>
                     </ul>
                 </div>
-                <div id="chat-container" x-data="chat">
+                <div id="chat-container" x-data="$store.chat">
                     <div id="chat-messages">
                         <template x-for="msg in messages">
                             <div>
