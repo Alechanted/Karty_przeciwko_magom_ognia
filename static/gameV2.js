@@ -169,11 +169,6 @@ function createRoomList(gameApiClient) {
             } else {
                 gameApiClient.joinRoom(room.name, null);
             }
-        },
-
-        joinRoomWithPassword() {
-            gameApiClient.joinRoom(this.roomToJoin, this.password);
-            this.roomToJoin = null;
         }
     }));
 }
