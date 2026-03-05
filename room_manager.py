@@ -29,8 +29,6 @@ class RoomManager:
         self.active_connections[websocket] = None
 
     async def remove_player(self, websocket: WebSocket, remove_connection: bool):
-        room_removed = False
-
         nick = None
         if remove_connection:
             nick = self.active_connections.pop(websocket, None)
@@ -40,18 +38,17 @@ class RoomManager:
         room_name = self.player_room_map.pop(websocket, None)
         room = self.rooms.get(room_name) if room_name else None
 
-        if room:
-            room.remove_player(websocket)
-            if not room.players_data:
-                logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
-                del self.rooms[room_name]
-                room_removed = True
+        if room and room.remove_player(websocket):
+            logger.info(f"Pokój '{room_name}' jest pusty. Usuwanie.")
+            del self.rooms[room_name]
+            await self.broadcast_room_list()
+        elif room:
+            await self.broadcast_room_state(room_name)
 
+        await self.broadcast_lobby_players()
         # Jeśli gracz był w lobby (nie w pokoju) i miał nick -> dźwięk wyjścia
         if room_name is None and nick:
             await self.broadcast_lobby_sound("goodbye")
-
-        return nick, room_name, room_removed
 
     def get_deck_list(self):
         files = glob.glob("decks/*.*")
@@ -112,7 +109,7 @@ class RoomManager:
         self.rooms[settings.name] = engine
         return True
 
-    async def join_room(self, websocket, room_name, password):
+    async def join_room(self, websocket, room_name, password, connection_id):
         room = self.rooms.get(room_name)
         if not room: return TEXTS["ERR_NO_ROOM"]
 
@@ -126,7 +123,7 @@ class RoomManager:
         if not nick:
             return "ERR_NO_NICK"
         self.player_room_map[websocket] = room_name
-        room.add_player(websocket, nick)
+        room.add_player(websocket, nick, connection_id)
         return "OK"
 
     async def send_room_list(self, websocket):
@@ -170,11 +167,9 @@ class RoomManager:
         if not relevant: relevant = list(room.players_data.keys())
         ready_count = len([s for s in room.ready_players if s in relevant])
 
-        players_list = []
-        for ws, p in room.players_data.items():
-            players_list.append({
-                "nick": p['nick'], "score": p['score'], "is_czar": (ws == room.czar_socket)
-            })
+        players_list = [{
+            "nick": p['nick'], "score": p['score'], "is_czar": (ws == room.czar_socket), "id": p['id']
+        } for ws, p in room.players_data.items()]
 
         for ws in list(room.players_data.keys()):
             try:

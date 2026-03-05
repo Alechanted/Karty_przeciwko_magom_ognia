@@ -30,19 +30,19 @@ class MessageHandler:
             # Dźwięk powitalny w lobby
             await self.room_manager.broadcast_lobby_sound("welcome")
 
-    async def create_room(self, settings: GameSettings):
+    async def create_room(self, settings: GameSettings, connection_id: str):
         owner_name = self._get_player_nick()
         success = self.room_manager.create_room(owner_name, settings)
         if success:
             await self.room_manager.broadcast_room_list()
-            await self.join_room(settings.name, settings.password)
+            await self.join_room(settings.name, settings.password, connection_id)
         else:
             await self._send_to_self({"type": "ERROR", "message": "Pokój o tej nazwie już istnieje!"})
 
-    async def join_room(self, name, password):
-        result = await self.room_manager.join_room(self.websocket, name, password)
+    async def join_room(self, name, password, connection_id):
+        result = await self.room_manager.join_room(self.websocket, name, password, connection_id)
         if result == "OK":
-            await self._send_to_self({"type": "JOIN_ROOM_OK", "room": name})
+            await self._send_to_self({"type": "JOIN_ROOM_OK", "room": name, "connection_id": connection_id})
             await self.room_manager.broadcast_room_state(name)
             # Update lobby clients with changed player count for this room
             await self.room_manager.broadcast_room_count(name)

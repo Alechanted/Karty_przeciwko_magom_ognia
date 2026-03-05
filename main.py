@@ -1,5 +1,6 @@
 import logging
 import json
+import uuid
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -36,6 +37,7 @@ async def websocket_endpoint(websocket: WebSocket):
     handler = MessageHandler(room_manager, websocket)
 
     await room_manager.connect(websocket)
+    connection_id = str(uuid.uuid4())
 
     try:
         while True:
@@ -58,10 +60,10 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 case 'CREATE_ROOM':
                     settings = GameSettings(**data['settings'])
-                    await handler.create_room(settings)
+                    await handler.create_room(settings, connection_id)
 
                 case 'JOIN_ROOM':
-                    await handler.join_room(data['name'], data.get('password', None))
+                    await handler.join_room(data['name'], data.get('password', None), connection_id)
 
                 case 'START_GAME':
                     await handler.start_game()

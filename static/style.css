@@ -241,6 +241,10 @@ button:disabled {
     padding: 15px;
 }
 
+.current-player {
+    font-weight: bold;
+}
+
 /* ========================================
    PLAY VIEW
 ======================================== */
@@ -260,7 +264,7 @@ button:disabled {
     min-height: 0;
 }
 
-#hand-container {
+.cards-container {
     height: 260px;
     flex-shrink: 0;
     display: flex;
@@ -270,6 +274,16 @@ button:disabled {
     padding: 15px;
     background: linear-gradient(to top, #1a1418, #120d10);
     border-top: 2px solid var(--accent);
+}
+
+.cards-container p {
+    text-align: center;
+    width: 100%;
+    color: #aaa;
+}
+
+.button-container button {
+    margin-top: 15px;
 }
 
 /* ========================================
@@ -480,7 +494,7 @@ button:disabled {
         font-size: 0.75rem;
     }
 
-    #hand-container {
+    .cards-container {
         height: 180px;
     }
 
