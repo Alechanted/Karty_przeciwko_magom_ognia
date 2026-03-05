@@ -47,9 +47,9 @@
                         </template>
                     </div>
                 </div>
-                <aside style="flex:1; max-width:320px;" x-data="$store.chat">
+                <aside style="flex:1; max-width:320px;" x-data="chat">
                     <h3>Lobby — Czat</h3>
-                    <div id="lobby-chat-messages"
+                    <div id="lobby-chat-messages" x-ref="element"
                         style="height:220px; overflow-y:auto; background:rgba(0,0,0,0.25); padding:8px; border-radius:10px; margin-bottom:8px;">
                         <template x-for="msg in messages">
                             <div>
@@ -58,7 +58,7 @@
                         </template>
                     </div>
                     <div style="display:flex; gap:8px; margin-bottom:12px;">
-                        <input x-model="newMessage" id="lobby-chat-input" type="text" placeholder="Napisz..." style="flex:1; padding:6px; border-radius:8px;">
+                        <input x-model="newMessage" id="lobby-chat-input" type="text" placeholder="Napisz..." style="flex:1; padding:6px; border-radius:8px;" @keydown.enter="sendMessage">
                         <button id="send-lobby-chat" class="green-btn" @click="sendMessage">Wyślij</button>
                     </div>
 
@@ -233,8 +233,8 @@
                         </template>
                     </ul>
                 </div>
-                <div id="chat-container" x-data="$store.chat">
-                    <div id="chat-messages">
+                <div id="chat-container" x-data="chat">
+                    <div id="chat-messages" x-ref="element">
                         <template x-for="msg in messages">
                             <div>
                                 <strong x-text="msg.author"></strong>: <span x-text="msg.message"></span>
@@ -242,7 +242,7 @@
                         </template>
                     </div>
                     <div class="chat-input-row">
-                        <input x-model="newMessage" type="text" id="chat-input" placeholder="...">
+                        <input x-model="newMessage" type="text" id="chat-input" placeholder="..." @keydown.enter="sendMessage">
                         <button @click="sendMessage" id="send-chat">></button>
                     </div>
                 </div>

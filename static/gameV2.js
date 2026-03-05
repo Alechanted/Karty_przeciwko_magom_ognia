@@ -201,15 +201,21 @@ function createRoomPasswordModal(gameApiClient) {
 }
 
 function createChat(gameApiClient) {
-    Alpine.store('chat', () => ({
+    Alpine.data('chat', () => ({
         messages: [],
         newMessage: "",
 
         init() {
             on('CHAT', (e) => {
-                let message = models.chatMessage(e.detail);
+                const message = models.chatMessage(e.detail);
                 this.messages.push(message);
-                // todo scroll to bottom of chat
+
+                const el = this.$refs.element;
+                const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+                if (!isAtBottom) return;
+
+                this.$nextTick(() => el.scrollTop = el.scrollHeight);
             });
 
             on('JOIN_ROOM_OK', () => {
@@ -317,16 +323,16 @@ function createGameRoom(gameApiClient) {
 
         init() {
             on('JOIN_ROOM_OK', (e) => this.onRoomJoined(e.detail));
-            
+
             on('GAME_UPDATE', (e) => this.updateGameState(e.detail));
-            
+
             on('LEFT_ROOM', () => {
                 this.show = false;
                 this.updateGameState({ phase: "LOBBY", hand: [], submissions: [], players_list: [] });
             });
         },
 
-        onRoomJoined({room, connection_id}) {
+        onRoomJoined({ room, connection_id }) {
             this.id = connection_id;
             this.roomName = room;
             this.show = true;
